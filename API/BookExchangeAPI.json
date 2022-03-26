@@ -11,7 +11,7 @@
     "/donate" : {
       "post" : {
         "summary" : "The endpoint for donation API.",
-        "description" : "This API takes in one or more messages from the client and returns\none or more messages as a response. The API create a record for the book donated.\n",
+        "description" : "This API takes in one 'donation' from the client and create a record for the book donated in the DynamoDB for donation information.\n",
         "tags" : [ "DONATE" ],
         "operationId" : "donateBook",
         "produces" : [ "application/json" ],
@@ -48,7 +48,7 @@
     "/remove" : {
       "post" : {
         "summary" : "The endpoint for canceling donation API.",
-        "description" : "This API takes in one or more messages from the client and returns\none or more messages as a response. The API delete a record for the book donated.\n",
+        "description" : "This API takes in one donation from the client and delete a record for the book donated.\n",
         "tags" : [ "DONATE" ],
         "operationId" : "removeDonatedBook",
         "produces" : [ "application/json" ],
@@ -85,7 +85,7 @@
     "/request" : {
       "post" : {
         "summary" : "The endpoint for requesting a book API.",
-        "description" : "This API takes in a message from the client and returns\na message as a response.\n",
+        "description" : "This API takes in a book request from the client and returns\na message as a response, and it modify the information to the DynamoDB for user information\n",
         "tags" : [ "REQUEST" ],
         "operationId" : "requestBook",
         "produces" : [ "application/json" ],
@@ -122,7 +122,7 @@
     "/search" : {
       "get" : {
         "summary" : "The endpoint for search API.",
-        "description" : "This API takes in one strings and returns a list of books as a response.\n",
+        "description" : "This API takes in one strings and returns a list of donations of books as a the search result\n",
         "tags" : [ "SEARCH" ],
         "operationId" : "searchBook",
         "produces" : [ "application/json" ],
@@ -159,7 +159,7 @@
     "/login" : {
       "post" : {
         "summary" : "The endpoint for login API.",
-        "description" : "This API takes in the login information from the client and returns\nthe user details as the response.\n",
+        "description" : "This API takes in the login information from the client and returns the user details as the response.\n",
         "tags" : [ "USER" ],
         "operationId" : "login",
         "produces" : [ "application/json" ],
@@ -232,6 +232,20 @@
     }
   },
   "definitions" : {
+    "Search" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "tag" : {
+          "type" : "string"
+        },
+        "category" : {
+          "type" : "string"
+        }
+      }
+    },
     "Donation" : {
       "type" : "object",
       "properties" : {
@@ -264,54 +278,6 @@
           "format" : "datetime"
         }
       }
-    },
-    "Search" : {
-      "type" : "object",
-      "properties" : {
-        "name" : {
-          "type" : "string"
-        },
-        "tag" : {
-          "type" : "string"
-        },
-        "category" : {
-          "type" : "string"
-        }
-      }
-    },
-    "SearchResponse" : {
-      "type" : "object",
-      "properties" : {
-        "book_list" : {
-          "type" : "array",
-          "items" : {
-            "type" : "object",
-            "properties" : {
-              "book_information" : {
-                "$ref" : "#/definitions/Book"
-              },
-              "donation_list" : {
-                "type" : "array",
-                "items" : {
-                  "$ref" : "#/definitions/Donation"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "DonationResponse" : {
-      "$ref" : "#/definitions/Donation"
-    },
-    "RequestResponse" : {
-      "$ref" : "#/definitions/Request"
-    },
-    "LoginResponse" : {
-      "$ref" : "#/definitions/UserInfo"
-    },
-    "RegisterResponse" : {
-      "$ref" : "#/definitions/UserInfo"
     },
     "Book" : {
       "type" : "object",
@@ -363,6 +329,40 @@
           "type" : "string"
         }
       }
+    },
+    "SearchResponse" : {
+      "type" : "object",
+      "properties" : {
+        "book_list" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "properties" : {
+              "book_information" : {
+                "$ref" : "#/definitions/Book"
+              },
+              "donation_list" : {
+                "type" : "array",
+                "items" : {
+                  "$ref" : "#/definitions/Donation"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "DonationResponse" : {
+      "$ref" : "#/definitions/Donation"
+    },
+    "RequestResponse" : {
+      "$ref" : "#/definitions/Request"
+    },
+    "LoginResponse" : {
+      "$ref" : "#/definitions/UserInfo"
+    },
+    "RegisterResponse" : {
+      "$ref" : "#/definitions/UserInfo"
     }
   }
 }
