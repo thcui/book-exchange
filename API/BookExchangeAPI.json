@@ -48,7 +48,7 @@
     "/remove" : {
       "post" : {
         "summary" : "The endpoint for canceling donation API.",
-        "description" : "This API takes in one donation from the client and delete a record for the book donated.\n",
+        "description" : "This API takes in one donation_id from the client and delete a record for the book donated.\n",
         "tags" : [ "DONATE" ],
         "operationId" : "removeDonatedBook",
         "produces" : [ "application/json" ],
@@ -57,7 +57,12 @@
           "in" : "body",
           "required" : true,
           "schema" : {
-            "$ref" : "#/definitions/Donation"
+            "type" : "object",
+            "properties" : {
+              "donation_id" : {
+                "type" : "string"
+              }
+            }
           }
         } ],
         "responses" : {
@@ -85,7 +90,7 @@
     "/request" : {
       "post" : {
         "summary" : "The endpoint for requesting a book API.",
-        "description" : "This API takes in a book request from the client and returns\na message as a response, and it modify the information to the DynamoDB for user information\n",
+        "description" : "This API takes in a book request from the client and returns\na message as a response, and it modify the information to the DynamoDB for user information.\n",
         "tags" : [ "REQUEST" ],
         "operationId" : "requestBook",
         "produces" : [ "application/json" ],
