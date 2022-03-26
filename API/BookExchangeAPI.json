@@ -235,8 +235,11 @@
     "Donation" : {
       "type" : "object",
       "properties" : {
-        "book" : {
-          "$ref" : "#/definitions/Book"
+        "donation_id" : {
+          "type" : "string"
+        },
+        "book_id" : {
+          "type" : "string"
         },
         "user" : {
           "type" : "string"
@@ -250,8 +253,8 @@
     "Request" : {
       "type" : "object",
       "properties" : {
-        "book" : {
-          "$ref" : "#/definitions/Book"
+        "donation_id" : {
+          "type" : "string"
         },
         "user" : {
           "type" : "string"
@@ -279,10 +282,21 @@
     "SearchResponse" : {
       "type" : "object",
       "properties" : {
-        "messages" : {
+        "book_list" : {
           "type" : "array",
           "items" : {
-            "$ref" : "#/definitions/Donation"
+            "type" : "object",
+            "properties" : {
+              "book_information" : {
+                "$ref" : "#/definitions/Book"
+              },
+              "donation_list" : {
+                "type" : "array",
+                "items" : {
+                  "$ref" : "#/definitions/Donation"
+                }
+              }
+            }
           }
         }
       }
@@ -302,6 +316,9 @@
     "Book" : {
       "type" : "object",
       "properties" : {
+        "book_id" : {
+          "type" : "string"
+        },
         "book_name" : {
           "type" : "string"
         },
@@ -321,6 +338,17 @@
         },
         "credit" : {
           "type" : "integer"
+        },
+        "requested_book_ids" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "donated_book_ids" : {
+          "items" : {
+            "type" : "string"
+          }
         }
       }
     },
