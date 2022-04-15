@@ -6,8 +6,12 @@ We would like to build an application that enables our users to donate or reques
 Users who want to donate their used books can post information on the web pages of the book. Users who want to request a used book can use our application to search and find sellers for the target book. It also provides the function that allows users to chat with a seller for information about the second-hand book.
 To avoid malicious use, the user needs to spend some ‘credit’ after they get the used book and they can earn ‘credit’ by successfully donating books to others.
 
+### Sturcture:
+
+![StructureDiagram.drawio](./StuctureDiagram/StructureDiagram.drawio.png)
 
 ### Motivation:
+
 People often need to buy some books either for their study or interest, but the price to buy a new book is usually high. In the meantime, there are a lot of people who have finished their use of the books and they are happy to donate them to others. There is a need to make buyers and sellers get in contact with each other.
 
 ### Functions:
@@ -25,7 +29,7 @@ We want to make it a place where readers can share their thoughts and find their
 
 Public Book Reviews:
 https://any-api.com/nytimes_com/books_api/docs/_lists_best_sellers_history_json
- 
+
 Get information for each book and fetch book information based on author, ISBNs, etc.:
 https://openlibrary.org/developers/api
 https://developers.google.com/books/docs/overview
