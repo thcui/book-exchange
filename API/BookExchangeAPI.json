@@ -243,9 +243,6 @@
     "DonationResponse" : {
       "$ref" : "#/definitions/Donation"
     },
-    "RegisterResponse" : {
-      "$ref" : "#/definitions/UserInfo"
-    },
     "LoginResponse" : {
       "$ref" : "#/definitions/UserInfo"
     },
@@ -256,6 +253,93 @@
           "type" : "string"
         }
       }
+    },
+    "Request" : {
+      "type" : "object",
+      "properties" : {
+        "donation_id" : {
+          "type" : "string"
+        },
+        "user" : {
+          "type" : "string"
+        },
+        "timestamp" : {
+          "type" : "string",
+          "format" : "datetime"
+        }
+      }
+    },
+    "Error" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "message" : {
+          "type" : "string"
+        }
+      }
+    },
+    "UserInfo" : {
+      "type" : "object",
+      "properties" : {
+        "username" : {
+          "type" : "string"
+        },
+        "password" : {
+          "type" : "string"
+        },
+        "credit" : {
+          "type" : "integer"
+        },
+        "requested_book_ids" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "RequestResponse" : {
+      "$ref" : "#/definitions/Request"
+    },
+    "Success" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "message" : {
+          "type" : "string"
+        }
+      }
+    },
+    "SearchResponse" : {
+      "type" : "object",
+      "properties" : {
+        "book_list" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "properties" : {
+              "book_information" : {
+                "$ref" : "#/definitions/Book"
+              },
+              "donation_list" : {
+                "type" : "array",
+                "items" : {
+                  "$ref" : "#/definitions/Donation"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "RegisterResponse" : {
+      "$ref" : "#/definitions/UserInfo"
     },
     "Book" : {
       "type" : "object",
@@ -300,90 +384,6 @@
         },
         "category" : {
           "type" : "string"
-        }
-      }
-    },
-    "Request" : {
-      "type" : "object",
-      "properties" : {
-        "donation_id" : {
-          "type" : "string"
-        },
-        "user" : {
-          "type" : "string"
-        },
-        "timestamp" : {
-          "type" : "string",
-          "format" : "datetime"
-        }
-      }
-    },
-    "Success" : {
-      "type" : "object",
-      "properties" : {
-        "code" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "message" : {
-          "type" : "string"
-        }
-      }
-    },
-    "Error" : {
-      "type" : "object",
-      "properties" : {
-        "code" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "message" : {
-          "type" : "string"
-        }
-      }
-    },
-    "UserInfo" : {
-      "type" : "object",
-      "properties" : {
-        "username" : {
-          "type" : "string"
-        },
-        "password" : {
-          "type" : "string"
-        },
-        "credit" : {
-          "type" : "integer"
-        },
-        "requested_book_ids" : {
-          "type" : "array",
-          "items" : {
-            "type" : "string"
-          }
-        }
-      }
-    },
-    "RequestResponse" : {
-      "$ref" : "#/definitions/Request"
-    },
-    "SearchResponse" : {
-      "type" : "object",
-      "properties" : {
-        "book_list" : {
-          "type" : "array",
-          "items" : {
-            "type" : "object",
-            "properties" : {
-              "book_information" : {
-                "$ref" : "#/definitions/Book"
-              },
-              "donation_list" : {
-                "type" : "array",
-                "items" : {
-                  "$ref" : "#/definitions/Donation"
-                }
-              }
-            }
-          }
         }
       }
     }
