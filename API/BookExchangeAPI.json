@@ -305,7 +305,7 @@
       "$ref" : "#/definitions/Request"
     },
     "Success" : {
-      "type" : "object",
+      "type" : "string",
       "properties" : {
         "code" : {
           "type" : "integer",
