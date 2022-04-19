@@ -1,23 +1,22 @@
 {
   "swagger" : "2.0",
   "info" : {
-    "title" : "BookExchange API",
     "description" : "Customer Service application for donating and requesting second-hand books",
-    "version" : "1.0.0"
+    "version" : "1.0.0",
+    "title" : "BookExchange API"
   },
+  "host" : "xrhrtsrjca.execute-api.us-east-1.amazonaws.com",
+  "basePath" : "/dev",
   "schemes" : [ "https" ],
-  "produces" : [ "application/json" ],
   "paths" : {
     "/donate" : {
       "post" : {
-        "summary" : "The endpoint for donation API.",
-        "description" : "This API takes in one 'donation' from the client and create a record for the book donated in the DynamoDB for donation information.\n",
-        "tags" : [ "DONATE" ],
         "operationId" : "donateBook",
+        "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "name" : "body",
           "in" : "body",
+          "name" : "Donation",
           "required" : true,
           "schema" : {
             "$ref" : "#/definitions/Donation"
@@ -25,19 +24,19 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "A response",
+            "description" : "200 response",
             "schema" : {
               "$ref" : "#/definitions/DonationResponse"
             }
           },
-          "403" : {
-            "description" : "Unauthorized",
+          "500" : {
+            "description" : "500 response",
             "schema" : {
               "$ref" : "#/definitions/Error"
             }
           },
-          "500" : {
-            "description" : "Unexpected error",
+          "403" : {
+            "description" : "403 response",
             "schema" : {
               "$ref" : "#/definitions/Error"
             }
@@ -45,117 +44,20 @@
         }
       }
     },
-    "/remove" : {
+    "/donate/photos/{key}" : {
       "post" : {
-        "summary" : "The endpoint for canceling donation API.",
-        "description" : "This API takes in one donation_id from the client and delete a record for the book donated.\n",
-        "tags" : [ "DONATE" ],
-        "operationId" : "removeDonatedBook",
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "name" : "body",
-          "in" : "body",
+          "name" : "key",
+          "in" : "path",
           "required" : true,
-          "schema" : {
-            "type" : "object",
-            "properties" : {
-              "donation_id" : {
-                "type" : "string"
-              }
-            }
-          }
+          "type" : "string"
         } ],
         "responses" : {
           "200" : {
-            "description" : "A response",
+            "description" : "200 response",
             "schema" : {
-              "$ref" : "#/definitions/DonationResponse"
-            }
-          },
-          "403" : {
-            "description" : "Unauthorized",
-            "schema" : {
-              "$ref" : "#/definitions/Error"
-            }
-          },
-          "500" : {
-            "description" : "Unexpected error",
-            "schema" : {
-              "$ref" : "#/definitions/Error"
-            }
-          }
-        }
-      }
-    },
-    "/request" : {
-      "post" : {
-        "summary" : "The endpoint for requesting a book API.",
-        "description" : "This API takes in a book request from the client and returns\na message as a response, and it modify the information to the DynamoDB for user information.\n",
-        "tags" : [ "REQUEST" ],
-        "operationId" : "requestBook",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "body",
-          "in" : "body",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/definitions/Request"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "A response",
-            "schema" : {
-              "$ref" : "#/definitions/RequestResponse"
-            }
-          },
-          "403" : {
-            "description" : "Unauthorized",
-            "schema" : {
-              "$ref" : "#/definitions/Error"
-            }
-          },
-          "500" : {
-            "description" : "Unexpected error",
-            "schema" : {
-              "$ref" : "#/definitions/Error"
-            }
-          }
-        }
-      }
-    },
-    "/search" : {
-      "get" : {
-        "summary" : "The endpoint for search API.",
-        "description" : "This API takes in one strings and returns a list of donations of books as a the search result\n",
-        "tags" : [ "SEARCH" ],
-        "operationId" : "searchBook",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "body",
-          "in" : "body",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/definitions/Search"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "A list of books for searched reuslt",
-            "schema" : {
-              "$ref" : "#/definitions/SearchResponse"
-            }
-          },
-          "403" : {
-            "description" : "Unauthorized",
-            "schema" : {
-              "$ref" : "#/definitions/Error"
-            }
-          },
-          "500" : {
-            "description" : "Unexpected error",
-            "schema" : {
-              "$ref" : "#/definitions/Error"
+              "$ref" : "#/definitions/Success"
             }
           }
         }
@@ -163,14 +65,12 @@
     },
     "/login" : {
       "post" : {
-        "summary" : "The endpoint for login API.",
-        "description" : "This API takes in the login information from the client and returns the user details as the response.\n",
-        "tags" : [ "USER" ],
         "operationId" : "login",
+        "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "name" : "body",
           "in" : "body",
+          "name" : "UserInfo",
           "required" : true,
           "schema" : {
             "$ref" : "#/definitions/UserInfo"
@@ -178,19 +78,19 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "A response",
+            "description" : "200 response",
             "schema" : {
               "$ref" : "#/definitions/LoginResponse"
             }
           },
-          "403" : {
-            "description" : "Unauthorized",
+          "500" : {
+            "description" : "500 response",
             "schema" : {
               "$ref" : "#/definitions/Error"
             }
           },
-          "500" : {
-            "description" : "Unexpected error",
+          "403" : {
+            "description" : "403 response",
             "schema" : {
               "$ref" : "#/definitions/Error"
             }
@@ -200,14 +100,12 @@
     },
     "/register" : {
       "post" : {
-        "summary" : "The endpoint for registration API.",
-        "description" : "This API takes in the registration information from the client and returns the default new user details as the response.\n",
-        "tags" : [ "USER" ],
         "operationId" : "register",
+        "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "name" : "body",
           "in" : "body",
+          "name" : "UserInfo",
           "required" : true,
           "schema" : {
             "$ref" : "#/definitions/UserInfo"
@@ -215,19 +113,124 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "A response",
+            "description" : "200 response",
             "schema" : {
               "$ref" : "#/definitions/RegisterResponse"
             }
           },
-          "403" : {
-            "description" : "Unauthorized",
+          "500" : {
+            "description" : "500 response",
             "schema" : {
               "$ref" : "#/definitions/Error"
             }
           },
+          "403" : {
+            "description" : "403 response",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/remove" : {
+      "post" : {
+        "operationId" : "removeDonatedBook",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "MODELef3cfd",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/MODELef3cfd"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200 response",
+            "schema" : {
+              "$ref" : "#/definitions/DonationResponse"
+            }
+          },
           "500" : {
-            "description" : "Unexpected error",
+            "description" : "500 response",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "403" : {
+            "description" : "403 response",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/request" : {
+      "post" : {
+        "operationId" : "requestBook",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "Request",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Request"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200 response",
+            "schema" : {
+              "$ref" : "#/definitions/RequestResponse"
+            }
+          },
+          "500" : {
+            "description" : "500 response",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "403" : {
+            "description" : "403 response",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/search" : {
+      "get" : {
+        "operationId" : "searchBook",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "Search",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Search"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200 response",
+            "schema" : {
+              "$ref" : "#/definitions/SearchResponse"
+            }
+          },
+          "500" : {
+            "description" : "500 response",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "403" : {
+            "description" : "403 response",
             "schema" : {
               "$ref" : "#/definitions/Error"
             }
@@ -237,16 +240,33 @@
     }
   },
   "definitions" : {
-    "Search" : {
+    "DonationResponse" : {
+      "$ref" : "#/definitions/Donation"
+    },
+    "RegisterResponse" : {
+      "$ref" : "#/definitions/UserInfo"
+    },
+    "LoginResponse" : {
+      "$ref" : "#/definitions/UserInfo"
+    },
+    "MODELef3cfd" : {
       "type" : "object",
       "properties" : {
-        "name" : {
+        "donation_id" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Book" : {
+      "type" : "object",
+      "properties" : {
+        "book_id" : {
           "type" : "string"
         },
-        "tag" : {
+        "book_name" : {
           "type" : "string"
         },
-        "category" : {
+        "cover_picture" : {
           "type" : "string"
         }
       }
@@ -269,6 +289,20 @@
         }
       }
     },
+    "Search" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "tag" : {
+          "type" : "string"
+        },
+        "category" : {
+          "type" : "string"
+        }
+      }
+    },
     "Request" : {
       "type" : "object",
       "properties" : {
@@ -284,16 +318,26 @@
         }
       }
     },
-    "Book" : {
+    "Success" : {
       "type" : "object",
       "properties" : {
-        "book_id" : {
-          "type" : "string"
+        "code" : {
+          "type" : "integer",
+          "format" : "int32"
         },
-        "book_name" : {
+        "message" : {
           "type" : "string"
+        }
+      }
+    },
+    "Error" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "integer",
+          "format" : "int32"
         },
-        "cover_picture" : {
+        "message" : {
           "type" : "string"
         }
       }
@@ -315,25 +359,11 @@
           "items" : {
             "type" : "string"
           }
-        },
-        "donated_book_ids" : {
-          "items" : {
-            "type" : "string"
-          }
         }
       }
     },
-    "Error" : {
-      "type" : "object",
-      "properties" : {
-        "code" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "message" : {
-          "type" : "string"
-        }
-      }
+    "RequestResponse" : {
+      "$ref" : "#/definitions/Request"
     },
     "SearchResponse" : {
       "type" : "object",
@@ -356,18 +386,6 @@
           }
         }
       }
-    },
-    "DonationResponse" : {
-      "$ref" : "#/definitions/Donation"
-    },
-    "RequestResponse" : {
-      "$ref" : "#/definitions/Request"
-    },
-    "LoginResponse" : {
-      "$ref" : "#/definitions/UserInfo"
-    },
-    "RegisterResponse" : {
-      "$ref" : "#/definitions/UserInfo"
     }
   }
 }
