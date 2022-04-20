@@ -6,7 +6,7 @@ We would like to build an application that enables our users to donate or reques
 Users who want to donate their used books can post information on the web pages of the book. Users who want to request a used book can use our application to search and find sellers for the target book. It also provides the function that allows users to chat with a seller for information about the second-hand book.
 To avoid malicious use, the user needs to spend some ‘credit’ after they get the used book and they can earn ‘credit’ by successfully donating books to others.
 
-### Sturcture:
+### Structure:
 
 ![StructureDiagram.drawio](./StuctureDiagram/StructureDiagram.drawio.png)
 
