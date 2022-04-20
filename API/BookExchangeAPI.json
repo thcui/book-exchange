@@ -6,7 +6,6 @@
     "title" : "BookExchange API"
   },
   "host" : "xrhrtsrjca.execute-api.us-east-1.amazonaws.com",
-  "basePath" : "/dev",
   "schemes" : [ "https" ],
   "paths" : {
     "/donate" : {
