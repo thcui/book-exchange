@@ -12,7 +12,7 @@ To avoid malicious use, the user needs to spend some ‘credit’ after they get
 
 ### Motivation:
 
-People often need to buy some books either for their study or interest, but the price to buy a new book is usually high. In the meantime, there are a lot of people who have finished their use of the books and they are happy to donate them to others. There is a need to make buyers and sellers get in contact with each other.
+People often need to buy some books either for their study or interest, but the price to buy a new book is usually high. In the meantime, there are a lot of people who have finished their use of the books and they are happy to donate them to others. There is a need to make donators and those who need the books get in contact with each other.
 
 ### Functions:
 1) 	Allows donators to post information and other users can get books from donators.
