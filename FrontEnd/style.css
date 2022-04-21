@@ -37,7 +37,12 @@ button{
 }
 
 #donate-popup{
+    margin-top: 10px;
     visibility: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 #donate-popup.show {
@@ -72,19 +77,24 @@ button{
     width: 30%;
     min-width: 200px;
     height: 30px;
-    margin-top: 30px;
     border-radius: 10px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
 }
 
+
+#donate-popup #bookNameInput{
+    width: 10%;
+    padding-right: 5%;
+}
 #donate-popup #labelInput{
-    width: 15%;
+    display: flex;
+    flex-direction: row;
+    width: 20%;
+    padding-right: 5%;
+
 }
 #donate-popup #imageInput{
     width: 10%;
+    padding-right: 5%;
 }
 h1 {
     text-align: center;

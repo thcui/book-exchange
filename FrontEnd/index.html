@@ -45,11 +45,17 @@
           type="file"
           accept="image/*"
         />
-        Add Labels:
-        <input
-          placeholder="Separate labels by comma (,)"
-          id="labelInput"
-        />
+        Add Tags:
+        <div id="labelInput">
+          <div>
+        <input type="checkbox" id="scales" name="like-new">
+        <label for="scales">Like-new</label>
+          </div>
+      <div>
+        <input type="checkbox" id="hardcover" name="hardcover">
+        <label for="hardcover">Hardcover</label>
+      </div>
+        </div>
         <button id='donate-button' onclick="makeDonation()" class="btn">Donate!</button>
 <!--        <button onclick="uploadImg()" class="btn">Upload a photo of the book: </button>-->
       </div>
@@ -64,18 +70,16 @@
         popup.classList.toggle("show");
       }
       function searchBook() {
-        var apigClient = apigClientFactory.newClient({
-          apiKey: "???",
-        });
+
         var params = {
-          "x-api-key": "???",
+          "x-api-key": "DZbM31zNmQ6yIX0cYXLul5QK72JoMVmA72sDXTSE",
         };
         var additionalParams = {
           headers: {
-            "x-api-key": "???",
+            "x-api-key": "DZbM31zNmQ6yIX0cYXLul5QK72JoMVmA72sDXTSE",
           },
         };
-        apigClient.makeRequest()
+
       }
 
       function makeDonation() {
@@ -83,29 +87,39 @@
         let labels = [];
         let list = document.getElementById("labelInput").value;
         labels.push(list);
-        let additionalParams = {
+
+
+        var apigClient = apigClientFactory.newClient({
+          apiKey: "DZbM31zNmQ6yIX0cYXLul5QK72JoMVmA72sDXTSE",
+        });
+        var params = {
+          "x-api-key": "DZbM31zNmQ6yIX0cYXLul5QK72JoMVmA72sDXTSE",
+        };
+        var additionalParams = {
           headers: {
-            "Content-Type": "application/json",
-            "x-api-key": "yjgRBd0mQt2IodCZTJwGk6SVcNxIKaK6amLkFWhQ",
+            "x-api-key": "DZbM31zNmQ6yIX0cYXLul5QK72JoMVmA72sDXTSE",
           },
         };
 
-        let url =
-                "https://xrhrtsrjca.execute-api.us-east-1.amazonaws.com/dev/donate"
-        axios.put(url, file, additionalParams).then((response) => {
-          alert("Book Donated");
-        });
-        let timer = setTimeout(() => {
-          var div = document.createElement("div");
-          var img = document.createElement("img");
-          img.src = imageUrl;
-          img.width = 500;
-          img.setAttribute("class", "img");
-          div.append(img);
-          var x = ele.appendChild(div);
-          x.style.padding = "10px";
-          clearTimeout(timer);
-        }, 1000);
+        var body = {
+          'donation_id': '0001',
+          'book_name': 'test-book'
+        }
+        let url ="https://ebs239nacc.execute-api.us-east-1.amazonaws.com/dev"
+        apigClient.donatePost(params,body,additionalParams).then((response)=>{
+          alert(response)
+        })
+        // let timer = setTimeout(() => {
+        //   var div = document.createElement("div");
+        //   var img = document.createElement("img");
+        //   img.src = imageUrl;
+        //   img.width = 500;
+        //   img.setAttribute("class", "img");
+        //   div.append(img);
+        //   var x = ele.appendChild(div);
+        //   x.style.padding = "10px";
+        //   clearTimeout(timer);
+        // }, 1000);
       }
 
       function uploadImg() {
