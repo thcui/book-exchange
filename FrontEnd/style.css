@@ -1,0 +1,97 @@
+body{
+    margin:0;
+}
+#header {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 0;
+    background-color: dodgerblue;
+    color: white;
+
+}
+
+input{
+    border-radius: 4px;
+}
+button{
+    border-radius: 4px;
+}
+
+#microphone-icon img{
+    width: auto;
+    height: 30px;
+}
+
+.search{
+    width: 100%;
+}
+
+#donate-popup-button{
+    position: relative;
+    display: inline-block;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#donate-popup{
+    visibility: hidden;
+}
+
+#donate-popup.show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+button{
+    cursor: pointer;
+    font-weight: bold;
+    color: grey;
+    height: 30px;
+}
+
+#search #donate-popup-button{
+    background-color:greenyellow;
+}
+
+#donate-button{
+    background-color:greenyellow;
+}
+#listenWord{
+    height: 30px;
+}
+#listenWord{
+    width:60%;
+    border-radius: 10px;
+}
+#donate-popup .upload {
+    align-self: center;
+    width: 30%;
+    min-width: 200px;
+    height: 30px;
+    margin-top: 30px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#donate-popup #labelInput{
+    width: 15%;
+}
+#donate-popup #imageInput{
+    width: 10%;
+}
+h1 {
+    text-align: center;
+}
+
+#bookArea {
+    display: flex;
+    justify-content: center;
+    flex-flow: wrap;
+}

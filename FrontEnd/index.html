@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="stylesheet"
+      href="./style.css"
+    />
+
+    <title>Book Exchange</title>
+  </head>
+  <body>
+
+    <div id="header">
+      <h1 id="title">Book <em>Exchange</em></h1>
+      <div id ='search'>
+
+        <input
+          id="listenWord"
+          name="transcribeWord"
+          placeholder="Try: 'Amazon Web Services in Action' "
+          onkeydown = "if (event.keyCode == 13)
+                        document.getElementById('search-button').click()"
+        />
+        <span id="microphone-icon"
+        ><img src="icons8-microphone-48.png" onclick="speechTranscribe()"></img
+        ></span>
+        <button id="search-button" onclick="searchBook()">Search</button>
+        <button id="donate-popup-button" onclick="showDonatePopup()">Show Donation Panel ↓</button>
+
+      </div>
+
+      <div id="donate-popup">
+          Book Name:
+          <input
+                placeholder="Ex. Harry Potter"
+                id="bookNameInput"
+          />
+          Upload a photo:
+        <input
+          id="imageInput"
+          type="file"
+          accept="image/*"
+        />
+        Add Labels:
+        <input
+          placeholder="Separate labels by comma (,)"
+          id="labelInput"
+        />
+        <button id='donate-button' onclick="makeDonation()" class="btn">Donate!</button>
+<!--        <button onclick="uploadImg()" class="btn">Upload a photo of the book: </button>-->
+      </div>
+    </div>
+    <div id="bookArea"></div>
+
+    <script>
+
+      // When the user clicks on div, open the popup
+      function showDonatePopup() {
+        var popup = document.getElementById("donate-popup");
+        popup.classList.toggle("show");
+      }
+      function searchBook() {
+        var apigClient = apigClientFactory.newClient({
+          apiKey: "???",
+        });
+        var params = {
+          "x-api-key": "???",
+        };
+        var additionalParams = {
+          headers: {
+            "x-api-key": "???",
+          },
+        };
+        apigClient.makeRequest()
+      }
+
+      function makeDonation() {
+        const bookNameInput = document.querySelector("#bookNameInput");
+        let labels = [];
+        let list = document.getElementById("labelInput").value;
+        labels.push(list);
+        let additionalParams = {
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": "yjgRBd0mQt2IodCZTJwGk6SVcNxIKaK6amLkFWhQ",
+          },
+        };
+
+        let url =
+                "https://xrhrtsrjca.execute-api.us-east-1.amazonaws.com/dev/donate"
+        axios.put(url, file, additionalParams).then((response) => {
+          alert("Book Donated");
+        });
+        let timer = setTimeout(() => {
+          var div = document.createElement("div");
+          var img = document.createElement("img");
+          img.src = imageUrl;
+          img.width = 500;
+          img.setAttribute("class", "img");
+          div.append(img);
+          var x = ele.appendChild(div);
+          x.style.padding = "10px";
+          clearTimeout(timer);
+        }, 1000);
+      }
+
+      function uploadImg() {
+        const imageInput = document.querySelector("#imageInput");
+        const file = imageInput.files[0];
+        let labels = [];
+        let list = document.getElementById("labelInput").value;
+        labels.push(list);
+        let additionalParams = {
+          headers: {
+            "Content-Type": file.type,
+            "x-amz-meta-customLabels": labels,
+            "x-api-key": "???",
+          },
+        };
+
+        let url =
+          "https://xrhrtsrjca.execute-api.us-east-1.amazonaws.com/dev/donate/photos/" +
+          file.name;
+
+        axios.put(url, file, additionalParams).then((response) => {
+          alert("Image uploaded: " + file.name);
+        });
+
+        let imageUrl = "https://book-exchange-book-photos-bucket.s3.amazonaws.com/" + file.name;
+        let timer = setTimeout(() => {
+          var div = document.createElement("div");
+          var img = document.createElement("img");
+          img.src = imageUrl;
+          img.width = 500;
+          img.setAttribute("class", "img");
+          div.append(img);
+          var x = ele.appendChild(div);
+          x.style.padding = "10px";
+          clearTimeout(timer);
+        }, 1000);
+      }
+
+      function speechTranscribe(event) {
+        let speech = true;
+        window.SpeechRecognition =
+          window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        recognition.interimResults = true;
+        console.log("start listening");
+        recognition.addEventListener("result", (e) => {
+          console.log("triggered");
+          const transcript = Array.from(e.results)
+            .map((result) => result[0])
+            .map((result) => result.transcript)
+            .join("");
+          console.log(transcript);
+          document.getElementById("listenWord").focus();
+          document.querySelector('input[name="transcribeWord"]').value =
+            transcript;
+          //recognition.stop();
+        });
+
+        if (speech == true) {
+          recognition.start();
+          //recognition.addEventListener("end", recognition.start);
+        }
+      }
+    </script>
+    <script
+      type="text/javascript"
+      src="lib/axios/dist/axios.standalone.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="lib/CryptoJS/rollups/hmac-sha256.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="lib/CryptoJS/rollups/sha256.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="lib/CryptoJS/components/hmac.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="lib/CryptoJS/components/enc-base64.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="lib/url-template/url-template.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="lib/apiGatewayCore/sigV4Client.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="lib/apiGatewayCore/apiGatewayClient.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="lib/apiGatewayCore/simpleHttpClient.js"
+    ></script>
+    <script type="text/javascript" src="lib/apiGatewayCore/utils.js"></script>
+    <script type="text/javascript" src="apigClient.js"></script>
+
+  </body>
+</html>
