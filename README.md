@@ -17,7 +17,7 @@ People often need to buy some books either for their study or interest, but the 
 ### Functions:
 1) 	Allows donators to post information and other users can get books from donators.
 2) 	Allows everyone to rate or write some reviews for a book
-3) 	Allows users to chat to ask sellers for information about their second-hand books, or contact others who share the same interest.
+3) 	Allows users to chat to ask donators for information about their second-hand books.
 
 ### Existing Similar Work 
 We did not find any existing applications that would provide all the services stated above.
