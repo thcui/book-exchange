@@ -11,6 +11,12 @@ body{
 
 }
 
+#title{
+    font-size: 48px;
+    margin: 50px;
+}
+
+
 input{
     border-radius: 4px;
 }

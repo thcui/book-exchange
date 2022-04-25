@@ -29,7 +29,7 @@
         ><img src="icons8-microphone-48.png" onclick="speechTranscribe()"></img
         ></span>
         <button id="search-button" onclick="searchBook()">Search</button>
-        <button id="donate-popup-button" onclick="showDonatePopup()">Show Donation Panel ↓</button>
+        <button id="donate-popup-button" onclick="showDonatePopup()">Expand Donation Panel ↓</button>
 
       </div>
 
@@ -82,8 +82,12 @@
 
       }
 
+      function get_user_id(){
+        // TODO: implement this
+        return '0001'
+      }
       function makeDonation() {
-        const bookNameInput = document.querySelector("#bookNameInput");
+        const bookNameInput = document.querySelector("#bookNameInput").value
         let labels = [];
         let list = document.getElementById("labelInput").value;
         labels.push(list);
@@ -101,13 +105,20 @@
           },
         };
 
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + "-" + today.getMinutes() + "-" + today.getSeconds()+"-" + today.getTimezoneOffset();
+        var dateTime = date+'-'+time;
+
+        user_id=get_user_id()
         var body = {
-          'donation_id': '0001',
-          'book_name': 'test-book'
+          'donation_id': user_id+'-'+dateTime,
+          'book_name': bookNameInput,
+          'user':user_id
         }
-        let url ="https://ebs239nacc.execute-api.us-east-1.amazonaws.com/dev"
+        // let url ="https://ebs239nacc.execute-api.us-east-1.amazonaws.com/dev"
         apigClient.donatePost(params,body,additionalParams).then((response)=>{
-          alert(response)
+          alert('Donated \"'+bookNameInput+'\" Successfully! Thanks for your support!')
         })
         // let timer = setTimeout(() => {
         //   var div = document.createElement("div");
