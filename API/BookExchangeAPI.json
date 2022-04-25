@@ -369,6 +369,12 @@
         "timestamp" : {
           "type" : "string",
           "format" : "datetime"
+        },
+        "tag" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
         }
       }
     },
