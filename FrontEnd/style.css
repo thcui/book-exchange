@@ -68,6 +68,12 @@ button{
     background-color:greenyellow;
 }
 
+#user-info{
+    display: flex;
+    flex-direction: row;
+
+
+}
 #donate-button{
     background-color:greenyellow;
 }
