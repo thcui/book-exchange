@@ -45,6 +45,7 @@
 }
 
 #login .container {
+    border-radius: 20px;
     padding: 16px;
 }
 
@@ -70,16 +71,17 @@
 
 /* Modal Content/Box */
 #login .modal-content {
+    border-radius: 20px;
     background-color: #fefefe;
     margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 40%; /* Could be more or less, depending on screen size */
 }
 
 /* The Close Button (x) */
 #login .close {
-    position: absolute;
-    right: 25px;
+    position: relative;
+    left: 92%;
     top: 0;
     color: #000;
     font-size: 35px;
