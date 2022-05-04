@@ -139,10 +139,15 @@
         "produces" : [ "application/json" ],
         "parameters" : [ {
           "in" : "body",
-          "name" : "MODELef3cfd",
+          "name" : "donation_id",
           "required" : true,
           "schema" : {
-            "$ref" : "#/definitions/MODELef3cfd"
+            "type" : "object",
+            "properties" : {
+              "donation_id" : {
+                "type" : "string"
+              }
+            }
           }
         } ],
         "responses" : {
@@ -236,6 +241,46 @@
           }
         }
       }
+    },
+    "/add-to-list" : {
+      "get" : {
+        "operationId" : "AddtoFavouriteList",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "donation_id",
+          "required" : true,
+          "schema" : {
+            "type" : "object",
+            "properties" : {
+              "book_name" : {
+                "type" : "string"
+              }
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200 response",
+            "schema" : {
+              "$ref" : "#/definitions/Success"
+            }
+          },
+          "500" : {
+            "description" : "500 response",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "403" : {
+            "description" : "403 response",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "definitions" : {
@@ -244,14 +289,6 @@
     },
     "LoginResponse" : {
       "$ref" : "#/definitions/UserInfo"
-    },
-    "MODELef3cfd" : {
-      "type" : "object",
-      "properties" : {
-        "donation_id" : {
-          "type" : "string"
-        }
-      }
     },
     "Request" : {
       "type" : "object",
