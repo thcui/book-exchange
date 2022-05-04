@@ -53,7 +53,7 @@ apigClientFactory.newClient = function (config) {
 
     
     // extract endpoint and path from url
-    var invokeUrl = 'https://ebs239nacc.execute-api.us-east-1.amazonaws.com/dev';
+    var invokeUrl = 'https://z7xnekbzrd.execute-api.us-east-1.amazonaws.com/dev';
     var endpoint = /(^https?:\/\/[^\/]+)/g.exec(invokeUrl)[1];
     var pathComponent = invokeUrl.substring(endpoint.length);
 
@@ -83,6 +83,24 @@ apigClientFactory.newClient = function (config) {
     
     
     
+    apigClient.addtolistPost = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['body'], ['body']);
+        
+        var addtolistPostRequest = {
+            verb: 'post'.toUpperCase(),
+            path: pathComponent + uritemplate('/addtolist').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(addtolistPostRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.donatePost = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
@@ -98,6 +116,24 @@ apigClientFactory.newClient = function (config) {
         
         
         return apiGatewayClient.makeRequest(donatePostRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.donateOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var donateOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/donate').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(donateOptionsRequest, authType, additionalParams, config.apiKey);
     };
     
     
