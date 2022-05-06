@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./style-main.css" />
+  <link rel="stylesheet" href="./style-login.css" />
+  <!-- import CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <title>Book Exchange</title>
+</head>
+
+<body>
+  <div id="app">
+    <div class="upperPart">
+      <h1>book Exchange</h1>
+    </div>
+    <div class="belowPart">
+      <div class="naviBar">
+        <el-row class="tac">
+          <el-col :span="12">
+            <el-menu default-active="1" class="el-menu-vertical-demo">
+              <el-menu-item index="1">
+                <i class="el-icon-menu"></i>
+                <span>Home</span>
+              </el-menu-item>
+              <el-menu-item index="2">
+                <i class="el-icon-menu"></i>
+                <span>Account</span>
+              </el-menu-item>
+              <el-menu-item index="3">
+                <i class="el-icon-document"></i>
+                <span>Favorite</span>
+              </el-menu-item>
+              <el-menu-item index="4">
+                <i class="el-icon-setting"></i>
+                <span>Message</span>
+              </el-menu-item>
+              <el-menu-item index="5">
+                <i class="el-icon-setting"></i>
+                <span>Cart</span>
+              </el-menu-item>
+            </el-menu>
+          </el-col>
+      </div>
+      <div>
+        middle
+      </div>
+      <div class="ediChoice">
+        <h4>Editor's choice</h4>
+      </div>
+    </div>
+  </div>
+  
+</body>
+<!-- import JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+  new Vue({
+    el: '#app',
+    data: function() {
+      return { visible: false }
+    }
+  })
+</script>
+</html>
