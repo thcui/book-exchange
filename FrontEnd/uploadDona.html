@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="./style.css"/>
     <link rel="stylesheet" href="./style-login.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
     <title>Book Exchange</title>
 </head>
 <body>
@@ -25,9 +26,10 @@
                 onkeydown="if (event.keyCode == 13)
                         document.getElementById('search-button').click()"
         />
-        <span id="microphone-icon"
+        <i class="el-icon-microphone" onclick="speechTranscribe()" style="font-size: 20px;"></i>
+        <!-- <span id="microphone-icon"
         ><img src="icons8-microphone-48.png" onclick="speechTranscribe()"></img
-        ></span>
+        ></span> -->
         <button id="search-button" onclick="searchBook()">Search</button>
         <button id="donate-popup-button" onclick="showDonatePopup()">Expand Donation Panel ↓</button>
 
