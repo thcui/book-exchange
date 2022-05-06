@@ -1,0 +1,35 @@
+.main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.upperPart {
+  text-align: center;
+  margin: 0;
+  background-color: dodgerblue;
+  color: white;
+  height: 40%;
+}
+
+.belowPart {
+  width: 100%; 
+  display: flex;
+  flex-direction: row;
+  justify-content:space-between
+}
+.naviBar {
+  width: 30%;
+}
+.ediChoice {
+  width: 200px;
+  height: 500px;
+  border: 1px solid black;
+  margin: 16px;
+}
+
+#title{
+  font-size: 48px;
+  margin: 50px;
+}
