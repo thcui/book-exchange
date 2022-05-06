@@ -10,7 +10,12 @@
   margin: 0;
   background-color: dodgerblue;
   color: white;
-  height: 40%;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-style: italic;
 }
 
 .belowPart {
@@ -33,3 +38,15 @@
 }
 .middle {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  margin: 16px;
+}
+.imgDisplay{
+  flex-grow: 1;
+  margin-top: 30px;
+}
+.grid-content {
+  max-height: 200px;
+  width: 100px;
+}
