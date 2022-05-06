@@ -20,16 +20,16 @@
   justify-content:space-between
 }
 .naviBar {
-  width: 30%;
+  width: 15%;
 }
 .ediChoice {
   width: 200px;
   height: 500px;
   border: 1px solid black;
   margin: 16px;
+  text-align: center;
+  color: #1e90ff;
+  border-radius: 8px;
 }
-
-#title{
-  font-size: 48px;
-  margin: 50px;
-}
+.middle {
+  text-align: center;
