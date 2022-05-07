@@ -8,15 +8,33 @@
   <link rel="stylesheet" href="./style-main.css" />
   <!-- import CSS -->
   <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+  <link rel="stylesheet" href="./style-login.css" />
   <title>Book Exchange</title>
+  <script type="text/javascript" src="lib/axios/dist/axios.standalone.js"></script>
+  <script type="text/javascript" src="lib/CryptoJS/rollups/hmac-sha256.js"></script>
+  <script type="text/javascript" src="lib/CryptoJS/rollups/sha256.js"></script>
+  <script type="text/javascript" src="lib/CryptoJS/components/hmac.js"></script>
+  <script type="text/javascript" src="lib/CryptoJS/components/enc-base64.js"></script>
+  <script type="text/javascript" src="lib/url-template/url-template.js"></script>
+  <script type="text/javascript" src="lib/apiGatewayCore/sigV4Client.js"></script>
+  <script type="text/javascript" src="lib/apiGatewayCore/apiGatewayClient.js"></script>
+  <script type="text/javascript" src="lib/apiGatewayCore/simpleHttpClient.js"></script>
+  <script type="text/javascript" src="lib/apiGatewayCore/utils.js"></script>
+  <script type="text/javascript" src="apigClient.js"></script>
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1128.0.min.js"></script>
+
+<!--  Add your js scripts here   -->
+  <script type="text/javascript" src="donation.js"></script>
+  <script type="text/javascript" src="accountManagement.js"></script>
+
 </head>
 
 <body>
   <div id="app">
     <div class="upperPart">
+      <el-button type="primary" round onclick="document.getElementById('login').style.display='block'">Login</el-button>
       <h1>Book Exchange</h1>
     </div>
-    <a href="uploadDona.html">Donation</a>
     <div class="belowPart">
       <div class="naviBar">
         <i class="el-icon-s-fold" @click="changeMode"></i>
@@ -25,19 +43,23 @@
             <i class="el-icon-menu"></i>
             <span>Home</span>
           </el-menu-item>
-          <el-menu-item index="2" @click="path = 2">
+          <el-menu-item index="2" @click="path = 'donate'">
+            <i class="el-icon-menu"></i>
+            <span>Donate</span>
+          </el-menu-item>
+          <el-menu-item index="3" @click="path = 2">
             <i class="el-icon-menu"></i>
             <span>Account</span>
           </el-menu-item>
-          <el-menu-item index="3" @click="path = 3">
+          <el-menu-item index="4" @click="path = 3">
             <i class="el-icon-document"></i>
             <span>Favorite</span>
           </el-menu-item>
-          <el-menu-item index="4" @click="path = 4">
+          <el-menu-item index="5" @click="path = 4">
             <i class="el-icon-setting"></i>
             <span>Message</span>
           </el-menu-item>
-          <el-menu-item index="5" @click="path = 5">
+          <el-menu-item index="6" @click="path = 5">
             <i class="el-icon-setting"></i>
             <span>Cart</span>
           </el-menu-item>
@@ -95,6 +117,39 @@
 
         </div>
       </div>
+      <div class="middle" v-if="path == 'donate'">
+        <div id="donate-popup">
+          <div>
+            BookName:
+            <el-input id="bookNameInput" placeholder="Name of your donated book" v-model="donatedBook" class="input-with-select"
+                      style="width: 90%; margin-bottom: 10px">
+            </el-input>
+
+          </div>
+          <div>
+            Upload a photo:
+            <input id="imageInput" type="file" accept="image/*" />
+          </div>
+          <div>
+            Add Tags:
+            <div id="labelInput">
+              <div>
+                <input type="checkbox" id="like-new" name="like-new">
+                <label for="like-new">Like-new</label>
+              </div>
+              <div>
+                <input type="checkbox" id="hardcover" name="hardcover">
+                <label for="hardcover">Hardcover</label>
+              </div>
+            </div>
+          </div>
+          <div>
+            <el-button type="primary" round onclick="makeDonation()">Donate!</el-button>
+<!--            <button id='donate-button' onclick="makeDonation()" class="btn">Donate!</button>-->
+          </div>
+        </div>
+
+      </div>
       <div class="ediChoice">
         <h4 class="title">Editor's choice</h4>
         <img src="https://photokit.com/images/editor.min.webp" height="300" width="180" />
@@ -103,6 +158,40 @@
 
     </div>
   </div>
+  <!-- attribution: https://www.w3schools.com/howto/howto_css_login_form.asp-->
+  <!--<a href="https://www.flaticon.com/free-icons/male" title="male icons">Male icons created by Freepik - Flaticon</a>-->
+  <div id="login" class="modal">
+
+
+    <!-- Modal Content -->
+    <div class="modal-content animate">
+      <span onclick="document.getElementById('login').style.display='none'" class="close"
+            title="Close Modal">&times;</span>
+      <div class="imgcontainer">
+        <img src="avatar.png" alt="Avatar" class="avatar">
+      </div>
+
+      <div class="container">
+        <label for="uname"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" id="uname" required>
+
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" id="psw" required>
+
+        <button type="submit" onclick="login()">Login</button>
+        <button type="submit" onclick="signUp()">Register</button>
+        <label>
+          <input type="checkbox" checked="checked" name="remember"> Remember me
+        </label>
+      </div>
+
+      <div class="container" style="background-color:#f1f1f1">
+        <button type="button" onclick="document.getElementById('login').style.display='none'"
+                class="cancelbtn">Cancel</button>
+        <span class="psw">Forgot <a href="#">password?</a></span>
+      </div>
+
+    </div>
 </body>
 <!-- import JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -122,6 +211,7 @@
         tag: "",
         category: "",
         bookName: "",
+        donatedBook: "",
         dialogVisible: false,
         path: 1
       };
