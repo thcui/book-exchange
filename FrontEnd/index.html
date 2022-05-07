@@ -22,8 +22,9 @@
   <script type="text/javascript" src="lib/apiGatewayCore/utils.js"></script>
   <script type="text/javascript" src="apigClient.js"></script>
   <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1128.0.min.js"></script>
+  <script src="https://wow.techbrood.com/libs/jquery/jquery-1.11.1.min.js"></script>
 
-<!--  Add your js scripts here   -->
+  <!--  Add your js scripts here   -->
   <script type="text/javascript" src="donation.js"></script>
   <script type="text/javascript" src="accountManagement.js"></script>
 
@@ -91,23 +92,24 @@
                     <img src="https://photokit.com/images/editor.min.webp" class="imgSize" />
                   </div>
                   <div class="right">
-                    <h1>Amazon Unbound</h1>
+                    <div class="line1">
+                      <h1>Amazon Unbound</h1>
+                      <div id="heart" @click="thumbup"></div>
+                    </div>
                     <div class="dialogText">Description</div>
                     <div class="part2">This is new york</div>
                     <div class="part3">
-                      <div>
+                      <div style="flex:1">
                         <div><i class="el-icon-user-solid"></i>
                           owner:nmlgb6998
                         </div>
-                        <div class="Rating-gray">
-                          <i v-for="(item,index) in itemClasses" :key="index" class="fa" :class="item"></i>
-                        </div>
+                        <el-rate v-model="read_value" disabled text-color="#ff9900" score-template="{value} points">
+                        </el-rate>
                       </div>
-                      <div></div>
-                      <div>credits:5</div>
+                      <div style="flex:1">credits:5</div>
                     </div>
-                    <div>
-                      <el-button>Request</el-button>
+                    <div class="part4">
+                      <el-button type="primary" round>Request</el-button>
                     </div>
                   </div>
                 </div>
@@ -121,8 +123,8 @@
         <div id="donate-popup">
           <div>
             BookName:
-            <el-input id="bookNameInput" placeholder="Name of your donated book" v-model="donatedBook" class="input-with-select"
-                      style="width: 90%; margin-bottom: 10px">
+            <el-input id="bookNameInput" placeholder="Name of your donated book" v-model="donatedBook"
+              class="input-with-select" style="width: 90%; margin-bottom: 10px">
             </el-input>
 
           </div>
@@ -143,9 +145,10 @@
               </div>
             </div>
           </div>
+          <el-rate v-model="collect_value" show-score>
+          </el-rate>
           <div>
             <el-button type="primary" round onclick="makeDonation()">Donate!</el-button>
-<!--            <button id='donate-button' onclick="makeDonation()" class="btn">Donate!</button>-->
           </div>
         </div>
 
@@ -166,7 +169,7 @@
     <!-- Modal Content -->
     <div class="modal-content animate">
       <span onclick="document.getElementById('login').style.display='none'" class="close"
-            title="Close Modal">&times;</span>
+        title="Close Modal">&times;</span>
       <div class="imgcontainer">
         <img src="avatar.png" alt="Avatar" class="avatar">
       </div>
@@ -187,7 +190,7 @@
 
       <div class="container" style="background-color:#f1f1f1">
         <button type="button" onclick="document.getElementById('login').style.display='none'"
-                class="cancelbtn">Cancel</button>
+          class="cancelbtn">Cancel</button>
         <span class="psw">Forgot <a href="#">password?</a></span>
       </div>
 
@@ -213,12 +216,18 @@
         bookName: "",
         donatedBook: "",
         dialogVisible: false,
-        path: 1
+        path: 1,
+        read_value: 3.7,
+        collect_value: null
       };
     },
     methods: {
       changeMode() {
         this.isCollapse = !this.isCollapse
+      },
+      thumbup() {
+        var popup = document.getElementById("heart");
+        popup.classList.toggle("is-active");
       }
     },
     computed: {
