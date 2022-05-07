@@ -1,3 +1,6 @@
+body{
+  margin: 0;
+}
 .main {
   width: 100%;
   height: 100%;
@@ -25,7 +28,8 @@
   justify-content:space-between
 }
 .naviBar {
-  width: 15%;
+  width: 25%;
+  height: 80%;
 }
 .ediChoice {
   width: 200px;
@@ -50,7 +54,39 @@
   max-height: 200px;
   width: 100px;
 }
-
-body{
-  margin: 0;
+.dialog{
+  display: flex;
+  flex-direction: row;
 }
+.imgSize{
+  height: 80%;
+  width: 40%;
+}
+
+.right{
+  border: 1px solid black;
+  flex: 1;
+  text-align: left;
+}
+.dialogText{
+  text-decoration: underline; font-size: 20px;
+}
+.part2{
+  border: 1px solid black;
+  height: 50px;
+  width: 400px;
+}
+.part3{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.Rating-gray {
+  margin-right: 1.066667vw;
+  color: #ffbe00;
+  display: inline-block;
+}
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 200px;
+}
+

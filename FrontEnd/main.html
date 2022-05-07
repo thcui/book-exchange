@@ -21,29 +21,29 @@
       <div class="naviBar">
         <i class="el-icon-s-fold" @click="changeMode"></i>
         <el-menu default-active="1" class="el-menu-vertical-demo" :collapse="isCollapse">
-          <el-menu-item index="1">
+          <el-menu-item index="1" @click="path = 1">
             <i class="el-icon-menu"></i>
             <span>Home</span>
           </el-menu-item>
-          <el-menu-item index="2">
+          <el-menu-item index="2" @click="path = 2">
             <i class="el-icon-menu"></i>
             <span>Account</span>
           </el-menu-item>
-          <el-menu-item index="3">
+          <el-menu-item index="3" @click="path = 3">
             <i class="el-icon-document"></i>
             <span>Favorite</span>
           </el-menu-item>
-          <el-menu-item index="4">
+          <el-menu-item index="4" @click="path = 4">
             <i class="el-icon-setting"></i>
             <span>Message</span>
           </el-menu-item>
-          <el-menu-item index="5">
+          <el-menu-item index="5" @click="path = 5">
             <i class="el-icon-setting"></i>
             <span>Cart</span>
           </el-menu-item>
         </el-menu>
       </div>
-      <div class="middle">
+      <div class="middle" v-if="path == 1">
         <div class="searchbar">
           <el-input placeholder="Search for Book Name" v-model="bookName" class="input-with-select"
             style="width: 90%; margin-bottom: 10px">
@@ -62,8 +62,37 @@
         <div class="imgDisplay">
           <el-row :gutter="20">
             <el-col :span="6"><img src="https://photokit.com/images/editor.min.webp" class="grid-content"></img>
+              <el-button type="text" @click="dialogVisible = true">click to open the Dialog</el-button>
+              <el-dialog :visible.sync="dialogVisible" width="40%">
+                <div class="dialog">
+                  <div class="left">
+                    <img src="https://photokit.com/images/editor.min.webp" class="imgSize" />
+                  </div>
+                  <div class="right">
+                    <h1>Amazon Unbound</h1>
+                    <div class="dialogText">Description</div>
+                    <div class="part2">This is new york</div>
+                    <div class="part3">
+                      <div>
+                        <div><i class="el-icon-user-solid"></i>
+                          owner:nmlgb6998
+                        </div>
+                        <div class="Rating-gray">
+                          <i v-for="(item,index) in itemClasses" :key="index" class="fa" :class="item"></i>
+                        </div>
+                      </div>
+                      <div></div>
+                      <div>credits:5</div>
+                    </div>
+                    <div>
+                      <el-button>Request</el-button>
+                    </div>
+                  </div>
+                </div>
+              </el-dialog>
             </el-col>
           </el-row>
+
         </div>
       </div>
       <div class="ediChoice">
@@ -71,6 +100,7 @@
         <img src="https://photokit.com/images/editor.min.webp" height="300" width="180" />
         <div style="color: black">to kill a mocking bird</div>
       </div>
+
     </div>
   </div>
 </body>
@@ -78,6 +108,10 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script>
+  const LENGTH = 5;
+  const CLS_ON = "fa-star";
+  const CLS_HALF = "fa-star-half-empty";
+  const CLS_OF = "fa-star-0";
   new Vue({
     el: "#app",
     data: function () {
@@ -87,14 +121,37 @@
         sortby: "",
         tag: "",
         category: "",
-        bookName:""
+        bookName: "",
+        dialogVisible: false,
+        path: 1
       };
     },
     methods: {
       changeMode() {
         this.isCollapse = !this.isCollapse
       }
+    },
+    computed: {
+      itemClasses() {
+        let result = [];
+        // 如 4.8 对分数进行处理, 向下取0.5的倍数
+        let score = Math.floor(this.rating * 2) / 2;
+        // 用来判断哪种星星的标准
+        let integer = Math.floor(score);
+        let hasDecimal = score % 1 !== 0;
+        for (let i = 0; i < integer; i++) {
+          result.push(CLS_ON);
+        };
+        if (hasDecimal) {
+          result.push(CLS_HALF);
+        };
+        while (result.length < LENGTH) {
+          result.push(CLS_OF);
+        };
+        return result;
+      }
     }
+
   });
 
 
