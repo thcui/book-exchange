@@ -62,24 +62,34 @@ body{
   height: 80%;
   width: 40%;
 }
-
+.left{
+  width: 40%;
+    height: 100%;
+}
 .right{
-  border: 1px solid black;
   flex: 1;
   text-align: left;
+}
+.line1{
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+    align-items: center;
 }
 .dialogText{
   text-decoration: underline; font-size: 20px;
 }
 .part2{
-  border: 1px solid black;
   height: 50px;
   width: 400px;
 }
 .part3{
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+}
+.part4{
+  justify-content: flex-end;
+  display: flex;
 }
 .Rating-gray {
   margin-right: 1.066667vw;
@@ -90,3 +100,20 @@ body{
   width: 200px;
 }
 
+
+#heart {
+  width: 100px;
+  height: 100px;
+  background: url("https://cssanimation.rocks/images/posts/steps/heart.png") no-repeat;
+  background-position: 0 0;
+  cursor: pointer;
+  -webkit-transition: background-position 1s steps(28);
+  transition: background-position 1s steps(28);
+  -webkit-transition-duration: 0s;
+  transition-duration: 0s;
+}
+#heart.is-active {
+  -webkit-transition-duration: 1s;
+  transition-duration: 1s;
+  background-position: -2800px 0;
+}
