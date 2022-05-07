@@ -50,3 +50,7 @@
   max-height: 200px;
   width: 100px;
 }
+
+body{
+  margin: 0;
+}
