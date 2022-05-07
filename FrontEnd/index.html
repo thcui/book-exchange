@@ -122,13 +122,12 @@
       <div class="middle" v-if="path == 'donate'">
         <div id="donate-popup">
           <div>
-            <<<<<<< HEAD BookName: <el-input id="bookNameInput" placeholder="Name of your donated book"
-              v-model="donatedBook" class="input-with-select" style="width: 90%; margin-bottom: 10px">
-              =======
+            BookName:
+            <el-input id="bookNameInput" placeholder="Name of your donated book" v-model="donatedBook"
+              class="input-with-select" style="width: 90%; margin-bottom: 10px">
               Name of your donated book:
               <el-input id="bookNameInput" placeholder="Ex. Harry Potter" v-model="donatedBook"
                 class="input-with-select" style="width: 90%; margin-bottom: 10px">
-                >>>>>>> aaef9d1651766f456dc5672ae54b3611275dd13d
               </el-input>
 
           </div>
@@ -157,14 +156,9 @@
               </div>
             </div>
           </div>
-          <el-rate v-model="collect_value" show-score>
-          </el-rate>
           <div>
-            <<<<<<< HEAD <el-button type="primary" round onclick="makeDonation()">Donate!</el-button>
-              =======
-              <el-button type="primary" round onclick="makeDonation()">Donate</el-button>
-              <!--            <button id='donate-button' onclick="makeDonation()" class="btn">Donate!</button>-->
-              >>>>>>> aaef9d1651766f456dc5672ae54b3611275dd13d
+            <el-button type="primary" round onclick="makeDonation()">Donate!</el-button>
+
           </div>
         </div>
 
@@ -235,7 +229,6 @@
         dialogVisible: false,
         path: 1,
         read_value: 3.7,
-        collect_value: null,
         dialogImageUrl: ''
       };
     },
@@ -254,29 +247,7 @@
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
       }
-    },
-
-    computed: {
-      itemClasses() {
-        let result = [];
-        // 如 4.8 对分数进行处理, 向下取0.5的倍数
-        let score = Math.floor(this.rating * 2) / 2;
-        // 用来判断哪种星星的标准
-        let integer = Math.floor(score);
-        let hasDecimal = score % 1 !== 0;
-        for (let i = 0; i < integer; i++) {
-          result.push(CLS_ON);
-        };
-        if (hasDecimal) {
-          result.push(CLS_HALF);
-        };
-        while (result.length < LENGTH) {
-          result.push(CLS_OF);
-        };
-        return result;
-      }
-
-    },
+    }
 
   });
 
