@@ -130,6 +130,8 @@
             Upload a photo:
             <el-upload
                     action="https://z7xnekbzrd.execute-api.us-east-1.amazonaws.com/dev/donate/photos/test2"
+                    drag= true
+                    accept="image/*"
                     list-type="picture-card"
                     :on-preview="handlePictureCardPreview"
                     :on-remove="handleRemove">
