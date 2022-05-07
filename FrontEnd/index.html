@@ -156,9 +156,8 @@
               </div>
             </div>
           </div>
-          <el-rate v-model="collect_value" show-score>
-          </el-rate>
           <div>
+
               <el-button type="primary" round onclick="makeDonation()">Donate</el-button>
 
           </div>
@@ -231,7 +230,6 @@
         dialogVisible: false,
         path: 1,
         read_value: 3.7,
-        collect_value: null,
         dialogImageUrl: ''
       };
     },
@@ -250,29 +248,7 @@
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
       }
-    },
-
-    computed: {
-      itemClasses() {
-        let result = [];
-        // 如 4.8 对分数进行处理, 向下取0.5的倍数
-        let score = Math.floor(this.rating * 2) / 2;
-        // 用来判断哪种星星的标准
-        let integer = Math.floor(score);
-        let hasDecimal = score % 1 !== 0;
-        for (let i = 0; i < integer; i++) {
-          result.push(CLS_ON);
-        };
-        if (hasDecimal) {
-          result.push(CLS_HALF);
-        };
-        while (result.length < LENGTH) {
-          result.push(CLS_OF);
-        };
-        return result;
-      }
-
-    },
+    }
 
   });
 
