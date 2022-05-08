@@ -86,7 +86,7 @@
           <el-row :gutter="20">
             <el-col :span="6"><img src="https://photokit.com/images/editor.min.webp" class="grid-content"></img>
               <el-button type="text" @click="dialogVisible = true">click to open the Dialog</el-button>
-              <el-dialog :visible.sync="dialogVisible" width="40%">
+              <el-dialog :visible.sync="dialogVisible" width="800px">
                 <div class="dialog">
                   <div class="left">
                     <img src="https://photokit.com/images/editor.min.webp" class="imgSize" />
@@ -109,7 +109,7 @@
                       <div style="flex:1">credits:5</div>
                     </div>
                     <div class="part4">
-                      <el-button type="primary" round>Request</el-button>
+                      <el-button type="primary" round @click="dialogVisible = false">Request</el-button>
                     </div>
                   </div>
                 </div>

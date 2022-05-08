@@ -59,16 +59,16 @@ body{
   flex-direction: row;
 }
 .imgSize{
-  height: 80%;
-  width: 40%;
+  height: 100%;
+    width: 150px;
 }
 .left{
   width: 40%;
-    height: 100%;
 }
 .right{
   flex: 1;
   text-align: left;
+  margin-left: 20px;
 }
 .line1{
   display: flex;
