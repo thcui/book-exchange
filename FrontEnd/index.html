@@ -34,8 +34,8 @@
   <div id="app">
     <div class="upperPart">
       <div>
-        <el-button id="login-button" type="primary" round onclick="document.getElementById('login').style.display='block'"><i
-            class="el-icon-user"></i>Login
+        <el-button id="login-button" type="primary" round
+          onclick="document.getElementById('login').style.display='block'"><i class="el-icon-user"></i>Login
         </el-button>
       </div>
       <h1 style="flex: 1;">Book Exchange</h1>
@@ -143,15 +143,14 @@
             </el-input>
             <div class="line1">
               Credit Required for requesting this book:
-              <el-input-number v-model="creditRequired" @change="handleChange" :min="1" :max="10" label="credit">
+              <el-input-number v-model="creditRequired" :min="1" :max="10" label="credit">
               </el-input-number>
             </div>
 
             <div>
               Upload a photo:
-              <el-upload action="https://z7xnekbzrd.execute-api.us-east-1.amazonaws.com/dev/donate/photos/test2" drag:
-                true accept="image/*" list-type="picture-card" :on-preview="handlePictureCardPreview"
-                :on-remove="handleRemove">
+              <el-upload action=url drag: true accept="image/*" list-type="picture-card"
+                :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :on-change="addname">
                 <i class="el-icon-plus"></i>
               </el-upload>
               <el-dialog :visible.sync="dialogVisible">
@@ -262,8 +261,8 @@
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
       },
-      handleChange(value) {
-        console.log(value);
+      addname() {
+        this.url = "https://z7xnekbzrd.execute-api.us-east-1.amazonaws.com/dev/donate/photos/" + this.donatedBook
       }
     }
 
