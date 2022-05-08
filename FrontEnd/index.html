@@ -34,7 +34,8 @@
   <div id="app">
     <div class="upperPart">
       <div>
-        <el-button type="primary" round onclick="document.getElementById('login').style.display='block'">Login
+        <el-button type="primary" round onclick="document.getElementById('login').style.display='block'"><i
+            class="el-icon-user"></i>Login
         </el-button>
       </div>
       <h1 style="flex: 1;">Book Exchange</h1>
@@ -76,13 +77,23 @@
             <el-button slot="append" icon="el-icon-search"></el-button>
           </el-input>
           <el-select v-model="sortby" slot="prepend" placeholder="Sort By" style="width: 30%">
-            <el-option label="Restaurant" value="1"></el-option>
+            <el-option label="Alphabetical Order (A-Z)" value="1"></el-option>
+            <el-option label="Alphabetical Order (Z-A)" value="2"></el-option>
+            <el-option label="Credit required low to high" value="3"></el-option>
+            <el-option label="Credit required high to low" value="4"></el-option>
           </el-select>
           <el-select v-model="tag" slot="prepend" placeholder="Tag" style="width: 30%">
-            <el-option label="Restaurant" value="1"></el-option>
+            <el-option label="Like-new" value="1"></el-option>
+            <el-option label="Hardcover" value="2"></el-option>
           </el-select>
           <el-select v-model="category" slot="prepend" placeholder="Category" style="width: 30%">
-            <el-option label="Restaurant" value="1"></el-option>
+            <el-option label="Drama" value="Drama"></el-option>
+            <el-option label="Fiction" value="Fiction"></el-option>
+            <el-option label="History" value="History"></el-option>
+            <el-option label="Juvenile literature" value="Juvenile literature"></el-option>
+            <el-option label="Romance" value="Romance"></el-option>
+
+
           </el-select>
         </div>
         <div class="imgDisplay">
@@ -123,89 +134,105 @@
         </div>
       </div>
       <div class="middle" v-if="path == 'donate'">
-        <div id="donate-popup">
+        <<<<<<< HEAD <div id="donate-popup">
           <div>
             Name of your donated book:
             <el-input id="bookNameInput" placeholder="Ex. Harry Potter" v-model="donatedBook" class="input-with-select"
               style="width: 90%; margin-bottom: 10px">
             </el-input>
 
-          </div>
-          <div>
-            Upload a photo:
-            <el-upload action="https://z7xnekbzrd.execute-api.us-east-1.amazonaws.com/dev/donate/photos/test2" drag:
-              true accept="image/*" list-type="picture-card" :on-preview="handlePictureCardPreview"
-              :on-remove="handleRemove">
-              <i class="el-icon-plus"></i>
-            </el-upload>
-            <el-dialog :visible.sync="dialogVisible">
-              <img width="100%" :src="dialogImageUrl" alt="">
-            </el-dialog>
-          </div>
-          <div>
-            Add Tags:
-            <div id="labelInput">
-              <div>
-                <input type="checkbox" id="like-new" name="like-new">
-                <label for="like-new">Like-new</label>
-              </div>
-              <div>
-                <input type="checkbox" id="hardcover" name="hardcover">
-                <label for="hardcover">Hardcover</label>
+            =======
+
+            Name of your donated book:
+            <el-input id="bookNameInput" placeholder="Ex. Harry Potter" v-model="donatedBook" class="input-with-select"
+              style="width: 100%; margin-bottom: 10px">
+            </el-input>
+            <div class="line1">
+              Credit Required for requesting this book:
+              <el-input-number v-model="creditRequired" @change="handleChange" :min="1" :max="10" label="credit">
+              </el-input-number>
+              >>>>>>> 7f2428fa773bba8d6812016da6986f73ca36538b
+            </div>
+
+            <div>
+              Upload a photo:
+              <el-upload action="https://z7xnekbzrd.execute-api.us-east-1.amazonaws.com/dev/donate/photos/test2" drag:
+                true accept="image/*" list-type="picture-card" :on-preview="handlePictureCardPreview"
+                :on-remove="handleRemove">
+                <i class="el-icon-plus"></i>
+              </el-upload>
+              <el-dialog :visible.sync="dialogVisible">
+                <img width="100%" :src="dialogImageUrl" alt="">
+              </el-dialog>
+            </div>
+            <div>
+              Add Tags:
+              <div id="labelInput">
+                <div>
+                  <input type="checkbox" id="like-new" name="like-new">
+                  <label for="like-new">Like-new</label>
+                </div>
+                <div>
+                  <input type="checkbox" id="hardcover" name="hardcover">
+                  <label for="hardcover">Hardcover</label>
+                </div>
               </div>
             </div>
-          </div>
-          <div>
+            <div>
 
-            <el-button type="primary" round onclick="makeDonation()">Donate</el-button>
+              <<<<<<< HEAD <el-button type="primary" round onclick="makeDonation()">Donate</el-button>
+                =======
+                <el-button type="primary" style="width:250px;height:50px;font-size:20px" round onclick="makeDonation()">
+                  Donate<i class="el-icon-upload el-icon--right"></i></el-button>
+                >>>>>>> 7f2428fa773bba8d6812016da6986f73ca36538b
+
+            </div>
+
 
           </div>
+          <div class="ediChoice">
+            <h4 class="title">Editor's choice</h4>
+            <img src="https://photokit.com/images/editor.min.webp" height="300" width="180" />
+            <div style="color: black">to kill a mocking bird</div>
+          </div>
+
+      </div>
+    </div>
+    <!-- attribution: https://www.w3schools.com/howto/howto_css_login_form.asp-->
+    <!--<a href="https://www.flaticon.com/free-icons/male" title="male icons">Male icons created by Freepik - Flaticon</a>-->
+    <div id="login" class="modal">
+
+
+      <!-- Modal Content -->
+      <div class="modal-content animate">
+        <span onclick="document.getElementById('login').style.display='none'" class="close"
+          title="Close Modal">&times;</span>
+        <div class="imgcontainer">
+          <img src="avatar.png" alt="Avatar" class="avatar">
+        </div>
+
+        <div class="container">
+          <label for="uname"><b>Username</b></label>
+          <input type="text" placeholder="Enter Username" id="uname" required>
+
+          <label for="psw"><b>Password</b></label>
+          <input type="password" placeholder="Enter Password" id="psw" required>
+
+          <button type="submit" onclick="login()">Login</button>
+          <button type="submit" onclick="signUp()">Register</button>
+          <label>
+            <input type="checkbox" checked="checked" name="remember"> Remember me
+          </label>
+        </div>
+
+        <div class="container" style="background-color:#f1f1f1">
+          <button type="button" onclick="document.getElementById('login').style.display='none'"
+            class="cancelbtn">Cancel</button>
+          <span class="psw">Forgot <a href="#">password?</a></span>
         </div>
 
       </div>
-      <div class="ediChoice">
-        <h4 class="title">Editor's choice</h4>
-        <img src="https://photokit.com/images/editor.min.webp" height="300" width="180" />
-        <div style="color: black">to kill a mocking bird</div>
-      </div>
-
     </div>
-  </div>
-  <!-- attribution: https://www.w3schools.com/howto/howto_css_login_form.asp-->
-  <!--<a href="https://www.flaticon.com/free-icons/male" title="male icons">Male icons created by Freepik - Flaticon</a>-->
-  <div id="login" class="modal">
-
-
-    <!-- Modal Content -->
-    <div class="modal-content animate">
-      <span onclick="document.getElementById('login').style.display='none'" class="close"
-        title="Close Modal">&times;</span>
-      <div class="imgcontainer">
-        <img src="avatar.png" alt="Avatar" class="avatar">
-      </div>
-
-      <div class="container">
-        <label for="uname"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" id="uname" required>
-
-        <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" id="psw" required>
-
-        <button type="submit" onclick="login()">Login</button>
-        <button type="submit" onclick="signUp()">Register</button>
-        <label>
-          <input type="checkbox" checked="checked" name="remember"> Remember me
-        </label>
-      </div>
-
-      <div class="container" style="background-color:#f1f1f1">
-        <button type="button" onclick="document.getElementById('login').style.display='none'"
-          class="cancelbtn">Cancel</button>
-        <span class="psw">Forgot <a href="#">password?</a></span>
-      </div>
-
-    </div>
-  </div>
 </body>
 <!-- import JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -226,10 +253,12 @@
         category: "",
         bookName: "",
         donatedBook: "",
+        creditRequired: 5,
         dialogVisible: false,
         path: 1,
         read_value: 3.7,
         dialogImageUrl: ''
+
       };
     },
     methods: {
@@ -246,6 +275,9 @@
       handlePictureCardPreview(file) {
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
+      },
+      handleChange(value) {
+        console.log(value);
       }
     }
 

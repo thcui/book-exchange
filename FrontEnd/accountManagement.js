@@ -1,6 +1,6 @@
 var login_user_name = null
 
-
+var user_credit = null
 function login() {
     AWS.config.region = 'us-east-1'; // Region
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -19,6 +19,7 @@ function login() {
         }).promise().then(() => {
             login_user_name = document.getElementById("uname").value
             document.getElementById('login').style.display = 'none'
+            document.getElementById('login-button').innerHTML='<i class="el-icon-user"></i>'+ login_user_name+'<i class="el-icon-coin"></i>'+'Credit: '+user_credit
         }).catch(err => alert(err))
     } catch (err) {
         alert(err)
