@@ -82,9 +82,13 @@
                     <el-option label="Credit required low to high" value="3"></el-option>
                     <el-option label="Credit required high to low" value="4"></el-option>
                 </el-select>
-                <el-select placeholder="Tag" slot="prepend" style="width: 30%" v-model="tag">
-                    <el-option label="Like-new" value="1"></el-option>
-                    <el-option label="Hardcover" value="2"></el-option>
+                <el-select placeholder="Min. Condition Requirement" slot="prepend" style="width: 30%" v-model="tag">
+                    <el-option label="As New" value="1"></el-option>
+                    <el-option label="Very good" value="2"></el-option>
+                    <el-option label="Good" value="3"></el-option>
+                    <el-option label="Fair" value="4"></el-option>
+                    <el-option label="Poor" value="5"></el-option>
+
                 </el-select>
                 <el-select placeholder="Category" slot="prepend" style="width: 30%" v-model="category">
                     <el-option label="Drama" value="Drama"></el-option>
@@ -161,16 +165,15 @@
                         </el-dialog>
                     </div>
                     <div>
-                        Add Tags:
-                        <div id="labelInput">
-                            <div>
-                                <input id="Like-new" name="tags" type="checkbox">
-                                <label for="Like-new">Like-new</label>
-                            </div>
-                            <div>
-                                <input id="Hardcover" name="tags" type="checkbox">
-                                <label for="Hardcover">Hardcover</label>
-                            </div>
+                        Book condition:
+                        <div>
+                            <el-radio-group id="book_condition" v-model="condition_radio">
+                                <el-radio-button label="Poor"></el-radio-button>
+                                <el-radio-button label="Fair"></el-radio-button>
+                                <el-radio-button label="Good"></el-radio-button>
+                                <el-radio-button label="Very  good"></el-radio-button>
+                                <el-radio-button label="As New"></el-radio-button>
+                            </el-radio-group>
                         </div>
                     </div>
                     <div>
@@ -238,6 +241,7 @@
         el: "#app",
         data: function () {
             return {
+                condition_radio: 'Good',
                 visible: false,
                 isCollapse: false,
                 sortby: "",

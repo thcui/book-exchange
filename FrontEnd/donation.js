@@ -34,7 +34,7 @@ function makeDonation() {
         'donation_id': user_id + '-' + dateTime ,
         'book_name': bookNameInput,
         'user': user_id,
-        'tags':collect_tags(),
+        'condition':get_condition(),
         'photos_links':Object.values(user_images_list),
         'credit':parseInt(document.querySelector("#credit-required .el-input .el-input__inner").ariaValueNow)
     }
@@ -71,15 +71,11 @@ function generateUUID() { // Public Domain/MIT
     });
 }
 
-function collect_tags(){
-    let tag_collected=[]
-    for(let tag of ['Like-new','Hardcover']) {
-        if (document.querySelector('#' + tag).checked) {
-            tag_collected.push(tag)
-        }
-    }
-    return tag_collected
+function get_condition(){
+    return document.querySelector("#book_condition .is-active .el-radio-button__orig-radio").getAttribute('value')
+
 }
+
 
 function uploadImg() {
     const imageInput = document.querySelector("#imageInput");
