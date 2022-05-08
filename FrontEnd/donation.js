@@ -1,3 +1,4 @@
+var user_images_list={}
 function makeDonation() {
     if (login_user_name == null) {
         alert('Please login to your account first.')
@@ -22,21 +23,45 @@ function makeDonation() {
         },
     };
 
-    var today = new Date();
-    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-    var time = today.getHours() + "-" + today.getMinutes() + "-" + today.getSeconds() + "-" + today.getTimezoneOffset();
-    var dateTime = date + '-' + time;
-
+    dateTime=get_current_time()
     user_id = get_user_id()
     var body = {
-        'donation_id': user_id + '-' + dateTime,
+        'donation_id': user_id + '-' + dateTime ,
         'book_name': bookNameInput,
-        'user': user_id
+        'user': user_id,
+        'photos_links':Object.values(user_images_list)
     }
+    console.log(user_images_list)
+    user_images_list={}
     // let url ="https://ebs239nacc.execute-api.us-east-1.amazonaws.com/dev"
     apigClient.donatePost(params, body, additionalParams).then((response) => {
         alert('Donated \"' + bookNameInput + '\" Successfully! Thanks for your support!')
     })
+}
+
+function get_current_time(){
+    var today = new Date();
+    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    var time = today.getHours() + "-" + today.getMinutes() + "-" + today.getSeconds() + "-" + today.getTimezoneOffset();
+    var dateTime = date + '-' + time;
+    return dateTime
+
+}
+
+function generateUUID() { // Public Domain/MIT
+    var d = new Date().getTime();//Timestamp
+    var d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16;//random number between 0 and 16
+        if(d > 0){//Use timestamp until depleted
+            r = (d + r)%16 | 0;
+            d = Math.floor(d/16);
+        } else {//Use microseconds since page-load if supported
+            r = (d2 + r)%16 | 0;
+            d2 = Math.floor(d2/16);
+        }
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
 }
 
 function uploadImg() {

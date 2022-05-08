@@ -1,6 +1,7 @@
 var login_user_name = null
 
 var user_credit = null
+
 function login() {
     AWS.config.region = 'us-east-1'; // Region
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
