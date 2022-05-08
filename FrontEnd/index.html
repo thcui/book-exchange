@@ -73,13 +73,23 @@
             <el-button slot="append" icon="el-icon-search"></el-button>
           </el-input>
           <el-select v-model="sortby" slot="prepend" placeholder="Sort By" style="width: 30%">
-            <el-option label="Restaurant" value="1"></el-option>
+            <el-option label="Alphabetical Order (A-Z)" value="1"></el-option>
+            <el-option label="Alphabetical Order (Z-A)" value="2"></el-option>
+            <el-option label="Credit required low to high" value="3"></el-option>
+            <el-option label="Credit required high to low" value="4"></el-option>
           </el-select>
           <el-select v-model="tag" slot="prepend" placeholder="Tag" style="width: 30%">
-            <el-option label="Restaurant" value="1"></el-option>
+            <el-option label="Like-new" value="1"></el-option>
+            <el-option label="Hardcover" value="2"></el-option>
           </el-select>
           <el-select v-model="category" slot="prepend" placeholder="Category" style="width: 30%">
-            <el-option label="Restaurant" value="1"></el-option>
+            <el-option label="Drama" value="Drama"></el-option>
+            <el-option label="Fiction" value="Fiction"></el-option>
+            <el-option label="History" value="History"></el-option>
+            <el-option label="Juvenile literature" value="Juvenile literature"></el-option>
+            <el-option label="Romance" value="Romance"></el-option>
+
+
           </el-select>
         </div>
         <div class="imgDisplay">
@@ -120,14 +130,16 @@
         </div>
       </div>
       <div class="middle" v-if="path == 'donate'">
-        <div id="donate-popup">
-          <div>
+
               Name of your donated book:
               <el-input id="bookNameInput" placeholder="Ex. Harry Potter" v-model="donatedBook"
-                class="input-with-select" style="width: 90%; margin-bottom: 10px">
+                class="input-with-select" style="width: 100%; margin-bottom: 10px">
               </el-input>
-
+          <div class="line1">
+            Credit Required for requesting this book:
+            <el-input-number v-model="creditRequired" @change="handleChange" :min="1" :max="10" label="credit"></el-input-number>
           </div>
+
           <div>
             Upload a photo:
             <el-upload
@@ -158,10 +170,10 @@
           </div>
           <div>
 
-              <el-button type="primary" round onclick="makeDonation()">Donate</el-button>
+              <el-button type="primary" style="width:250px;height:50px;font-size:20px" round onclick="makeDonation()">Donate<i class="el-icon-upload el-icon--right"></i></el-button>
 
           </div>
-        </div>
+
 
       </div>
       <div class="ediChoice">
@@ -227,10 +239,12 @@
         category: "",
         bookName: "",
         donatedBook: "",
+        creditRequired:5,
         dialogVisible: false,
         path: 1,
         read_value: 3.7,
         dialogImageUrl: ''
+
       };
     },
     methods: {
@@ -247,6 +261,9 @@
       handlePictureCardPreview(file) {
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
+      },
+      handleChange(value) {
+        console.log(value);
       }
     }
 
