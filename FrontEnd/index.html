@@ -149,8 +149,8 @@
 
             <div>
               Upload a photo:
-              <el-upload action=url drag: true accept="image/*" list-type="picture-card"
-                :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :on-change="addname">
+              <el-upload :action="Baseurl+donatedBook" drag: true accept="image/*" list-type="picture-card"
+                :on-preview="handlePictureCardPreview" :on-remove="handleRemove">
                 <i class="el-icon-plus"></i>
               </el-upload>
               <el-dialog :visible.sync="dialogVisible">
@@ -242,8 +242,9 @@
         dialogVisible: false,
         path: 1,
         read_value: 3.7,
-        dialogImageUrl: ''
-
+        dialogImageUrl: '',
+        url: "",
+        Baseurl: "https://z7xnekbzrd.execute-api.us-east-1.amazonaws.com/dev/donate/photos/"
       };
     },
     methods: {
@@ -260,9 +261,6 @@
       handlePictureCardPreview(file) {
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
-      },
-      addname() {
-        this.url = "https://z7xnekbzrd.execute-api.us-east-1.amazonaws.com/dev/donate/photos/" + this.donatedBook
       }
     }
 
