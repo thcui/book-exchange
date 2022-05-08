@@ -134,14 +134,8 @@
         </div>
       </div>
       <div class="middle" v-if="path == 'donate'">
-        <<<<<<< HEAD <div id="donate-popup">
+        <div id="donate-popup">
           <div>
-            Name of your donated book:
-            <el-input id="bookNameInput" placeholder="Ex. Harry Potter" v-model="donatedBook" class="input-with-select"
-              style="width: 90%; margin-bottom: 10px">
-            </el-input>
-
-            =======
 
             Name of your donated book:
             <el-input id="bookNameInput" placeholder="Ex. Harry Potter" v-model="donatedBook" class="input-with-select"
@@ -151,7 +145,6 @@
               Credit Required for requesting this book:
               <el-input-number v-model="creditRequired" @change="handleChange" :min="1" :max="10" label="credit">
               </el-input-number>
-              >>>>>>> 7f2428fa773bba8d6812016da6986f73ca36538b
             </div>
 
             <div>
@@ -180,59 +173,56 @@
             </div>
             <div>
 
-              <<<<<<< HEAD <el-button type="primary" round onclick="makeDonation()">Donate</el-button>
-                =======
-                <el-button type="primary" style="width:250px;height:50px;font-size:20px" round onclick="makeDonation()">
-                  Donate<i class="el-icon-upload el-icon--right"></i></el-button>
-                >>>>>>> 7f2428fa773bba8d6812016da6986f73ca36538b
+
+              <el-button type="primary" style="width:250px;height:50px;font-size:20px" round onclick="makeDonation()">
+                Donate<i class="el-icon-upload el-icon--right"></i></el-button>
 
             </div>
 
 
           </div>
-          <div class="ediChoice">
-            <h4 class="title">Editor's choice</h4>
-            <img src="https://photokit.com/images/editor.min.webp" height="300" width="180" />
-            <div style="color: black">to kill a mocking bird</div>
+        </div>
+      </div>
+      <div class="ediChoice">
+        <h4 class="title">Editor's choice</h4>
+        <img src="https://photokit.com/images/editor.min.webp" height="300" width="180" />
+        <div style="color: black">to kill a mocking bird</div>
+      </div>
+      <!-- attribution: https://www.w3schools.com/howto/howto_css_login_form.asp-->
+      <!--<a href="https://www.flaticon.com/free-icons/male" title="male icons">Male icons created by Freepik - Flaticon</a>-->
+      <div id="login" class="modal">
+
+
+        <!-- Modal Content -->
+        <div class="modal-content animate">
+          <span onclick="document.getElementById('login').style.display='none'" class="close"
+            title="Close Modal">&times;</span>
+          <div class="imgcontainer">
+            <img src="avatar.png" alt="Avatar" class="avatar">
           </div>
 
+          <div class="container">
+            <label for="uname"><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" id="uname" required>
+
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" id="psw" required>
+
+            <button type="submit" onclick="login()">Login</button>
+            <button type="submit" onclick="signUp()">Register</button>
+            <label>
+              <input type="checkbox" checked="checked" name="remember"> Remember me
+            </label>
+          </div>
+
+          <div class="container" style="background-color:#f1f1f1">
+            <button type="button" onclick="document.getElementById('login').style.display='none'"
+              class="cancelbtn">Cancel</button>
+            <span class="psw">Forgot <a href="#">password?</a></span>
+          </div>
+
+        </div>
       </div>
-    </div>
-    <!-- attribution: https://www.w3schools.com/howto/howto_css_login_form.asp-->
-    <!--<a href="https://www.flaticon.com/free-icons/male" title="male icons">Male icons created by Freepik - Flaticon</a>-->
-    <div id="login" class="modal">
-
-
-      <!-- Modal Content -->
-      <div class="modal-content animate">
-        <span onclick="document.getElementById('login').style.display='none'" class="close"
-          title="Close Modal">&times;</span>
-        <div class="imgcontainer">
-          <img src="avatar.png" alt="Avatar" class="avatar">
-        </div>
-
-        <div class="container">
-          <label for="uname"><b>Username</b></label>
-          <input type="text" placeholder="Enter Username" id="uname" required>
-
-          <label for="psw"><b>Password</b></label>
-          <input type="password" placeholder="Enter Password" id="psw" required>
-
-          <button type="submit" onclick="login()">Login</button>
-          <button type="submit" onclick="signUp()">Register</button>
-          <label>
-            <input type="checkbox" checked="checked" name="remember"> Remember me
-          </label>
-        </div>
-
-        <div class="container" style="background-color:#f1f1f1">
-          <button type="button" onclick="document.getElementById('login').style.display='none'"
-            class="cancelbtn">Cancel</button>
-          <span class="psw">Forgot <a href="#">password?</a></span>
-        </div>
-
-      </div>
-    </div>
 </body>
 <!-- import JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
