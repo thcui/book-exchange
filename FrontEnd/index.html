@@ -146,7 +146,7 @@
                     </el-input>
                     <div class="line1">
                         Credit Required for requesting this book:
-                        <el-input-number :max="10" :min="1" label="credit" v-model="creditRequired">
+                        <el-input-number :max="10" :min="1" id="credit-required" label="credit" v-model="creditRequired">
                         </el-input-number>
                     </div>
 
@@ -164,12 +164,12 @@
                         Add Tags:
                         <div id="labelInput">
                             <div>
-                                <input id="like-new" name="like-new" type="checkbox">
-                                <label for="like-new">Like-new</label>
+                                <input id="Like-new" name="tags" type="checkbox">
+                                <label for="Like-new">Like-new</label>
                             </div>
                             <div>
-                                <input id="hardcover" name="hardcover" type="checkbox">
-                                <label for="hardcover">Hardcover</label>
+                                <input id="Hardcover" name="tags" type="checkbox">
+                                <label for="Hardcover">Hardcover</label>
                             </div>
                         </div>
                     </div>

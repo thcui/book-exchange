@@ -1,11 +1,15 @@
 var user_images_list={}
 function makeDonation() {
+    const bookNameInput = document.querySelector("#bookNameInput").value
+    if(bookNameInput===''){
+        alert('Please input the name for your book.')
+        return
+    }
     if (login_user_name == null) {
         alert('Please login to your account first.')
         document.getElementById('login').style.display = 'block'
         return
     }
-    const bookNameInput = document.querySelector("#bookNameInput").value
     let labels = [];
     let list = document.getElementById("labelInput").value;
     labels.push(list);
@@ -25,13 +29,16 @@ function makeDonation() {
 
     dateTime=get_current_time()
     user_id = get_user_id()
+    //TODO: find a better way to get the credit value
     var body = {
         'donation_id': user_id + '-' + dateTime ,
         'book_name': bookNameInput,
         'user': user_id,
-        'photos_links':Object.values(user_images_list)
+        'tags':collect_tags(),
+        'photos_links':Object.values(user_images_list),
+        'credit':parseInt(document.querySelector("#credit-required .el-input .el-input__inner").ariaValueNow)
     }
-    console.log(user_images_list)
+    console.log(body)
     user_images_list={}
     // let url ="https://ebs239nacc.execute-api.us-east-1.amazonaws.com/dev"
     apigClient.donatePost(params, body, additionalParams).then((response) => {
@@ -64,6 +71,16 @@ function generateUUID() { // Public Domain/MIT
     });
 }
 
+function collect_tags(){
+    let tag_collected=[]
+    for(let tag of ['Like-new','Hardcover']) {
+        if (document.querySelector('#' + tag).checked) {
+            tag_collected.push(tag)
+        }
+    }
+    return tag_collected
+}
+
 function uploadImg() {
     const imageInput = document.querySelector("#imageInput");
     const file = imageInput.files[0];
@@ -79,7 +96,7 @@ function uploadImg() {
     };
 
     let url =
-        "https://xrhrtsrjca.execute-api.us-east-1.amazonaws.com/dev/donate/photos/" +
+        "https://z7xnekbzrd.execute-api.us-east-1.amazonaws.com/dev/donate/photos/" +
         file.name;
 
     axios.put(url, file, additionalParams).then((response) => {
