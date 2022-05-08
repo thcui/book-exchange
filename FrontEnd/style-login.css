@@ -99,6 +99,9 @@
     -webkit-animation: animatezoom 0.6s;
     animation: animatezoom 0.6s
 }
+#user-credit{
+    display: none;
+}
 
 @-webkit-keyframes animatezoom {
     from {-webkit-transform: scale(0)}
