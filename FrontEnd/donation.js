@@ -1,114 +1,126 @@
-var user_images_list={}
+var user_images_list = {};
 function makeDonation() {
-    const bookNameInput = document.querySelector("#bookNameInput").value
-    if(bookNameInput===''){
-        alert('Please input the name for your book.')
-        return
+  const bookNameInput = document.querySelector("#bookNameInput").value;
+  if (bookNameInput === "") {
+    alert("Please input the name for your book.");
+    return;
+  }
+  if (login_user_name == null) {
+    alert("Please login to your account first.");
+    document.getElementById("login").style.display = "block";
+    return;
+  }
+
+  var apigClient = apigClientFactory.newClient({
+    apiKey: "DZbM31zNmQ6yIX0cYXLul5QK72JoMVmA72sDXTSE",
+  });
+  var params = {
+    "x-api-key": "DZbM31zNmQ6yIX0cYXLul5QK72JoMVmA72sDXTSE",
+  };
+  var additionalParams = {
+    headers: {
+      "x-api-key": "DZbM31zNmQ6yIX0cYXLul5QK72JoMVmA72sDXTSE",
+    },
+  };
+
+  dateTime = get_current_time();
+  user_id = get_user_id();
+  //TODO: find a better way to get the credit value
+  var body = {
+    donation_id: user_id + "-" + dateTime,
+    book_name: bookNameInput,
+    user: user_id,
+    condition: get_condition(),
+    photos_links: Object.values(user_images_list),
+    credit: parseInt(
+      document.querySelector("#credit-required .el-input .el-input__inner")
+        .ariaValueNow
+    ),
+  };
+  console.log(body);
+  user_images_list = {};
+  // let url ="https://ebs239nacc.execute-api.us-east-1.amazonaws.com/dev"
+  apigClient.donatePost(params, body, additionalParams).then((response) => {
+    alert(
+      'Donated "' + bookNameInput + '" Successfully! Thanks for your support!'
+    );
+  });
+}
+
+function get_current_time() {
+  var today = new Date();
+  var date =
+    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+  var time =
+    today.getHours() +
+    "-" +
+    today.getMinutes() +
+    "-" +
+    today.getSeconds() +
+    "-" +
+    today.getTimezoneOffset();
+  var dateTime = date + "-" + time;
+  return dateTime;
+}
+
+function generateUUID() {
+  // Public Domain/MIT
+  var d = new Date().getTime(); //Timestamp
+  var d2 =
+    (typeof performance !== "undefined" &&
+      performance.now &&
+      performance.now() * 1000) ||
+    0; //Time in microseconds since page-load or 0 if unsupported
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    var r = Math.random() * 16; //random number between 0 and 16
+    if (d > 0) {
+      //Use timestamp until depleted
+      r = (d + r) % 16 | 0;
+      d = Math.floor(d / 16);
+    } else {
+      //Use microseconds since page-load if supported
+      r = (d2 + r) % 16 | 0;
+      d2 = Math.floor(d2 / 16);
     }
-    if (login_user_name == null) {
-        alert('Please login to your account first.')
-        document.getElementById('login').style.display = 'block'
-        return
-    }
-    let labels = [];
-    let list = document.getElementById("labelInput").value;
-    labels.push(list);
-
-
-    var apigClient = apigClientFactory.newClient({
-        apiKey: "DZbM31zNmQ6yIX0cYXLul5QK72JoMVmA72sDXTSE",
-    });
-    var params = {
-        "x-api-key": "DZbM31zNmQ6yIX0cYXLul5QK72JoMVmA72sDXTSE",
-    };
-    var additionalParams = {
-        headers: {
-            "x-api-key": "DZbM31zNmQ6yIX0cYXLul5QK72JoMVmA72sDXTSE",
-        },
-    };
-
-    dateTime=get_current_time()
-    user_id = get_user_id()
-    //TODO: find a better way to get the credit value
-    var body = {
-        'donation_id': user_id + '-' + dateTime ,
-        'book_name': bookNameInput,
-        'user': user_id,
-        'condition':get_condition(),
-        'photos_links':Object.values(user_images_list),
-        'credit':parseInt(document.querySelector("#credit-required .el-input .el-input__inner").ariaValueNow)
-    }
-    console.log(body)
-    user_images_list={}
-    // let url ="https://ebs239nacc.execute-api.us-east-1.amazonaws.com/dev"
-    apigClient.donatePost(params, body, additionalParams).then((response) => {
-        alert('Donated \"' + bookNameInput + '\" Successfully! Thanks for your support!')
-    })
+    return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
+  });
 }
 
-function get_current_time(){
-    var today = new Date();
-    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-    var time = today.getHours() + "-" + today.getMinutes() + "-" + today.getSeconds() + "-" + today.getTimezoneOffset();
-    var dateTime = date + '-' + time;
-    return dateTime
-
+function get_condition() {
+  return document
+    .querySelector("#book_condition .is-active .el-radio-button__orig-radio")
+    .getAttribute("value");
 }
-
-function generateUUID() { // Public Domain/MIT
-    var d = new Date().getTime();//Timestamp
-    var d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = Math.random() * 16;//random number between 0 and 16
-        if(d > 0){//Use timestamp until depleted
-            r = (d + r)%16 | 0;
-            d = Math.floor(d/16);
-        } else {//Use microseconds since page-load if supported
-            r = (d2 + r)%16 | 0;
-            d2 = Math.floor(d2/16);
-        }
-        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-    });
-}
-
-function get_condition(){
-    return document.querySelector("#book_condition .is-active .el-radio-button__orig-radio").getAttribute('value')
-
-}
-
 
 function uploadImg() {
-    const imageInput = document.querySelector("#imageInput");
-    const file = imageInput.files[0];
-    let labels = [];
-    let list = document.getElementById("labelInput").value;
-    labels.push(list);
-    let additionalParams = {
-        headers: {
-            "Content-Type": file.type,
-            "x-amz-meta-customLabels": labels,
-            "x-api-key": "???",
-        },
-    };
+  const imageInput = document.querySelector("#imageInput");
+  const file = imageInput.files[0];
 
-    let url =
-        "https://z7xnekbzrd.execute-api.us-east-1.amazonaws.com/dev/donate/photos/" +
-        file.name;
+  let additionalParams = {
+    headers: {
+      "Content-Type": file.type,
+    },
+  };
 
-    axios.put(url, file, additionalParams).then((response) => {
-        alert("Image uploaded: " + file.name);
-    });
+  let url =
+    "https://z7xnekbzrd.execute-api.us-east-1.amazonaws.com/dev/donate/photos/" +
+    file.name;
 
-    let imageUrl = "https://book-exchange-book-photos-bucket.s3.amazonaws.com/" + file.name;
-    let timer = setTimeout(() => {
-        var div = document.createElement("div");
-        var img = document.createElement("img");
-        img.src = imageUrl;
-        img.width = 500;
-        img.setAttribute("class", "img");
-        div.append(img);
-        var x = ele.appendChild(div);
-        x.style.padding = "10px";
-        clearTimeout(timer);
-    }, 1000);
+  axios.put(url, file, additionalParams).then((response) => {
+    alert("Image uploaded: " + file.name);
+  });
+
+  let imageUrl =
+    "https://book-exchange-book-photos-bucket.s3.amazonaws.com/" + file.name;
+  let timer = setTimeout(() => {
+    var div = document.createElement("div");
+    var img = document.createElement("img");
+    img.src = imageUrl;
+    img.width = 500;
+    img.setAttribute("class", "img");
+    div.append(img);
+    var x = ele.appendChild(div);
+    x.style.padding = "10px";
+    clearTimeout(timer);
+  }, 1000);
 }
