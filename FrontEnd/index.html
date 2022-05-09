@@ -186,20 +186,21 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="middle" v-if="path == 'fav'">
-      <el-card class="box-card">
-        <div v-for="(item,index) in this.fav" :key="index" class="text item">
-          {{item}}
-        </div>
-      </el-card>
+      <div class="middle" v-if="path == 'fav'">
+        <el-card class="box-card">
+          <div v-for="(item,index) in this.fav" :key="index" class="text item">
+            {{item}}
+          </div>
+        </el-card>
+      </div>
+
+      <div class="ediChoice">
+        <h4 class="title">Editor's choice</h4>
+        <img src="https://photokit.com/images/editor.min.webp" height="300" width="180" />
+        <div style="color: black">to kill a mocking bird</div>
+      </div>
     </div>
 
-    <div class="ediChoice">
-      <h4 class="title">Editor's choice</h4>
-      <img src="https://photokit.com/images/editor.min.webp" height="300" width="180" />
-      <div style="color: black">to kill a mocking bird</div>
-    </div>
     <!-- attribution: https://www.w3schools.com/howto/howto_css_login_form.asp-->
     <!--<a href="https://www.flaticon.com/free-icons/male" title="male icons">Male icons created by Freepik - Flaticon</a>-->
     <div class="modal" id="login">
