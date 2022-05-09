@@ -97,7 +97,17 @@ body{
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
 }
+.text {
+  font-size: 14px;
+}
 
+.item {
+  padding: 18px 0;
+}
+
+.box-card {
+  width: 480px;
+}
 
 #heart {
   width: 100px;

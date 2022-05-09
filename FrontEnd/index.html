@@ -56,7 +56,7 @@
             <i class="el-icon-user"></i>
             <span>Account</span>
           </el-menu-item>
-          <el-menu-item index="4" @click="path = 3">
+          <el-menu-item index="4" @click="showFav">
             <i class="el-icon-star-off"></i>
             <span>Favorite</span>
           </el-menu-item>
@@ -182,6 +182,14 @@
           </div>
         </div>
       </div>
+      <div class="middle" v-if="path == 'fav'">
+        <el-card class="box-card">
+          <div v-for="(item,index) in this.fav" :key="index" class="text item">
+            {{item}}
+          </div>
+        </el-card>
+      </div>
+
       <div class="ediChoice">
         <h4 class="title">Editor's choice</h4>
         <img src="https://photokit.com/images/editor.min.webp" height="300" width="180" />
@@ -244,7 +252,8 @@
         read_value: 3.7,
         dialogImageUrl: '',
         url: "",
-        Baseurl: "https://z7xnekbzrd.execute-api.us-east-1.amazonaws.com/dev/donate/photos/"
+        Baseurl: "https://z7xnekbzrd.execute-api.us-east-1.amazonaws.com/dev/donate/photos/",
+        fav: []
       };
     },
     methods: {
@@ -263,12 +272,25 @@
         var additionalParams = {};
         var params = {};
         apigClient.addtolistPost(params, body, additionalParams)
-          .then(res => {
+          .then(() => {
           });
       },// todo：还差取消收藏功能
       handlePictureCardPreview(file) {
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
+      },
+      showFav() {
+        this.path = 'fav';
+        var apigClient = apigClientFactory.newClient();
+        var params = {
+          user_id: login_user_name
+        };
+        var additionalParams = {};
+        var body = {};
+        apigClient.getuserinfoGet(params, body, additionalParams)
+          .then(res => {
+            this.fav = res.data.favorite_list
+          });
       }
     }
 
