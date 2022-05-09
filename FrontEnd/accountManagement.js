@@ -1,6 +1,8 @@
 var login_user_name = null
 
 var user_credit = null
+var user_info_cognito = null
+
 function login() {
     AWS.config.region = 'us-east-1'; // Region
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -16,10 +18,18 @@ function login() {
                 USERNAME: document.getElementById("uname").value,
                 PASSWORD: document.getElementById("psw").value
             }
-        }).promise().then(() => {
-            login_user_name = document.getElementById("uname").value
-            document.getElementById('login').style.display = 'none'
-            document.getElementById('login-button').innerHTML='<i class="el-icon-user"></i>'+ login_user_name+'<i class="el-icon-coin"></i>'+'Credit: '+user_credit
+        }).promise().then((auth_info) => {
+            console.log(auth_info)
+            return cognito.getUser({
+                AccessToken: auth_info['AuthenticationResult']['AccessToken'] /* required */
+            }).promise().then((user_info) => {
+                user_info_cognito = user_info
+                console.log(user_info_cognito['UserAttributes'])
+                user_credit = user_info_cognito['UserAttributes'].filter(att=>att['Name']==='custom:credit')[0]['Value']
+                login_user_name = document.getElementById("uname").value
+                document.getElementById('login').style.display = 'none'
+                document.getElementById('login-button').innerHTML = '<i class="el-icon-user"></i>' + login_user_name + '<i class="el-icon-coin"></i>' + 'Credit: ' + user_credit
+            })
         }).catch(err => alert(err))
     } catch (err) {
         alert(err)
@@ -42,8 +52,19 @@ function signUp() {
                 Username: document.getElementById("uname").value, /* required */
                 UserPoolId: 'us-east-1_uDFJ9JkrJ'/* required */
             }).promise().then(() => {
-                alert("Registered Successfully");
-                login()
+                cognito.adminUpdateUserAttributes({
+                    UserAttributes: [ /* required */
+                        {
+                            Name: "custom:credit", /* required */
+                            Value: "0"
+                        }
+                    ],
+                    UserPoolId: 'us-east-1_uDFJ9JkrJ',
+                    Username: document.getElementById("uname").value
+                }).promise().then(() => {
+                    alert("Registered Successfully");
+                    login()
+                })
             })
         }).catch(err => alert(err))
     } catch (err) {

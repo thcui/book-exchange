@@ -3,30 +3,30 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="./style-main.css" />
+  <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <link href="./style-main.css" rel="stylesheet" />
   <!-- import CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
-  <link rel="stylesheet" href="./style-login.css" />
+  <link href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" rel="stylesheet" />
+  <link href="./style-login.css" rel="stylesheet" />
   <title>Book Exchange</title>
-  <script type="text/javascript" src="lib/axios/dist/axios.standalone.js"></script>
-  <script type="text/javascript" src="lib/CryptoJS/rollups/hmac-sha256.js"></script>
-  <script type="text/javascript" src="lib/CryptoJS/rollups/sha256.js"></script>
-  <script type="text/javascript" src="lib/CryptoJS/components/hmac.js"></script>
-  <script type="text/javascript" src="lib/CryptoJS/components/enc-base64.js"></script>
-  <script type="text/javascript" src="lib/url-template/url-template.js"></script>
-  <script type="text/javascript" src="lib/apiGatewayCore/sigV4Client.js"></script>
-  <script type="text/javascript" src="lib/apiGatewayCore/apiGatewayClient.js"></script>
-  <script type="text/javascript" src="lib/apiGatewayCore/simpleHttpClient.js"></script>
-  <script type="text/javascript" src="lib/apiGatewayCore/utils.js"></script>
-  <script type="text/javascript" src="apigClient.js"></script>
+  <script src="lib/axios/dist/axios.standalone.js" type="text/javascript"></script>
+  <script src="lib/CryptoJS/rollups/hmac-sha256.js" type="text/javascript"></script>
+  <script src="lib/CryptoJS/rollups/sha256.js" type="text/javascript"></script>
+  <script src="lib/CryptoJS/components/hmac.js" type="text/javascript"></script>
+  <script src="lib/CryptoJS/components/enc-base64.js" type="text/javascript"></script>
+  <script src="lib/url-template/url-template.js" type="text/javascript"></script>
+  <script src="lib/apiGatewayCore/sigV4Client.js" type="text/javascript"></script>
+  <script src="lib/apiGatewayCore/apiGatewayClient.js" type="text/javascript"></script>
+  <script src="lib/apiGatewayCore/simpleHttpClient.js" type="text/javascript"></script>
+  <script src="lib/apiGatewayCore/utils.js" type="text/javascript"></script>
+  <script src="apigClient.js" type="text/javascript"></script>
   <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1128.0.min.js"></script>
   <script src="https://wow.techbrood.com/libs/jquery/jquery-1.11.1.min.js"></script>
 
   <!--  Add your js scripts here   -->
-  <script type="text/javascript" src="donation.js"></script>
-  <script type="text/javascript" src="accountManagement.js"></script>
+  <script src="donation.js" type="text/javascript"></script>
+  <script src="accountManagement.js" type="text/javascript"></script>
 
 </head>
 
@@ -34,11 +34,11 @@
   <div id="app">
     <div class="upperPart">
       <div>
-        <el-button id="login-button" type="primary" round
-          onclick="document.getElementById('login').style.display='block'"><i class="el-icon-user"></i>Login
+        <el-button id="login-button" onclick="document.getElementById('login').style.display='block'" round
+          type="primary"><i class="el-icon-user"></i>Login
         </el-button>
       </div>
-      <h1 style="flex: 1;">Book Exchange</h1>
+      <h1 style="flex: 1;"><i class="el-icon-reading"></i>Book Exchange</h1>
     </div>
     <div class="belowPart">
       <div class="naviBar">
@@ -82,9 +82,13 @@
             <el-option label="Credit required low to high" value="3"></el-option>
             <el-option label="Credit required high to low" value="4"></el-option>
           </el-select>
-          <el-select v-model="tag" slot="prepend" placeholder="Tag" style="width: 30%" clearable>
-            <el-option label="Like-new" value="1"></el-option>
-            <el-option label="Hardcover" value="2"></el-option>
+          <el-select placeholder="Min. Condition Requirement" slot="prepend" style="width: 30%" v-model="tag">
+            <el-option label="As New" value="1"></el-option>
+            <el-option label="Very good" value="2"></el-option>
+            <el-option label="Good" value="3"></el-option>
+            <el-option label="Fair" value="4"></el-option>
+            <el-option label="Poor" value="5"></el-option>
+
           </el-select>
           <el-select v-model="category" slot="prepend" placeholder="Category" style="width: 30%" clearable>
             <el-option label="Drama" value="Drama"></el-option>
@@ -92,23 +96,21 @@
             <el-option label="History" value="History"></el-option>
             <el-option label="Juvenile literature" value="Juvenile literature"></el-option>
             <el-option label="Romance" value="Romance"></el-option>
-
-
           </el-select>
         </div>
         <div class="imgDisplay">
           <el-row :gutter="20">
-            <el-col :span="6"><img src="https://photokit.com/images/editor.min.webp" class="grid-content"></img>
-              <el-button type="text" @click="dialogVisible = true">click to open the Dialog</el-button>
+            <el-col :span="6"><img class="grid-content" src="https://photokit.com/images/editor.min.webp"></img>
+              <el-button @click="dialogVisible = true" type="text">click to open the Dialog</el-button>
               <el-dialog :visible.sync="dialogVisible" width="800px">
                 <div class="dialog">
                   <div class="left">
-                    <img src="https://photokit.com/images/editor.min.webp" class="imgSize" />
+                    <img class="imgSize" src="https://photokit.com/images/editor.min.webp" />
                   </div>
                   <div class="right">
                     <div class="line1">
                       <h1>Amazon Unbound</h1>
-                      <div id="heart" @click="thumbup"></div>
+                      <div @click="thumbup" id="heart"></div>
                     </div>
                     <div class="dialogText">Description</div>
                     <div class="part2">This is new york</div>
@@ -117,13 +119,14 @@
                         <div><i class="el-icon-user-solid"></i>
                           owner:nmlgb6998
                         </div>
-                        <el-rate v-model="read_value" disabled text-color="#ff9900" score-template="{value} points">
+                        <el-rate disabled score-template="{value} points" text-color="#ff9900" v-model="read_value">
                         </el-rate>
                       </div>
                       <div style="flex:1">credits:5</div>
                     </div>
                     <div class="part4">
-                      <el-button type="primary" round @click="dialogVisible = false">Request</el-button>
+                      <el-button @click="dialogVisible = false" round type="primary">Request
+                      </el-button>
                     </div>
                   </div>
                 </div>
@@ -138,42 +141,43 @@
           <div>
 
             Name of your donated book:
-            <el-input id="bookNameInput" placeholder="Ex. Harry Potter" v-model="donatedBook" class="input-with-select"
-              style="width: 100%; margin-bottom: 10px">
+            <el-input class="input-with-select" id="bookNameInput" placeholder="Ex. Harry Potter"
+              style="width: 100%; margin-bottom: 10px" v-model="donatedBook">
             </el-input>
             <div class="line1">
               Credit Required for requesting this book:
-              <el-input-number v-model="creditRequired" :min="1" :max="10" label="credit">
+              <el-input-number :max="10" :min="1" id="credit-required" label="credit" v-model="creditRequired">
               </el-input-number>
             </div>
 
             <div>
               Upload a photo:
-              <el-upload :action="Baseurl+donatedBook" drag: true accept="image/*" list-type="picture-card"
-                :on-preview="handlePictureCardPreview">
+              <el-upload :action="Baseurl+image_path" :on-preview="handlePictureCardPreview" :on-remove="handleRemove"
+                :on-success="handleSuccess" accept="image/*" drag: list-type="picture-card" true>
                 <i class="el-icon-plus"></i>
               </el-upload>
               <el-dialog :visible.sync="dialogVisible">
-                <img width="100%" :src="dialogImageUrl" alt="">
+                <img :src="dialogImageUrl" alt="" width="100%">
               </el-dialog>
             </div>
             <div>
-              Add Tags:
-              <div id="labelInput">
-                <div>
-                  <input type="checkbox" id="like-new" name="like-new">
-                  <label for="like-new">Like-new</label>
-                </div>
-                <div>
-                  <input type="checkbox" id="hardcover" name="hardcover">
-                  <label for="hardcover">Hardcover</label>
-                </div>
+              Book condition:
+              <div>
+                <el-radio-group id="book_condition" v-model="condition_radio">
+                  <el-radio-button label="Poor"></el-radio-button>
+                  <el-radio-button label="Fair"></el-radio-button>
+                  <el-radio-button label="Good"></el-radio-button>
+                  <el-radio-button label="Very  good"></el-radio-button>
+                  <el-radio-button label="As New"></el-radio-button>
+                </el-radio-group>
               </div>
             </div>
             <div>
 
 
-              <el-button type="primary" style="width:250px;height:50px;font-size:20px" round onclick="makeDonation()">
+
+              <el-button onclick="makeDonation()" round style="width:250px;height:50px;font-size:20px;margin: 20px"
+                type="primary">
                 Donate<i class="el-icon-upload el-icon--right"></i></el-button>
 
             </div>
@@ -182,54 +186,55 @@
           </div>
         </div>
       </div>
-      <div class="middle" v-if="path == 'fav'">
-        <el-card class="box-card">
-          <div v-for="(item,index) in this.fav" :key="index" class="text item">
-            {{item}}
-          </div>
-        </el-card>
-      </div>
-
-      <div class="ediChoice">
-        <h4 class="title">Editor's choice</h4>
-        <img src="https://photokit.com/images/editor.min.webp" height="300" width="180" />
-        <div style="color: black">to kill a mocking bird</div>
-      </div>
-      <!-- attribution: https://www.w3schools.com/howto/howto_css_login_form.asp-->
-      <!--<a href="https://www.flaticon.com/free-icons/male" title="male icons">Male icons created by Freepik - Flaticon</a>-->
-      <div id="login" class="modal">
-
-
-        <!-- Modal Content -->
-        <div class="modal-content animate">
-          <span onclick="document.getElementById('login').style.display='none'" class="close"
-            title="Close Modal">&times;</span>
-          <div class="imgcontainer">
-            <img src="avatar.png" alt="Avatar" class="avatar">
-          </div>
-
-          <div class="container">
-            <label for="uname"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" id="uname" required>
-
-            <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" id="psw" required>
-
-            <button type="submit" onclick="login()">Login</button>
-            <button type="submit" onclick="signUp()">Register</button>
-            <label>
-              <input type="checkbox" checked="checked" name="remember"> Remember me
-            </label>
-          </div>
-
-          <div class="container" style="background-color:#f1f1f1">
-            <button type="button" onclick="document.getElementById('login').style.display='none'"
-              class="cancelbtn">Cancel</button>
-            <span class="psw">Forgot <a href="#">password?</a></span>
-          </div>
-
+    </div>
+    <div class="middle" v-if="path == 'fav'">
+      <el-card class="box-card">
+        <div v-for="(item,index) in this.fav" :key="index" class="text item">
+          {{item}}
         </div>
+      </el-card>
+    </div>
+
+    <div class="ediChoice">
+      <h4 class="title">Editor's choice</h4>
+      <img src="https://photokit.com/images/editor.min.webp" height="300" width="180" />
+      <div style="color: black">to kill a mocking bird</div>
+    </div>
+    <!-- attribution: https://www.w3schools.com/howto/howto_css_login_form.asp-->
+    <!--<a href="https://www.flaticon.com/free-icons/male" title="male icons">Male icons created by Freepik - Flaticon</a>-->
+    <div class="modal" id="login">
+      <!-- Modal Content -->
+      <div class="modal-content animate">
+        <span class="close" onclick="document.getElementById('login').style.display='none'"
+          title="Close Modal">&times;</span>
+        <div class="imgcontainer">
+          <img alt="Avatar" class="avatar" src="avatar.png">
+        </div>
+
+        <div class="container">
+          <label for="uname"><b>Username</b></label>
+          <input id="uname" placeholder="Enter Username" required type="text">
+
+          <label for="psw"><b>Password</b></label>
+          <input id="psw" placeholder="Enter Password" required type="password">
+
+          <button onclick="login()" type="submit">Login</button>
+          <button onclick="signUp()" type="submit">Register</button>
+          <label>
+            <input checked="checked" name="remember" type="checkbox"> Remember me
+          </label>
+        </div>
+
+        <div class="container" style="background-color:#f1f1f1">
+          <button class="cancelbtn" onclick="document.getElementById('login').style.display='none'" type="button">Cancel
+          </button>
+          <span class="psw">Forgot <a href="#">password?</a></span>
+        </div>
+
       </div>
+    </div>
+  </div>
+  </div>
 </body>
 <!-- import JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -239,12 +244,13 @@
     el: "#app",
     data: function () {
       return {
+        condition_radio: 'Good',
         visible: false,
         isCollapse: false,
         sortby: "",
         tag: "",
         category: "",
-        bookName: "aaa",
+        bookName: "",
         donatedBook: "",
         creditRequired: 5,
         dialogVisible: false,
@@ -275,9 +281,17 @@
           .then(() => {
           });
       },// todo：还差取消收藏功能
+      handleRemove(file, fileList) {
+        delete user_images_list[file.name]
+        console.log(file, fileList);
+      },
       handlePictureCardPreview(file) {
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
+      },
+      handleSuccess(response, file) {
+        user_images_list[file.name] = this.image_path
+        this.image_path = generateUUID()
       },
       showFav() {
         this.path = 'fav';
@@ -295,10 +309,6 @@
     }
 
   });
-
-
-
-
 
 </script>
 
