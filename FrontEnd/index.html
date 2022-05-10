@@ -42,7 +42,8 @@
     </div>
     <div class="belowPart">
       <div class="naviBar">
-        <i class="el-icon-s-fold" @click="changeMode"></i>
+        <i class="el-icon-s-fold" @click="changeMode" style="font-size: 32px;
+        color: gray;"></i>
         <el-menu default-active="1" class="el-menu-vertical-demo" :collapse="isCollapse">
           <el-menu-item index="1" @click="path = 1">
             <i class="el-icon-house"></i>
@@ -52,7 +53,7 @@
             <i class="el-icon-plus"></i>
             <span>Donate</span>
           </el-menu-item>
-          <el-menu-item index="3" @click="path = 2">
+          <el-menu-item index="3" @click="showAcc">
             <i class="el-icon-user"></i>
             <span>Account</span>
           </el-menu-item>
@@ -186,6 +187,12 @@
           </div>
         </div>
       </div>
+      <div class="middle account" v-if="path == 'account'">
+        <div>User ID: {{user_id}}</div>
+        <div>Current Credit: {{current_credit}}</div>
+        <div>Last Sign Up Time: {{last_sign_up_time}}</div>
+
+      </div>
       <div class="middle" v-if="path == 'fav'">
         <h1>Favorite book list</h1>
         <el-card class="box-card">
@@ -261,7 +268,11 @@
         dialogImageUrl: '',
         url: "",
         Baseurl: "https://z7xnekbzrd.execute-api.us-east-1.amazonaws.com/dev/donate/photos/",
-        fav: []
+        fav: [],
+        current_credit: '',
+        last_sign_up_time: '',
+        user_id: '',
+        thum: false
       };
     },
     methods: {
@@ -282,10 +293,16 @@
           user_id: login_user_name,
           book_name: this.bookName
         };
+
+        if (this.thum) {
+          body.action = "remove"
+        }
+
         var additionalParams = {};
         var params = {};
         apigClient.addtolistPost(params, body, additionalParams)
           .then(() => {
+            this.thum = !this.thum
           });
       },// todo：还差取消收藏功能
       handleRemove(file, fileList) {
@@ -310,11 +327,26 @@
         var body = {};
         apigClient.getuserinfoGet(params, body, additionalParams)
           .then(res => {
+            console.log(res)
             this.fav = res.data.favorite_list
+          });
+      },
+      showAcc() {
+        this.path = 'account';
+        var apigClient = apigClientFactory.newClient();
+        var params = {
+          user_id: login_user_name
+        };
+        var additionalParams = {};
+        var body = {};
+        apigClient.getuserinfoGet(params, body, additionalParams)
+          .then(res => {
+            this.last_sign_up_time = res.data.user_sign_up_time
+            this.current_credit = res.data.current_credit
+            this.user_id = res.data.user_id
           });
       }
     }
-
   });
 
 </script>

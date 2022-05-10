@@ -108,6 +108,9 @@ body{
 .box-card {
   width: 480px;
 }
+.account{
+  margin-top: 100px;
+}
 
 #heart {
   width: 100px;
