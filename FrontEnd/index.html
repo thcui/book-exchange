@@ -82,7 +82,7 @@
             <el-option label="Credit required low to high" value="3"></el-option>
             <el-option label="Credit required high to low" value="4"></el-option>
           </el-select>
-          <el-select placeholder="Min. Condition Requirement" slot="prepend" style="width: 30%" v-model="tag">
+          <el-select placeholder="Min. Condition Requirement" slot="prepend" style="width: 30%" v-model="tag" clearable>
             <el-option label="As New" value="1"></el-option>
             <el-option label="Very good" value="2"></el-option>
             <el-option label="Good" value="3"></el-option>
@@ -251,7 +251,7 @@
         sortby: "",
         tag: "",
         category: "",
-        bookName: "",
+        bookName: "aaa",
         donatedBook: "",
         creditRequired: 5,
         dialogVisible: false,
