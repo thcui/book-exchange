@@ -187,6 +187,7 @@
         </div>
       </div>
       <div class="middle" v-if="path == 'fav'">
+        <h1>Favorite book list</h1>
         <el-card class="box-card">
           <div v-for="(item,index) in this.fav" :key="index" class="text item">
             {{item}}
@@ -251,7 +252,7 @@
         sortby: "",
         tag: "",
         category: "",
-        bookName: "aaa",
+        bookName: "Harry Potter",
         donatedBook: "",
         creditRequired: 5,
         dialogVisible: false,
