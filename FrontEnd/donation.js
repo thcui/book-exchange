@@ -6,8 +6,7 @@ function makeDonation() {
     return;
   }
   if (login_user_name == null) {
-    alert("Please login to your account first.");
-    document.getElementById("login").style.display = "block";
+    request_login()
     return;
   }
 
@@ -123,4 +122,9 @@ function uploadImg() {
     x.style.padding = "10px";
     clearTimeout(timer);
   }, 1000);
+}
+function request_login(){
+  alert("Please login to your account first.");
+  document.getElementById("login").style.display = "block";
+  return;
 }

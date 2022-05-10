@@ -269,10 +269,15 @@
         this.isCollapse = !this.isCollapse
       },
       thumbup() {
+        if (login_user_name == null) {
+          request_login()
+          return;
+        }
         var popup = document.getElementById("heart");
         popup.classList.toggle("is-active");
 
         var apigClient = apigClientFactory.newClient();
+
         var body = {
           user_id: login_user_name,
           book_name: this.bookName
