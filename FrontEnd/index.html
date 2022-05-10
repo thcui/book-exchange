@@ -139,58 +139,56 @@
       </div>
       <div class="middle" v-if="path == 'donate'">
         <div id="donate-popup">
+
+          Name of your donated book:
+          <el-input class="input-with-select" id="bookNameInput" placeholder="Ex. Harry Potter"
+            style="width: 100%; margin-bottom: 10px" v-model="donatedBook" clearable>
+          </el-input>
+          <div class="line1">
+            Credit Required for requesting this book:
+            <el-input-number :max="10" :min="1" id="credit-required" label="credit" v-model="creditRequired">
+            </el-input-number>
+          </div>
+
+          <div>
+            Upload a photo:
+            <el-upload :action="Baseurl+image_path" :on-preview="handlePictureCardPreview" :on-remove="handleRemove"
+              :on-success="handleSuccess" accept="image/*" drag: list-type="picture-card" true>
+              <i class="el-icon-plus"></i>
+            </el-upload>
+            <el-dialog :visible.sync="dialogVisible">
+              <img :src="dialogImageUrl" alt="" width="100%">
+            </el-dialog>
+          </div>
+          <div>
+            Book condition:
+            <div>
+              <el-radio-group id="book_condition" v-model="condition_radio">
+                <el-radio-button label="Poor"></el-radio-button>
+                <el-radio-button label="Fair"></el-radio-button>
+                <el-radio-button label="Good"></el-radio-button>
+                <el-radio-button label="Very  good"></el-radio-button>
+                <el-radio-button label="As New"></el-radio-button>
+              </el-radio-group>
+            </div>
+          </div>
           <div>
 
-            Name of your donated book:
-            <el-input class="input-with-select" id="bookNameInput" placeholder="Ex. Harry Potter"
-              style="width: 100%; margin-bottom: 10px" v-model="donatedBook">
-            </el-input>
-            <div class="line1">
-              Credit Required for requesting this book:
-              <el-input-number :max="10" :min="1" id="credit-required" label="credit" v-model="creditRequired">
-              </el-input-number>
-            </div>
-
-            <div>
-              Upload a photo:
-              <el-upload :action="Baseurl+image_path" :on-preview="handlePictureCardPreview" :on-remove="handleRemove"
-                :on-success="handleSuccess" accept="image/*" drag: list-type="picture-card" true>
-                <i class="el-icon-plus"></i>
-              </el-upload>
-              <el-dialog :visible.sync="dialogVisible">
-                <img :src="dialogImageUrl" alt="" width="100%">
-              </el-dialog>
-            </div>
-            <div>
-              Book condition:
-              <div>
-                <el-radio-group id="book_condition" v-model="condition_radio">
-                  <el-radio-button label="Poor"></el-radio-button>
-                  <el-radio-button label="Fair"></el-radio-button>
-                  <el-radio-button label="Good"></el-radio-button>
-                  <el-radio-button label="Very  good"></el-radio-button>
-                  <el-radio-button label="As New"></el-radio-button>
-                </el-radio-group>
-              </div>
-            </div>
-            <div>
 
 
-
-              <el-button onclick="makeDonation()" round style="width:250px;height:50px;font-size:20px;margin: 20px"
-                type="primary">
-                Donate<i class="el-icon-upload el-icon--right"></i></el-button>
-
-            </div>
-
+            <el-button onclick="makeDonation()" round style="width:250px;height:50px;font-size:20px;margin: 20px"
+              type="primary">
+              Donate<i class="el-icon-upload el-icon--right"></i></el-button>
 
           </div>
+
+
         </div>
       </div>
       <div class="middle account" v-if="path == 'account'">
         <div>User ID: {{user_id}}</div>
         <div>Current Credit: {{current_credit}}</div>
-        <div>Last Sign Up Time: {{last_sign_up_time}}</div>
+        <div>Sign Up Time: {{last_sign_up_time}}</div>
 
       </div>
       <div class="middle" v-if="path == 'fav'">
