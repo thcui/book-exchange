@@ -111,7 +111,7 @@
                   <div class="right">
                     <div class="line1">
                       <h1>Amazon Unbound</h1>
-                      <div @click="thumbup" id="heart"></div>
+                      <div @click="thumbup" id="heart" :class="thum ?  'is-active' : ''"></div>
                     </div>
                     <div class="dialogText">Description</div>
                     <div class="part2">This is new york</div>
@@ -273,6 +273,26 @@
         thum: false
       };
     },
+    mounted() {
+      var apigClient = apigClientFactory.newClient();
+      var params = {
+        user_id: login_user_name
+      };
+      var additionalParams = {};
+      var body = {};
+      apigClient.getuserinfoGet(params, body, additionalParams)
+        .then(res => {
+          console.log(res)
+          this.fav = res.data.favorite_list
+          if (this.fav.includes(this.bookName)) {
+            this.thum = true
+          } else {
+            this.thum = false
+          }
+          console.log(this.fav, this.thum)
+
+        });
+    },
     methods: {
       changeMode() {
         this.isCollapse = !this.isCollapse
@@ -302,7 +322,7 @@
           .then(() => {
             this.thum = !this.thum
           });
-      },// todo：还差取消收藏功能
+      },
       handleRemove(file, fileList) {
         delete user_images_list[file.name]
         console.log(file, fileList);
