@@ -27,6 +27,7 @@
   <!--  Add your js scripts here   -->
   <script src="donation.js" type="text/javascript"></script>
   <script src="accountManagement.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
 
 </head>
 
@@ -73,9 +74,9 @@
       </div>
       <div class="middle" v-if="path == 1">
         <div class="searchbar">
-          <el-input placeholder="Search for Book Name" v-model="bookName" class="input-with-select"
+          <el-input id="searchContent" placeholder="Search for Book Name" v-model="bookName" class="input-with-select"
             style="width: 90%; margin-bottom: 10px" clearable>
-            <el-button slot="append" icon="el-icon-search"></el-button>
+            <el-button slot="append" icon="el-icon-search" @click="searchPhoto"></el-button>
           </el-input>
           <el-select v-model="sortby" slot="prepend" placeholder="Sort By" style="width: 30%" clearable>
             <el-option label="Alphabetical Order (A-Z)" value="1"></el-option>
@@ -99,7 +100,7 @@
             <el-option label="Romance" value="Romance"></el-option>
           </el-select>
         </div>
-        <div class="imgDisplay">
+        <div class="imgDisplay" id="photoContainer">
           <el-row :gutter="20">
             <el-col :span="6"><img class="grid-content" src="https://photokit.com/images/editor.min.webp"></img>
               <el-button @click="dialogVisible = true" type="text">click to open the Dialog</el-button>
