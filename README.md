@@ -7,6 +7,8 @@
 2. 显示用户信息界面，从cognito和DynamoDB 中拿信息
 3. 把registration单独做成一个界面，要求用户添加email,phone和city等信息
 4. 支持用google登录
+5. Front-End 调取用户上传的photos
+6. 找rating of book 的api
 
 
 ~~5. 添加更多的tags选项~~
