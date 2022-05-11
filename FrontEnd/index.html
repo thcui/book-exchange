@@ -85,8 +85,8 @@
             <el-option label="Credit required low to high" value="3"></el-option>
             <el-option label="Credit required high to low" value="4"></el-option>
           </el-select>
-          <el-select id="selectCondition" placeholder="Min. Condition Requirement" slot="prepend" onchange="getCondition()"
-            style="width: 30%" v-model="tag" clearable>
+          <el-select id="selectCondition" placeholder="Min. Condition Requirement" slot="prepend"
+            onchange="getCondition()" style="width: 30%" v-model="tag" clearable>
             <el-option label="As New" value="1"></el-option>
             <el-option label="Very good" value="2"></el-option>
             <el-option label="Good" value="3"></el-option>
@@ -94,8 +94,8 @@
             <el-option label="Poor" value="5"></el-option>
 
           </el-select>
-          <el-select id="selectCategory" v-model="category" slot="prepend" onchange="getCategory()" placeholder="Category"
-            style="width: 30%" clearable>
+          <el-select id="selectCategory" v-model="category" slot="prepend" onchange="getCategory()"
+            placeholder="Category" style="width: 30%" clearable>
             <el-option label="Drama" value="Drama"></el-option>
             <el-option label="Fiction" value="Fiction"></el-option>
             <el-option label="History" value="History"></el-option>
@@ -198,7 +198,10 @@
       <div class="middle" v-if="path == 'fav'">
         <h1>Favorite book list</h1>
         <el-card class="box-card" style="overflow-y: scroll;">
-          <div v-for="(item,index) in this.fav" :key="index" class="text item">
+          <div v-if="this.fav.length === 0">
+            <el-empty :image-size="200" description="No Data"></el-empty>
+          </div>
+          <div v-for="(item,index) in this.fav" :key="index" class="text item" v-else>
             {{item}}
           </div>
         </el-card>
@@ -334,8 +337,8 @@
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
       },
-      handleSuccess(file,file_list) {
-        donation_photos_list=file_list
+      handleSuccess(file, file_list) {
+        donation_photos_list = file_list
 
       },
       showFav() {
@@ -349,7 +352,7 @@
         apigClient.getuserinfoGet(params, body, additionalParams)
           .then(res => {
             console.log(res)
-            this.fadv = res.data.favorite_list
+            this.fav = res.data.favorite_list
           });
       },
       showAcc() {
