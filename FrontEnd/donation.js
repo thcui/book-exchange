@@ -111,7 +111,7 @@ function uploadImg() {
         let url =
             "https://z7xnekbzrd.execute-api.us-east-1.amazonaws.com/dev/donate/photos/" +
             uuid + photo.name;
-        donation_photos_links.push('uuid+file.name')
+        donation_photos_links.push(uuid+file.name)
 
         axios.post(url, photo['raw'], additionalParams)
     }
