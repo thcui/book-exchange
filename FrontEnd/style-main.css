@@ -52,6 +52,7 @@ body{
 .grid-content {
   max-height: 200px;
   width: 100px;
+  height: 150px;
 }
 .dialog{
   display: flex;

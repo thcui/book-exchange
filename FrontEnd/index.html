@@ -78,13 +78,15 @@
             style="width: 90%; margin-bottom: 10px" clearable>
             <el-button slot="append" icon="el-icon-search" @click="searchPhoto"></el-button>
           </el-input>
-          <el-select id="selectOrder" v-model="sortby" slot="prepend" @change="getOrder" placeholder="Sort By" style="width: 30%" clearable>
+          <el-select id="selectOrder" v-model="sortby" slot="prepend" @change="getOrder" placeholder="Sort By"
+            style="width: 30%" clearable>
             <el-option label="Alphabetical Order (A-Z)" value="1"></el-option>
             <el-option label="Alphabetical Order (Z-A)" value="2"></el-option>
             <el-option label="Credit required low to high" value="3"></el-option>
             <el-option label="Credit required high to low" value="4"></el-option>
           </el-select>
-          <el-select id="selectCondition" placeholder="Min. Condition Requirement" slot="prepend" @change="getCondition" style="width: 30%" v-model="tag" clearable>
+          <el-select id="selectCondition" placeholder="Min. Condition Requirement" slot="prepend" @change="getCondition"
+            style="width: 30%" v-model="tag" clearable>
             <el-option label="As New" value="1"></el-option>
             <el-option label="Very good" value="2"></el-option>
             <el-option label="Good" value="3"></el-option>
@@ -92,7 +94,8 @@
             <el-option label="Poor" value="5"></el-option>
 
           </el-select>
-          <el-select id="selectCategory" v-model="category" slot="prepend" @change="getCategory" placeholder="Category" style="width: 30%" clearable>
+          <el-select id="selectCategory" v-model="category" slot="prepend" @change="getCategory" placeholder="Category"
+            style="width: 30%" clearable>
             <el-option label="Drama" value="Drama"></el-option>
             <el-option label="Fiction" value="Fiction"></el-option>
             <el-option label="History" value="History"></el-option>
@@ -271,7 +274,8 @@
         current_credit: '',
         last_sign_up_time: '',
         user_id: '',
-        thum: false
+        thum: false,
+        image_path: generateUUID()
       };
     },
     mounted() {
