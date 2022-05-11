@@ -1,6 +1,5 @@
 // function to do the search and display the images in front end
 function searchPhoto() {
-  // clear the display area
   var query = document.getElementById("searchContent").value;
   if (query === "") {
     alert("Please input the name for your book.");
@@ -15,7 +14,7 @@ function searchPhoto() {
   
   //initialize apigclient and related parameters
   var apigClient = apigClientFactory.newClient({
-    apiKey: 'DZbM31zNmQ6yIX0cYXLul5QK72JoMVmA72sDXTSE'
+    apiKey: "DZbM31zNmQ6yIX0cYXLul5QK72JoMVmA72sDXTSE"
   });
   var params = {
     "x-api-key": "DZbM31zNmQ6yIX0cYXLul5QK72JoMVmA72sDXTSE"
@@ -28,12 +27,12 @@ function searchPhoto() {
   }
   
   apigClient.searchGet(params, body, additionalParams).then(function (result) {
-    response = result.data
+    response = result.data;
     if (response.length == 0) {
-      alert("Oops, no image found based on the given input.");
+      alert("Oops, no corresponding book was found!");
     }
     console.log(response);
-    var order = getOrder
+    var order = getOrder();
     var condition = getCondition();
     var category = getCategory();
     //TODO: Display the book info in the frontend

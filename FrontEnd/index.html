@@ -76,16 +76,16 @@
         <div class="searchbar">
           <el-input id="searchContent" placeholder="Search for Book Name" v-model="bookName" class="input-with-select"
             style="width: 90%; margin-bottom: 10px" clearable>
-            <el-button slot="append" icon="el-icon-search" @click="searchPhoto"></el-button>
+            <el-button slot="append" icon="el-icon-search" onclick="searchPhoto()"></el-button>
           </el-input>
-          <el-select id="selectOrder" v-model="sortby" slot="prepend" @change="getOrder" placeholder="Sort By"
+          <el-select id="selectOrder" v-model="sortby" slot="prepend" onchange="getOrder()" placeholder="Sort By"
             style="width: 30%" clearable>
             <el-option label="Alphabetical Order (A-Z)" value="1"></el-option>
             <el-option label="Alphabetical Order (Z-A)" value="2"></el-option>
             <el-option label="Credit required low to high" value="3"></el-option>
             <el-option label="Credit required high to low" value="4"></el-option>
           </el-select>
-          <el-select id="selectCondition" placeholder="Min. Condition Requirement" slot="prepend" @change="getCondition"
+          <el-select id="selectCondition" placeholder="Min. Condition Requirement" slot="prepend" onchange="getCondition()"
             style="width: 30%" v-model="tag" clearable>
             <el-option label="As New" value="1"></el-option>
             <el-option label="Very good" value="2"></el-option>
@@ -94,7 +94,7 @@
             <el-option label="Poor" value="5"></el-option>
 
           </el-select>
-          <el-select id="selectCategory" v-model="category" slot="prepend" @change="getCategory" placeholder="Category"
+          <el-select id="selectCategory" v-model="category" slot="prepend" onchange="getCategory()" placeholder="Category"
             style="width: 30%" clearable>
             <el-option label="Drama" value="Drama"></el-option>
             <el-option label="Fiction" value="Fiction"></el-option>
@@ -156,8 +156,8 @@
 
           <div>
             Upload a photo:
-            <el-upload :action="Baseurl+image_path" :on-preview="handlePictureCardPreview" :on-remove="handleRemove"
-              :on-success="handleSuccess" accept="image/*" drag: list-type="picture-card" true>
+            <el-upload action="#" :on-preview="handlePictureCardPreview" :on-remove="handleRemove"
+              :on-change="handleSuccess" accept="image/*" drag: list-type="picture-card" :auto-upload=false>
               <i class="el-icon-plus"></i>
             </el-upload>
             <el-dialog :visible.sync="dialogVisible">
@@ -327,16 +327,16 @@
           });
       },
       handleRemove(file, fileList) {
-        delete user_images_list[file.name]
+        delete donation_photos_list[file.name]
         console.log(file, fileList);
       },
       handlePictureCardPreview(file) {
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
       },
-      handleSuccess(response, file) {
-        user_images_list[file.name] = this.image_path
-        this.image_path = generateUUID()
+      handleSuccess(file,file_list) {
+        donation_photos_list=file_list
+
       },
       showFav() {
         this.path = 'fav';
@@ -349,7 +349,7 @@
         apigClient.getuserinfoGet(params, body, additionalParams)
           .then(res => {
             console.log(res)
-            this.fav = res.data.favorite_list
+            this.fadv = res.data.favorite_list
           });
       },
       showAcc() {
