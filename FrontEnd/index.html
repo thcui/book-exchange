@@ -329,7 +329,7 @@
           });
       },
       handleRemove(file, fileList) {
-        delete user_images_list[file.name]
+        delete donation_photos_list[file.name]
         console.log(file, fileList);
       },
       handlePictureCardPreview(file) {
@@ -337,8 +337,7 @@
         this.dialogVisible = true;
       },
       handleSuccess(file,file_list) {
-        console.log("LALA")
-        user_images_list=file_list
+        donation_photos_list=file_list
 
       },
       showFav() {
