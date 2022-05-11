@@ -37,6 +37,7 @@ function makeDonation() {
     ),
   };
   console.log(body);
+  uploadImg()
   user_images_list = {};
   // let url ="https://ebs239nacc.execute-api.us-east-1.amazonaws.com/dev"
   apigClient.donatePost(params, body, additionalParams).then((response) => {
@@ -92,36 +93,21 @@ function get_condition() {
 }
 
 function uploadImg() {
-  const imageInput = document.querySelector("#imageInput");
-  const file = imageInput.files[0];
+  const file = user_images_list[0];
+  console.log(file)
+  console.log(file['raw'])
 
   let additionalParams = {
     headers: {
-      "Content-Type": file.type,
+      "Content-Type": file['raw']['type'],
     },
   };
 
   let url =
     "https://z7xnekbzrd.execute-api.us-east-1.amazonaws.com/dev/donate/photos/" +
-    file.name;
+    generateUUID()+file.name;
 
-  axios.put(url, file, additionalParams).then((response) => {
-    alert("Image uploaded: " + file.name);
-  });
-
-  let imageUrl =
-    "https://book-exchange-book-photos-bucket.s3.amazonaws.com/" + file.name;
-  let timer = setTimeout(() => {
-    var div = document.createElement("div");
-    var img = document.createElement("img");
-    img.src = imageUrl;
-    img.width = 500;
-    img.setAttribute("class", "img");
-    div.append(img);
-    var x = ele.appendChild(div);
-    x.style.padding = "10px";
-    clearTimeout(timer);
-  }, 1000);
+  axios.post(url, file['raw'], additionalParams)
 }
 function request_login(){
   alert("Please login to your account first.");
