@@ -47,7 +47,7 @@
         <i class="el-icon-s-fold" @click="changeMode" style="font-size: 32px;
         color: gray;"></i>
         <el-menu default-active="1" class="el-menu-vertical-demo" :collapse="isCollapse">
-          <el-menu-item index="1" @click="path = 1">
+          <el-menu-item index="1" @click="path = 'home'">
             <i class="el-icon-house"></i>
             <span>Home</span>
           </el-menu-item>
@@ -63,17 +63,14 @@
             <i class="el-icon-star-off"></i>
             <span>Favorite</span>
           </el-menu-item>
-          <el-menu-item index="5" @click="path = 4">
+          <el-menu-item index="5" @click="showMessage">
             <i class="el-icon-chat-line-round"></i>
             <span>Message</span>
           </el-menu-item>
-          <el-menu-item index="6" @click="path = 5">
-            <i class="el-icon-setting"></i>
-            <span>Cart</span>
           </el-menu-item>
         </el-menu>
       </div>
-      <div class="middle" v-if="path == 1">
+      <div class="middle" v-if="path == 'home'">
         <div class="searchbar">
           <el-input id="searchContent" placeholder="Search for Book Name" v-model="bookName" class="input-with-select"
             style="width: 90%; margin-bottom: 10px" clearable>
@@ -208,6 +205,44 @@
         </el-card>
       </div>
 
+      <div class="middle" v-if="path == 'message'">
+        <h1>Message Box</h1>
+<!--        <el-card class="box-card" style="overflow-y: scroll;">-->
+<!--          <div v-if="this.messages.length === 0">-->
+<!--            <el-empty :image-size="200" description="No Message"></el-empty>-->
+<!--          </div>-->
+<!--          <div v-for="(item,index) in this.messages" :key="index" class="text item" v-else>-->
+<!--            {{item}}-->
+<!--          </div>-->
+<!--        </el-card>-->
+
+        <el-table
+                :data="this.messages"
+                style="width: 100%">
+          <el-table-column
+                  fixed
+                  prop="sender"
+                  label="Sender"
+                  width="150">
+          </el-table-column>
+          <el-table-column
+                  prop="content"
+                  label="Content"
+                  width="500">
+          </el-table-column>
+
+          <el-table-column
+                  fixed="right"
+                  label="Operations"
+                  width="120">
+            <template slot-scope="scope">
+              <el-button @click="handleClick" type="text" size="small">Reply</el-button>
+              <el-button @click="handleClick" type="text" size="small">Delete</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+
       <div class="ediChoice">
         <h4 class="title">Editor's choice</h4>
         <img src="https://photokit.com/images/editor.min.webp" height="300" width="180" />
@@ -269,36 +304,19 @@
         donatedBook: "",
         creditRequired: 5,
         dialogVisible: false,
-        path: 1,
+        path: 'home',
         read_value: 3.7,
         dialogImageUrl: '',
         url: "",
         Baseurl: "https://z7xnekbzrd.execute-api.us-east-1.amazonaws.com/dev/donate/photos/",
         fav: [],
+        messages:[],
         current_credit: '',
         last_sign_up_time: '',
         user_id: '',
         thum: false,
         image_path: generateUUID()
       };
-    },
-    mounted() {
-      var apigClient = apigClientFactory.newClient();
-      var params = {
-        user_id: login_user_name
-      };
-      var additionalParams = {};
-      var body = {};
-      apigClient.getuserinfoGet(params, body, additionalParams)
-        .then(res => {
-          this.fav = res.data.favorite_list
-          if (this.fav.includes(this.bookName)) {
-            this.thum = true
-          } else {
-            this.thum = false
-          }
-
-        });
     },
     methods: {
       changeMode() {
@@ -343,6 +361,10 @@
 
       },
       showFav() {
+        if (login_user_name==null){
+          request_login()
+          return
+        }
         this.path = 'fav';
         var apigClient = apigClientFactory.newClient();
         var params = {
@@ -356,7 +378,29 @@
             this.fav = res.data.favorite_list
           });
       },
+      showMessage() {
+        if (login_user_name==null){
+          request_login()
+          return
+        }
+        this.path = 'message';
+        var apigClient = apigClientFactory.newClient();
+        var params = {
+          user_id: login_user_name
+        };
+        var additionalParams = {};
+        var body = {};
+        apigClient.messageGet(params, body, additionalParams)
+                .then(res => {
+                  console.log(res)
+                  this.messages = res.data.messages
+                });
+      },
       showAcc() {
+        if (login_user_name==null){
+          request_login()
+          return
+        }
         this.path = 'account';
         var apigClient = apigClientFactory.newClient();
         var params = {

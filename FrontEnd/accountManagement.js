@@ -32,6 +32,7 @@ function login() {
                 console.log(user_info_cognito['UserAttributes'])
                 /*user_credit = user_info_cognito['UserAttributes'].filter(att=>att['Name']==='custom:credit')[0]['Value']*/
                 login_user_name = document.getElementById("uname").value
+                get_user_dynamo_information()
                 var params = {
                     ExpressionAttributeValues: {
                       ':s': login_user_name,
@@ -107,6 +108,30 @@ function signUp() {
   }
 }
 
+
+function get_user_dynamo_information(){
+    var apigClient = apigClientFactory.newClient();
+    var params = {
+        user_id: login_user_name
+    };
+    var additionalParams = {};
+    var body = {};
+    apigClient.getuserinfoGet(params, body, additionalParams)
+        .then(res => {
+            this.fav = res.data.favorite_list
+            if (this.fav.includes(this.bookName)) {
+                this.thum = true
+            } else {
+                this.thum = false
+            }
+
+        });
+    apigClient.messageGet(params, body, additionalParams)
+        .then(res => {
+            console.log(res)
+            this.messages = res.data.messages
+        });
+}
 function get_user_id() {
   return login_user_name;
 }
