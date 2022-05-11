@@ -287,14 +287,12 @@
       var body = {};
       apigClient.getuserinfoGet(params, body, additionalParams)
         .then(res => {
-          console.log(res)
           this.fav = res.data.favorite_list
           if (this.fav.includes(this.bookName)) {
             this.thum = true
           } else {
             this.thum = false
           }
-          console.log(this.fav, this.thum)
 
         });
     },
