@@ -2,291 +2,376 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8"/>
-    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <link href="./style-main.css" rel="stylesheet"/>
-    <!-- import CSS -->
-    <link href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" rel="stylesheet"/>
-    <link href="./style-login.css" rel="stylesheet"/>
-    <title>Book Exchange</title>
-    <script src="lib/axios/dist/axios.standalone.js" type="text/javascript"></script>
-    <script src="lib/CryptoJS/rollups/hmac-sha256.js" type="text/javascript"></script>
-    <script src="lib/CryptoJS/rollups/sha256.js" type="text/javascript"></script>
-    <script src="lib/CryptoJS/components/hmac.js" type="text/javascript"></script>
-    <script src="lib/CryptoJS/components/enc-base64.js" type="text/javascript"></script>
-    <script src="lib/url-template/url-template.js" type="text/javascript"></script>
-    <script src="lib/apiGatewayCore/sigV4Client.js" type="text/javascript"></script>
-    <script src="lib/apiGatewayCore/apiGatewayClient.js" type="text/javascript"></script>
-    <script src="lib/apiGatewayCore/simpleHttpClient.js" type="text/javascript"></script>
-    <script src="lib/apiGatewayCore/utils.js" type="text/javascript"></script>
-    <script src="apigClient.js" type="text/javascript"></script>
-    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1128.0.min.js"></script>
-    <script src="https://wow.techbrood.com/libs/jquery/jquery-1.11.1.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <link href="./style-main.css" rel="stylesheet" />
+  <!-- import CSS -->
+  <link href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" rel="stylesheet" />
+  <link href="./style-login.css" rel="stylesheet" />
+  <title>Book Exchange</title>
+  <script src="lib/axios/dist/axios.standalone.js" type="text/javascript"></script>
+  <script src="lib/CryptoJS/rollups/hmac-sha256.js" type="text/javascript"></script>
+  <script src="lib/CryptoJS/rollups/sha256.js" type="text/javascript"></script>
+  <script src="lib/CryptoJS/components/hmac.js" type="text/javascript"></script>
+  <script src="lib/CryptoJS/components/enc-base64.js" type="text/javascript"></script>
+  <script src="lib/url-template/url-template.js" type="text/javascript"></script>
+  <script src="lib/apiGatewayCore/sigV4Client.js" type="text/javascript"></script>
+  <script src="lib/apiGatewayCore/apiGatewayClient.js" type="text/javascript"></script>
+  <script src="lib/apiGatewayCore/simpleHttpClient.js" type="text/javascript"></script>
+  <script src="lib/apiGatewayCore/utils.js" type="text/javascript"></script>
+  <script src="apigClient.js" type="text/javascript"></script>
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1128.0.min.js"></script>
+  <script src="https://wow.techbrood.com/libs/jquery/jquery-1.11.1.min.js"></script>
 
-    <!--  Add your js scripts here   -->
-    <script src="donation.js" type="text/javascript"></script>
-    <script src="accountManagement.js" type="text/javascript"></script>
+  <!--  Add your js scripts here   -->
+  <script src="donation.js" type="text/javascript"></script>
+  <script src="accountManagement.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
 
 </head>
 
 <body>
-<div id="app">
+  <div id="app">
     <div class="upperPart">
-        <div>
-            <el-button id="login-button" onclick="document.getElementById('login').style.display='block'" round
-                       type="primary"><i class="el-icon-user"></i>Login
-            </el-button>
-        </div>
-        <h1 style="flex: 1;"><i class="el-icon-reading"></i>Book Exchange</h1>
+      <div>
+        <el-button id="login-button" onclick="document.getElementById('login').style.display='block'" round
+          type="primary"><i class="el-icon-user"></i>Login
+        </el-button>
+      </div>
+      <h1 style="flex: 1;"><i class="el-icon-reading"></i>Book Exchange</h1>
     </div>
     <div class="belowPart">
-        <div class="naviBar">
-            <i @click="changeMode" class="el-icon-s-fold"></i>
-            <el-menu :collapse="isCollapse" class="el-menu-vertical-demo" default-active="1">
-                <el-menu-item @click="path = 1" index="1">
-                    <i class="el-icon-house"></i>
-                    <span>Home</span>
-                </el-menu-item>
-                <el-menu-item @click="path = 'donate'" index="2">
-                    <i class="el-icon-plus"></i>
-                    <span>Donate</span>
-                </el-menu-item>
-                <el-menu-item @click="path = 2" index="3">
-                    <i class="el-icon-user"></i>
-                    <span>Account</span>
-                </el-menu-item>
-                <el-menu-item @click="path = 3" index="4">
-                    <i class="el-icon-star-off"></i>
-                    <span>Favorite</span>
-                </el-menu-item>
-                <el-menu-item @click="path = 4" index="5">
-                    <i class="el-icon-chat-line-round"></i>
-                    <span>Message</span>
-                </el-menu-item>
-                <el-menu-item @click="path = 5" index="6">
-                    <i class="el-icon-setting"></i>
-                    <span>Cart</span>
-                </el-menu-item>
-            </el-menu>
+      <div class="naviBar">
+        <i class="el-icon-s-fold" @click="changeMode" style="font-size: 32px;
+        color: gray;"></i>
+        <el-menu default-active="1" class="el-menu-vertical-demo" :collapse="isCollapse">
+          <el-menu-item index="1" @click="path = 1">
+            <i class="el-icon-house"></i>
+            <span>Home</span>
+          </el-menu-item>
+          <el-menu-item index="2" @click="path = 'donate'">
+            <i class="el-icon-plus"></i>
+            <span>Donate</span>
+          </el-menu-item>
+          <el-menu-item index="3" @click="showAcc">
+            <i class="el-icon-user"></i>
+            <span>Account</span>
+          </el-menu-item>
+          <el-menu-item index="4" @click="showFav">
+            <i class="el-icon-star-off"></i>
+            <span>Favorite</span>
+          </el-menu-item>
+          <el-menu-item index="5" @click="path = 4">
+            <i class="el-icon-chat-line-round"></i>
+            <span>Message</span>
+          </el-menu-item>
+          <el-menu-item index="6" @click="path = 5">
+            <i class="el-icon-setting"></i>
+            <span>Cart</span>
+          </el-menu-item>
+        </el-menu>
+      </div>
+      <div class="middle" v-if="path == 1">
+        <div class="searchbar">
+          <el-input id="searchContent" placeholder="Search for Book Name" v-model="bookName" class="input-with-select"
+            style="width: 90%; margin-bottom: 10px" clearable>
+            <el-button slot="append" icon="el-icon-search" onclick="searchPhoto()"></el-button>
+          </el-input>
+          <el-select id="selectOrder" v-model="sortby" slot="prepend" onchange="getOrder()" placeholder="Sort By"
+            style="width: 30%" clearable>
+            <el-option label="Alphabetical Order (A-Z)" value="1"></el-option>
+            <el-option label="Alphabetical Order (Z-A)" value="2"></el-option>
+            <el-option label="Credit required low to high" value="3"></el-option>
+            <el-option label="Credit required high to low" value="4"></el-option>
+          </el-select>
+          <el-select id="selectCondition" placeholder="Min. Condition Requirement" slot="prepend"
+            onchange="getCondition()" style="width: 30%" v-model="tag" clearable>
+            <el-option label="As New" value="1"></el-option>
+            <el-option label="Very good" value="2"></el-option>
+            <el-option label="Good" value="3"></el-option>
+            <el-option label="Fair" value="4"></el-option>
+            <el-option label="Poor" value="5"></el-option>
+
+          </el-select>
+          <el-select id="selectCategory" v-model="category" slot="prepend" onchange="getCategory()"
+            placeholder="Category" style="width: 30%" clearable>
+            <el-option label="Drama" value="Drama"></el-option>
+            <el-option label="Fiction" value="Fiction"></el-option>
+            <el-option label="History" value="History"></el-option>
+            <el-option label="Juvenile literature" value="Juvenile literature"></el-option>
+            <el-option label="Romance" value="Romance"></el-option>
+          </el-select>
         </div>
-        <div class="middle" v-if="path == 1">
-            <div class="searchbar">
-                <el-input class="input-with-select" placeholder="Search for Book Name" style="width: 90%; margin-bottom: 10px"
-                          v-model="bookName">
-                    <el-button icon="el-icon-search" slot="append"></el-button>
-                </el-input>
-                <el-select placeholder="Sort By" slot="prepend" style="width: 30%" v-model="sortby">
-                    <el-option label="Alphabetical Order (A-Z)" value="1"></el-option>
-                    <el-option label="Alphabetical Order (Z-A)" value="2"></el-option>
-                    <el-option label="Credit required low to high" value="3"></el-option>
-                    <el-option label="Credit required high to low" value="4"></el-option>
-                </el-select>
-                <el-select placeholder="Min. Condition Requirement" slot="prepend" style="width: 30%" v-model="tag">
-                    <el-option label="As New" value="1"></el-option>
-                    <el-option label="Very good" value="2"></el-option>
-                    <el-option label="Good" value="3"></el-option>
-                    <el-option label="Fair" value="4"></el-option>
-                    <el-option label="Poor" value="5"></el-option>
-
-                </el-select>
-                <el-select placeholder="Category" slot="prepend" style="width: 30%" v-model="category">
-                    <el-option label="Drama" value="Drama"></el-option>
-                    <el-option label="Fiction" value="Fiction"></el-option>
-                    <el-option label="History" value="History"></el-option>
-                    <el-option label="Juvenile literature" value="Juvenile literature"></el-option>
-                    <el-option label="Romance" value="Romance"></el-option>
-
-
-                </el-select>
-            </div>
-            <div class="imgDisplay">
-                <el-row :gutter="20">
-                    <el-col :span="6"><img class="grid-content" src="https://photokit.com/images/editor.min.webp"></img>
-                        <el-button @click="dialogVisible = true" type="text">click to open the Dialog</el-button>
-                        <el-dialog :visible.sync="dialogVisible" width="800px">
-                            <div class="dialog">
-                                <div class="left">
-                                    <img class="imgSize" src="https://photokit.com/images/editor.min.webp"/>
-                                </div>
-                                <div class="right">
-                                    <div class="line1">
-                                        <h1>Amazon Unbound</h1>
-                                        <div @click="thumbup" id="heart"></div>
-                                    </div>
-                                    <div class="dialogText">Description</div>
-                                    <div class="part2">This is new york</div>
-                                    <div class="part3">
-                                        <div style="flex:1">
-                                            <div><i class="el-icon-user-solid"></i>
-                                                owner:nmlgb6998
-                                            </div>
-                                            <el-rate disabled score-template="{value} points" text-color="#ff9900"
-                                                     v-model="read_value">
-                                            </el-rate>
-                                        </div>
-                                        <div style="flex:1">credits:5</div>
-                                    </div>
-                                    <div class="part4">
-                                        <el-button @click="dialogVisible = false" round type="primary">Request
-                                        </el-button>
-                                    </div>
-                                </div>
-                            </div>
-                        </el-dialog>
-                    </el-col>
-                </el-row>
-
-            </div>
-        </div>
-        <div class="middle" v-if="path == 'donate'">
-            <div id="donate-popup">
-                <div>
-
-                    Name of your donated book:
-                    <el-input class="input-with-select" id="bookNameInput" placeholder="Ex. Harry Potter"
-                              style="width: 100%; margin-bottom: 10px"
-                              v-model="donatedBook">
-                    </el-input>
+        <div class="imgDisplay" id="photoContainer">
+          <el-row :gutter="20">
+            <el-col :span="6"><img class="grid-content" src="https://photokit.com/images/editor.min.webp"></img>
+              <el-button @click="dialogVisible = true" type="text">click to open the Dialog</el-button>
+              <el-dialog :visible.sync="dialogVisible" width="800px">
+                <div class="dialog">
+                  <div class="left">
+                    <img class="imgSize" src="https://photokit.com/images/editor.min.webp" />
+                  </div>
+                  <div class="right">
                     <div class="line1">
-                        Credit Required for requesting this book:
-                        <el-input-number :max="10" :min="1" id="credit-required" label="credit" v-model="creditRequired">
-                        </el-input-number>
+                      <h1>Amazon Unbound</h1>
+                      <div @click="thumbup" id="heart" :class="thum ?  'is-active' : ''"></div>
                     </div>
-
-                    <div>
-                        Upload a photo:
-                        <el-upload :action="Baseurl+image_path" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :on-success="handleSuccess" accept="image/*" drag:
-                                   list-type="picture-card" true>
-                            <i class="el-icon-plus"></i>
-                        </el-upload>
-                        <el-dialog :visible.sync="dialogVisible">
-                            <img :src="dialogImageUrl" alt="" width="100%">
-                        </el-dialog>
-                    </div>
-                    <div>
-                        Book condition:
-                        <div>
-                            <el-radio-group id="book_condition" v-model="condition_radio">
-                                <el-radio-button label="Poor"></el-radio-button>
-                                <el-radio-button label="Fair"></el-radio-button>
-                                <el-radio-button label="Good"></el-radio-button>
-                                <el-radio-button label="Very  good"></el-radio-button>
-                                <el-radio-button label="As New"></el-radio-button>
-                            </el-radio-group>
+                    <div class="dialogText">Description</div>
+                    <div class="part2">This is new york</div>
+                    <div class="part3">
+                      <div style="flex:1">
+                        <div><i class="el-icon-user-solid"></i>
+                          owner:nmlgb6998
                         </div>
+                        <el-rate disabled score-template="{value} points" text-color="#ff9900" v-model="read_value">
+                        </el-rate>
+                      </div>
+                      <div style="flex:1">credits:5</div>
                     </div>
-                    <div>
-
-
-                        <el-button onclick="makeDonation()" round style="width:250px;height:50px;font-size:20px;margin: 20px"
-                                   type="primary">
-                            Donate<i class="el-icon-upload el-icon--right"></i></el-button>
-
+                    <div class="part4">
+                      <el-button @click="dialogVisible = false" round type="primary">Request
+                      </el-button>
                     </div>
-
-
+                  </div>
                 </div>
+              </el-dialog>
+            </el-col>
+          </el-row>
+
+        </div>
+      </div>
+      <div class="middle" v-if="path == 'donate'">
+        <div id="donate-popup">
+
+          Name of your donated book:
+          <el-input class="input-with-select" id="bookNameInput" placeholder="Ex. Harry Potter"
+            style="width: 100%; margin-bottom: 10px" v-model="donatedBook" clearable>
+          </el-input>
+          <div class="line1">
+            Credit Required for requesting this book:
+            <el-input-number :max="10" :min="1" id="credit-required" label="credit" v-model="creditRequired">
+            </el-input-number>
+          </div>
+
+          <div>
+            Upload a photo:
+            <el-upload action="#" :on-preview="handlePictureCardPreview" :on-remove="handleRemove"
+              :on-change="handleSuccess" accept="image/*" drag: list-type="picture-card" :auto-upload=false>
+              <i class="el-icon-plus"></i>
+            </el-upload>
+            <el-dialog :visible.sync="dialogVisible">
+              <img :src="dialogImageUrl" alt="" width="100%">
+            </el-dialog>
+          </div>
+          <div>
+            Book condition:
+            <div>
+              <el-radio-group id="book_condition" v-model="condition_radio">
+                <el-radio-button label="Poor"></el-radio-button>
+                <el-radio-button label="Fair"></el-radio-button>
+                <el-radio-button label="Good"></el-radio-button>
+                <el-radio-button label="Very  good"></el-radio-button>
+                <el-radio-button label="As New"></el-radio-button>
+              </el-radio-group>
             </div>
+          </div>
+          <div>
+
+
+
+            <el-button onclick="makeDonation()" round style="width:250px;height:50px;font-size:20px;margin: 20px"
+              type="primary">
+              Donate<i class="el-icon-upload el-icon--right"></i></el-button>
+
+          </div>
+
+
         </div>
-        <div class="ediChoice">
-            <h4 class="title">Editor's choice</h4>
-            <img height="300" src="https://photokit.com/images/editor.min.webp" width="180"/>
-            <div style="color: black">to kill a mocking bird</div>
-        </div>
-        <!-- attribution: https://www.w3schools.com/howto/howto_css_login_form.asp-->
-        <!--<a href="https://www.flaticon.com/free-icons/male" title="male icons">Male icons created by Freepik - Flaticon</a>-->
-        <div class="modal" id="login">
+      </div>
+      <div class="middle account" v-if="path == 'account'">
+        <div>User ID: {{user_id}}</div>
+        <div>Current Credit: {{current_credit}}</div>
+        <div>Sign Up Time: {{last_sign_up_time}}</div>
 
+      </div>
+      <div class="middle" v-if="path == 'fav'">
+        <h1>Favorite book list</h1>
+        <el-card class="box-card" style="overflow-y: scroll;">
+          <div v-if="this.fav.length === 0">
+            <el-empty :image-size="200" description="No Data"></el-empty>
+          </div>
+          <div v-for="(item,index) in this.fav" :key="index" class="text item" v-else>
+            {{item}}
+          </div>
+        </el-card>
+      </div>
 
-            <!-- Modal Content -->
-            <div class="modal-content animate">
-          <span class="close" onclick="document.getElementById('login').style.display='none'"
-                title="Close Modal">&times;</span>
-                <div class="imgcontainer">
-                    <img alt="Avatar" class="avatar" src="avatar.png">
-                </div>
-
-                <div class="container">
-                    <label for="uname"><b>Username</b></label>
-                    <input id="uname" placeholder="Enter Username" required type="text">
-
-                    <label for="psw"><b>Password</b></label>
-                    <input id="psw" placeholder="Enter Password" required type="password">
-
-                    <button onclick="login()" type="submit">Login</button>
-                    <button onclick="signUp()" type="submit">Register</button>
-                    <label>
-                        <input checked="checked" name="remember" type="checkbox"> Remember me
-                    </label>
-                </div>
-
-                <div class="container" style="background-color:#f1f1f1">
-                    <button class="cancelbtn" onclick="document.getElementById('login').style.display='none'"
-                            type="button">Cancel
-                    </button>
-                    <span class="psw">Forgot <a href="#">password?</a></span>
-                </div>
-
-            </div>
-        </div>
+      <div class="ediChoice">
+        <h4 class="title">Editor's choice</h4>
+        <img src="https://photokit.com/images/editor.min.webp" height="300" width="180" />
+        <div style="color: black">to kill a mocking bird</div>
+      </div>
     </div>
-</div>
+
+    <!-- attribution: https://www.w3schools.com/howto/howto_css_login_form.asp-->
+    <!--<a href="https://www.flaticon.com/free-icons/male" title="male icons">Male icons created by Freepik - Flaticon</a>-->
+    <div class="modal" id="login">
+      <!-- Modal Content -->
+      <div class="modal-content animate">
+        <span class="close" onclick="document.getElementById('login').style.display='none'"
+          title="Close Modal">&times;</span>
+        <div class="imgcontainer">
+          <img alt="Avatar" class="avatar" src="avatar.png">
+        </div>
+
+        <div class="container">
+          <label for="uname"><b>Username</b></label>
+          <input id="uname" placeholder="Enter Username" required type="text">
+
+          <label for="psw"><b>Password</b></label>
+          <input id="psw" placeholder="Enter Password" required type="password">
+
+          <button onclick="login()" type="submit">Login</button>
+          <button onclick="signUp()" type="submit">Register</button>
+          <label>
+            <input checked="checked" name="remember" type="checkbox"> Remember me
+          </label>
+        </div>
+
+        <div class="container" style="background-color:#f1f1f1">
+          <button class="cancelbtn" onclick="document.getElementById('login').style.display='none'" type="button">Cancel
+          </button>
+          <span class="psw">Forgot <a href="#">password?</a></span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </div>
 </body>
 <!-- import JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script>
-    new Vue({
-        el: "#app",
-        data: function () {
-            return {
-                condition_radio: 'Good',
-                visible: false,
-                isCollapse: false,
-                sortby: "",
-                tag: "",
-                category: "",
-                bookName: "",
-                donatedBook: "",
-                creditRequired: 5,
-                dialogVisible: false,
-                path: 1,
-                read_value: 3.7,
-                dialogImageUrl: '',
-                image_path:generateUUID(),
-                url: "",
-                Baseurl: "https://z7xnekbzrd.execute-api.us-east-1.amazonaws.com/dev/donate/photos/"
-            };
-        },
-        methods: {
-            changeMode() {
-                this.isCollapse = !this.isCollapse
-            },
-            thumbup() {
-                var popup = document.getElementById("heart");
-                popup.classList.toggle("is-active");
-            },
-            handleRemove(file, fileList) {
-                delete user_images_list[file.name]
-                console.log(file, fileList);
-            },
-            handlePictureCardPreview(file) {
-                console.log(file)
-                this.dialogImageUrl = file.url;
-                this.dialogVisible = true;
-            },
-          handleSuccess(response, file) {
-            user_images_list[file.name]=this.image_path
-            console.log(user_images_list)
-            this.image_path=generateUUID()
+  new Vue({
+    el: "#app",
+    data: function () {
+      return {
+        condition_radio: 'Good',
+        visible: false,
+        isCollapse: false,
+        sortby: "",
+        tag: "",
+        category: "",
+        bookName: "Harry Potter",
+        donatedBook: "",
+        creditRequired: 5,
+        dialogVisible: false,
+        path: 1,
+        read_value: 3.7,
+        dialogImageUrl: '',
+        url: "",
+        Baseurl: "https://z7xnekbzrd.execute-api.us-east-1.amazonaws.com/dev/donate/photos/",
+        fav: [],
+        current_credit: '',
+        last_sign_up_time: '',
+        user_id: '',
+        thum: false,
+        image_path: generateUUID()
+      };
+    },
+    mounted() {
+      var apigClient = apigClientFactory.newClient();
+      var params = {
+        user_id: login_user_name
+      };
+      var additionalParams = {};
+      var body = {};
+      apigClient.getuserinfoGet(params, body, additionalParams)
+        .then(res => {
+          this.fav = res.data.favorite_list
+          if (this.fav.includes(this.bookName)) {
+            this.thum = true
+          } else {
+            this.thum = false
           }
 
+        });
+    },
+    methods: {
+      changeMode() {
+        this.isCollapse = !this.isCollapse
+      },
+      thumbup() {
+        if (login_user_name == null) {
+          request_login()
+          return;
+        }
+        var popup = document.getElementById("heart");
+        popup.classList.toggle("is-active");
 
+        var apigClient = apigClientFactory.newClient();
+
+        var body = {
+          user_id: login_user_name,
+          book_name: this.bookName
+        };
+
+        if (this.thum) {
+          body.action = "remove"
         }
 
-    });
+        var additionalParams = {};
+        var params = {};
+        apigClient.addtolistPost(params, body, additionalParams)
+          .then(() => {
+            this.thum = !this.thum
+          });
+      },
+      handleRemove(file, fileList) {
+        delete donation_photos_list[file.name]
+        console.log(file, fileList);
+      },
+      handlePictureCardPreview(file) {
+        this.dialogImageUrl = file.url;
+        this.dialogVisible = true;
+      },
+      handleSuccess(file, file_list) {
+        donation_photos_list = file_list
 
+      },
+      showFav() {
+        this.path = 'fav';
+        var apigClient = apigClientFactory.newClient();
+        var params = {
+          user_id: login_user_name
+        };
+        var additionalParams = {};
+        var body = {};
+        apigClient.getuserinfoGet(params, body, additionalParams)
+          .then(res => {
+            console.log(res)
+            this.fav = res.data.favorite_list
+          });
+      },
+      showAcc() {
+        this.path = 'account';
+        var apigClient = apigClientFactory.newClient();
+        var params = {
+          user_id: login_user_name
+        };
+        var additionalParams = {};
+        var body = {};
+        apigClient.getuserinfoGet(params, body, additionalParams)
+          .then(res => {
+            this.last_sign_up_time = res.data.user_sign_up_time
+            this.current_credit = res.data.current_credit
+            this.user_id = res.data.user_id
+          });
+      }
+    }
+  });
 
 </script>
 

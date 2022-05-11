@@ -101,6 +101,24 @@ apigClientFactory.newClient = function (config) {
     };
     
     
+    apigClient.addtolistOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Access-Control-Allow-Headers'], ['body']);
+        
+        var addtolistOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/addtolist').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Access-Control-Allow-Headers']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(addtolistOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.donatePost = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
@@ -137,6 +155,24 @@ apigClientFactory.newClient = function (config) {
     };
     
     
+    apigClient.donatePhotosKeyPut = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['key'], ['body']);
+        
+        var donatePhotosKeyPutRequest = {
+            verb: 'put'.toUpperCase(),
+            path: pathComponent + uritemplate('/donate/photos/{key}').expand(apiGateway.core.utils.parseParametersToObject(params, ['key'])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(donatePhotosKeyPutRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.donatePhotosKeyPost = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
@@ -155,39 +191,57 @@ apigClientFactory.newClient = function (config) {
     };
     
     
-    apigClient.loginPost = function (params, body, additionalParams) {
+    apigClient.donatePhotosKeyOptions = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
-        apiGateway.core.utils.assertParametersDefined(params, ['body'], ['body']);
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
         
-        var loginPostRequest = {
-            verb: 'post'.toUpperCase(),
-            path: pathComponent + uritemplate('/login').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+        var donatePhotosKeyOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/donate/photos/{key}').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
             headers: apiGateway.core.utils.parseParametersToObject(params, []),
             queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
             body: body
         };
         
         
-        return apiGatewayClient.makeRequest(loginPostRequest, authType, additionalParams, config.apiKey);
+        return apiGatewayClient.makeRequest(donatePhotosKeyOptionsRequest, authType, additionalParams, config.apiKey);
     };
     
     
-    apigClient.registerPost = function (params, body, additionalParams) {
+    apigClient.getuserinfoGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
-        apiGateway.core.utils.assertParametersDefined(params, ['body'], ['body']);
+        apiGateway.core.utils.assertParametersDefined(params, ['user_id'], ['body']);
         
-        var registerPostRequest = {
-            verb: 'post'.toUpperCase(),
-            path: pathComponent + uritemplate('/register').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+        var getuserinfoGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/getuserinfo').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['user_id']),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(getuserinfoGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.getuserinfoOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var getuserinfoOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/getuserinfo').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
             headers: apiGateway.core.utils.parseParametersToObject(params, []),
             queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
             body: body
         };
         
         
-        return apiGatewayClient.makeRequest(registerPostRequest, authType, additionalParams, config.apiKey);
+        return apiGatewayClient.makeRequest(getuserinfoOptionsRequest, authType, additionalParams, config.apiKey);
     };
     
     
@@ -244,6 +298,22 @@ apigClientFactory.newClient = function (config) {
         return apiGatewayClient.makeRequest(searchGetRequest, authType, additionalParams, config.apiKey);
     };
     
+    apigClient.searchOptions = function (params, body, additionalParams) {
+        if (additionalParams === undefined) { additionalParams = {}; }
+
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+
+        var searchOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/search').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+
+
+        return apiGatewayClient.makeRequest(searchOptionsRequest, authType, additionalParams, config.apiKey);
+    };
 
     return apigClient;
 };

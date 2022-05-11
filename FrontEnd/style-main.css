@@ -43,6 +43,7 @@ body{
   display: flex;
   flex-direction: column;
   margin: 16px;
+  height: 500px;
 }
 .imgDisplay{
   flex-grow: 1;
@@ -51,6 +52,7 @@ body{
 .grid-content {
   max-height: 200px;
   width: 100px;
+  height: 150px;
 }
 .dialog{
   display: flex;
@@ -97,7 +99,20 @@ body{
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
 }
+.text {
+  font-size: 14px;
+}
 
+.item {
+  padding: 18px 0;
+}
+
+.box-card {
+  width: 480px;
+}
+.account{
+  margin-top: 100px;
+}
 
 #heart {
   width: 100px;
