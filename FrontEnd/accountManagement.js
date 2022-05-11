@@ -1,4 +1,4 @@
-var login_user_name = "nnnd";
+var login_user_name = null;
 
 var user_credit = null;
 var user_info_cognito = null;
