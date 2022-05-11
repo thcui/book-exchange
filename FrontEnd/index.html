@@ -28,6 +28,7 @@
   <script src="donation.js" type="text/javascript"></script>
   <script src="accountManagement.js" type="text/javascript"></script>
   <script src="search.js" type="text/javascript"></script>
+  <script src="request.js" type="text/javascript"></script>
 
 </head>
 
@@ -130,7 +131,7 @@
                       <div style="flex:1">credits:5</div>
                     </div>
                     <div class="part4">
-                      <el-button @click="dialogVisible = false" round type="primary">Request
+                        <el-button @click="dialogVisible = false" onclick="makeRequest()"round type="primary">Request
                       </el-button>
                     </div>
                   </div>
