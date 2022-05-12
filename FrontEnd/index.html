@@ -9,6 +9,7 @@
   <!-- import CSS -->
   <link href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" rel="stylesheet" />
   <link href="./style-login.css" rel="stylesheet" />
+  <link href="./style-signup.css" rel="stylesheet" />
   <link href="./style-chatbox.css" rel="stylesheet" />
   <title>Book Exchange</title>
   <script src="lib/axios/dist/axios.standalone.js" type="text/javascript"></script>
@@ -293,7 +294,7 @@
           <input id="psw" placeholder="Enter Password" required type="password">
 
           <button onclick="login()" type="submit">Login</button>
-          <button onclick="signUp()" type="submit">Register</button>
+          <button id='signup-btn' onclick="showSignUp()" type="submit">New user? Create an account here!</button>
           <label>
             <input checked="checked" name="remember" type="checkbox"> Remember me
           </label>
@@ -307,13 +308,45 @@
 
       </div>
     </div>
+    <div class="modal" id="signup">
+      <!-- Modal Content -->
+      <div class="modal-content animate">
+        <span class="close" onclick="document.getElementById('signup').style.display='none'"
+              title="Close Modal">&times;</span>
+
+        <div class="container">
+          <label for="signup-uname"><b>Username</b></label>
+          <input id="signup-uname" placeholder="Enter Your Username" required type="text">
+
+          <label for="signup-psw1"><b>Please enter your password</b></label>
+          <input id="signup-psw1" placeholder="Enter Your Password" required type="password">
+
+          <label for="signup-psw2"><b>Please enter your password again </b></label>
+          <input id="signup-psw2" placeholder="Enter Your Password" required type="password">
+
+          <label for="signup-email"><b>Email</b></label>
+          <input id="signup-email" placeholder="Enter Your Email" required type="text">
+
+          <button onclick="signUp()" type="submit">Register</button>
+          <label>
+            <input checked="checked" name="remember" type="checkbox"> Remember me
+          </label>
+        </div>
+
+        <div class="container" style="background-color:#f1f1f1">
+          <button class="cancelbtn" onclick="document.getElementById('signup').style.display='none'" type="button">Cancel
+          </button>
+          <span class="psw">Forgot <a href="#">password?</a></span>
+        </div>
+
+      </div>
+    </div>
     <div class="chat-popup" id="myForm">
       <form class="form-container">
         <h1>Send Message</h1>
 
         <b>Message</b></label>
         <textarea id="message_input" placeholder="Type message.." name="msg" required></textarea>
-
         <button type="button" class="btn" onclick="sendMessage()">Send</button>
         <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
       </form>

@@ -1,7 +1,7 @@
 
 
 /* Full-width input fields */
-#login input[type=text], input[type=password] {
+#signup input[type=text], input[type=password] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -10,8 +10,7 @@
     box-sizing: border-box;
 }
 
-/* Set a style for all buttons */
-#login button {
+#signup button {
     background-color: #04AA6D;
     color: white;
     padding: 14px 20px;
@@ -21,53 +20,41 @@
     width: 100%;
 }
 
-
-/* Set a style for all buttons */
-#login #signup-btn {
-    background-color: dodgerblue;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-}
-
-#login button:hover {
+#signup button:hover {
     opacity: 0.8;
 }
 
 /* Extra styles for the cancel button */
-#login .cancelbtn {
+#signup .cancelbtn {
     width: auto;
     padding: 10px 18px;
     background-color: #f44336;
 }
 
 /* Center the image and position the close button */
-#login .imgcontainer {
+#signup .imgcontainer {
     text-align: center;
     margin: 24px 0 12px 0;
     position: relative;
 }
 
-#login img.avatar {
+#signup img.avatar {
     width: 40%;
     border-radius: 50%;
 }
 
-#login .container {
+#signup .container {
     border-radius: 20px;
     padding: 16px;
 }
 
-#login span.psw {
+#signup span.psw {
     float: right;
     padding-top: 16px;
 }
 
 /* The Modal (background) */
-#login {
+#signup {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     left: 0;
@@ -82,7 +69,7 @@
 }
 
 /* Modal Content/Box */
-#login .modal-content {
+#signup .modal-content {
     border-radius: 20px;
     background-color: #fefefe;
     margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
@@ -91,7 +78,7 @@
 }
 
 /* The Close Button (x) */
-#login .close {
+#signup .close {
     position: relative;
     left: 92%;
     top: 0;
@@ -107,7 +94,7 @@
 }
 
 /* Add Zoom Animation */
-#login .animate {
+#signup .animate {
     -webkit-animation: animatezoom 0.6s;
     animation: animatezoom 0.6s
 }
