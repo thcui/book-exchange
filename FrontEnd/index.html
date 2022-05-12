@@ -9,6 +9,7 @@
   <!-- import CSS -->
   <link href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" rel="stylesheet" />
   <link href="./style-login.css" rel="stylesheet" />
+  <link href="./style-chatbox.css" rel="stylesheet" />
   <title>Book Exchange</title>
   <script src="lib/axios/dist/axios.standalone.js" type="text/javascript"></script>
   <script src="lib/CryptoJS/rollups/hmac-sha256.js" type="text/javascript"></script>
@@ -22,10 +23,12 @@
   <script src="lib/apiGatewayCore/utils.js" type="text/javascript"></script>
   <script src="apigClient.js" type="text/javascript"></script>
   <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1128.0.min.js"></script>
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1128.0.min.js"></script>
   <script src="https://wow.techbrood.com/libs/jquery/jquery-1.11.1.min.js"></script>
 
   <!--  Add your js scripts here   -->
   <script src="donation.js" type="text/javascript"></script>
+  <script src="chatbox.js" type="text/javascript"></script>
   <script src="accountManagement.js" type="text/javascript"></script>
   <script src="search.js" type="text/javascript"></script>
   <script src="request.js" type="text/javascript"></script>
@@ -46,8 +49,8 @@
       <div class="naviBar">
         <i class="el-icon-s-fold" @click="changeMode" style="font-size: 32px;
         color: gray;"></i>
-        <el-menu default-active="1" class="el-menu-vertical-demo" :collapse="isCollapse">
-          <el-menu-item index="1" @click="path = 1">
+        <el-menu class="el-menu-vertical-demo" :collapse="isCollapse" ref="menu" default-active="1">
+          <el-menu-item index="1" @click="path = 'home'">
             <i class="el-icon-house"></i>
             <span>Home</span>
           </el-menu-item>
@@ -63,17 +66,14 @@
             <i class="el-icon-star-off"></i>
             <span>Favorite</span>
           </el-menu-item>
-          <el-menu-item index="5" @click="path = 4">
+          <el-menu-item index="5" @click="showMessage">
             <i class="el-icon-chat-line-round"></i>
             <span>Message</span>
           </el-menu-item>
-          <el-menu-item index="6" @click="path = 5">
-            <i class="el-icon-setting"></i>
-            <span>Cart</span>
           </el-menu-item>
         </el-menu>
       </div>
-      <div class="middle" v-if="path == 1">
+      <div class="middle" v-if="path == 'home'">
         <div class="searchbar">
           <el-input id="searchContent" placeholder="Search for Book Name" v-model="bookName" class="input-with-select"
             style="width: 90%; margin-bottom: 10px" clearable>
@@ -133,7 +133,7 @@
                       <div style="flex:1">credits:5</div>
                     </div>
                     <div class="part4">
-                        <el-button @click="dialogVisible = false" onclick="makeRequest()"round type="primary">Request
+                      <el-button @click="dialogVisible = false" onclick="makeRequest()" round type="primary">Request
                       </el-button>
                     </div>
                   </div>
@@ -211,6 +211,32 @@
         </el-card>
       </div>
 
+      <div class="middle" v-if="path == 'message'">
+        <h1>Message Box</h1>
+        <!--        <el-card class="box-card" style="overflow-y: scroll;">-->
+        <!--          <div v-if="this.messages.length === 0">-->
+        <!--            <el-empty :image-size="200" description="No Message"></el-empty>-->
+        <!--          </div>-->
+        <!--          <div v-for="(item,index) in this.messages" :key="index" class="text item" v-else>-->
+        <!--            {{item}}-->
+        <!--          </div>-->
+        <!--        </el-card>-->
+
+        <el-table :data="this.messages" style="width: 100%">
+          <el-table-column fixed prop="sender" label="From" width="150">
+          </el-table-column>
+          <el-table-column prop="content" label="Content" width="500">
+          </el-table-column>
+
+          <el-table-column fixed="right" label="Operations" width="120">
+            <template slot-scope="scope">
+              <el-button @click="showMessagePanel(scope.$index)" type="text" size="small">Reply</el-button>
+              <el-button @click="showMessage" type="text" size="small">Delete</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+
       <div class="ediChoice">
         <h4 class="title">Editor's choice</h4>
         <img src="https://photokit.com/images/editor.min.webp" height="300" width="180" />
@@ -251,6 +277,17 @@
 
       </div>
     </div>
+    <div class="chat-popup" id="myForm">
+      <form class="form-container">
+        <h1>Send Message</h1>
+
+        <b>Message</b></label>
+        <textarea id="message_input" placeholder="Type message.." name="msg" required></textarea>
+
+        <button type="button" class="btn" onclick="sendMessage()">Send</button>
+        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+      </form>
+    </div>
   </div>
   </div>
 </body>
@@ -272,36 +309,19 @@
         donatedBook: "",
         creditRequired: 5,
         dialogVisible: false,
-        path: 1,
+        path: 'home',
         read_value: 3.7,
         dialogImageUrl: '',
         url: "",
         Baseurl: "https://z7xnekbzrd.execute-api.us-east-1.amazonaws.com/dev/donate/photos/",
         fav: [],
+        messages: [],
         current_credit: '',
         last_sign_up_time: '',
         user_id: '',
         thum: false,
         image_path: generateUUID()
       };
-    },
-    mounted() {
-      var apigClient = apigClientFactory.newClient();
-      var params = {
-        user_id: login_user_name
-      };
-      var additionalParams = {};
-      var body = {};
-      apigClient.getuserinfoGet(params, body, additionalParams)
-        .then(res => {
-          this.fav = res.data.favorite_list
-          if (this.fav.includes(this.bookName)) {
-            this.thum = true
-          } else {
-            this.thum = false
-          }
-
-        });
     },
     methods: {
       changeMode() {
@@ -344,8 +364,14 @@
       handleSuccess(file, file_list) {
         donation_photos_list = file_list
 
+
       },
       showFav() {
+        if (login_user_name == null) {
+          request_login()
+          this.$refs.menu.activeIndex = 1
+          return
+        }
         this.path = 'fav';
         var apigClient = apigClientFactory.newClient();
         var params = {
@@ -359,7 +385,31 @@
             this.fav = res.data.favorite_list
           });
       },
+      showMessage() {
+        if (login_user_name == null) {
+          request_login()
+          this.$refs.menu.activeIndex = 1
+          return
+        }
+        this.path = 'message';
+        var apigClient = apigClientFactory.newClient();
+        var params = {
+          user_id: login_user_name
+        };
+        var additionalParams = {};
+        var body = {};
+        apigClient.messageGet(params, body, additionalParams)
+          .then(res => {
+            console.log(res)
+            this.messages = res.data.messages
+          });
+      },
       showAcc() {
+        if (login_user_name == null) {
+          request_login()
+          this.$refs.menu.activeIndex = 1
+          return
+        }
         this.path = 'account';
         var apigClient = apigClientFactory.newClient();
         var params = {
@@ -374,6 +424,11 @@
             this.user_id = res.data.user_id
             this.request_history = res.data.request_history
           });
+      },
+      showMessagePanel(index){
+        console.log(this.messages[index]['sender'])
+        current_recipient=this.messages[index]['sender']
+        openForm()
       }
     }
   });
