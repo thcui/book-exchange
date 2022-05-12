@@ -1,5 +1,4 @@
-var login_user_name = null;
-
+var login_user_name = 'albert-new4';
 var user_credit = null;
 var user_info_cognito = null;
 
