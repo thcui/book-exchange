@@ -9,6 +9,7 @@
   <!-- import CSS -->
   <link href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" rel="stylesheet" />
   <link href="./style-login.css" rel="stylesheet" />
+  <link href="./style-signup.css" rel="stylesheet" />
   <link href="./style-chatbox.css" rel="stylesheet" />
   <title>Book Exchange</title>
   <script src="lib/axios/dist/axios.standalone.js" type="text/javascript"></script>
@@ -30,7 +31,7 @@
   <script src="donation.js" type="text/javascript"></script>
   <script src="chatbox.js" type="text/javascript"></script>
   <script src="accountManagement.js" type="text/javascript"></script>
-  <script src="search.js" type="text/javascript"></script>
+  <!-- <script src="search.js" type="text/javascript"></script> -->
   <script src="request.js" type="text/javascript"></script>
 
 </head>
@@ -77,49 +78,53 @@
         <div class="searchbar">
           <el-input id="searchContent" placeholder="Search for Book Name" v-model="bookName" class="input-with-select"
             style="width: 90%; margin-bottom: 10px" clearable>
-            <el-button slot="append" icon="el-icon-search" onclick="searchPhoto()"></el-button>
+            <el-button slot="append" icon="el-icon-search" @click="searchPhoto()"></el-button>
           </el-input>
-          <el-select id="selectOrder" v-model="sortby" slot="prepend" onchange="getOrder()" placeholder="Sort By"
-            style="width: 30%" clearable>
-            <el-option label="Alphabetical Order (A-Z)" value="1"></el-option>
+          <el-select id="selectOrder" v-model="sortby" slot="prepend" placeholder="Sort By" style="width: 30%"
+            @change="getOrder" clearable>
+            <el-option v-for="(item,index) in this.order_option" :key="index" :label="item.label" :value="item.value">
+            </el-option>
+            <!-- <el-option label="Alphabetical Order (A-Z)" value="1"></el-option>
             <el-option label="Alphabetical Order (Z-A)" value="2"></el-option>
             <el-option label="Credit required low to high" value="3"></el-option>
-            <el-option label="Credit required high to low" value="4"></el-option>
+            <el-option label="Credit required high to low" value="4"></el-option> -->
           </el-select>
-          <el-select id="selectCondition" placeholder="Min. Condition Requirement" slot="prepend"
-            onchange="getCondition()" style="width: 30%" v-model="tag" clearable>
-            <el-option label="As New" value="1"></el-option>
+          <el-select id="selectCondition" placeholder="Min. Condition Requirement" slot="prepend" style="width: 30%"
+            v-model="tag" @change="getCondition" clearable>
+            <el-option v-for="(item,index) in this.condition_option" :key="index" :label="item.label"
+              :value="item.value"></el-option>
+            <!-- <el-option label="As New" value="1"></el-option>
             <el-option label="Very good" value="2"></el-option>
             <el-option label="Good" value="3"></el-option>
             <el-option label="Fair" value="4"></el-option>
-            <el-option label="Poor" value="5"></el-option>
-
+            <el-option label="Poor" value="5"></el-option> -->
           </el-select>
-          <el-select id="selectCategory" v-model="category" slot="prepend" onchange="getCategory()"
-            placeholder="Category" style="width: 30%" clearable>
-            <el-option label="Drama" value="Drama"></el-option>
+          <el-select id="selectCategory" v-model="category" slot="prepend" placeholder="Category" style="width: 30%"
+            onchange="getCategory()" clearable>
+            <el-option v-for="(item,index) in this.category_option" :key="index" :label="item.label"
+              :value="item.value"></el-option>
+            <!-- <el-option label="Drama" value="Drama"></el-option>
             <el-option label="Fiction" value="Fiction"></el-option>
             <el-option label="History" value="History"></el-option>
             <el-option label="Juvenile literature" value="Juvenile literature"></el-option>
-            <el-option label="Romance" value="Romance"></el-option>
+            <el-option label="Romance" value="Romance"></el-option> -->
           </el-select>
         </div>
         <div class="imgDisplay" id="photoContainer">
-          <el-row :gutter="20" v-for="(item,index) in this.info" :key="index">
-            <el-col :span="6">
-              <img class="grid-content" :src="item.photos_links"></img>
-              <el-button @click="dialogVisible = true" type="text">Book Information</el-button>
+          <el-row :gutter="20">
+            <el-col :span="6" v-for="(item,index) in this.info" :key="index">
+              <img class="grid-content" :src="BaseurlPic+item.photos_links"></img>
+              <el-button @click="dialogVisible = true" type="text">{{item.book_name}}</el-button>
               <el-dialog :visible.sync="dialogVisible" width="800px">
                 <div class="dialog">
                   <div class="left">
-                    <img class="imgSize" :src="item.photos_links" />
+                    <img class="imgSize" :src="BaseurlPic+item.photos_links" />
                   </div>
                   <div class="right">
                     <div class="line1">
                       <h1>{{item.book_name}}</h1>
                       <div @click="thumbup" id="heart" :class="thum ?  'is-active' : ''"></div>
                     </div>
-                    <h3> albert-2022-5-8-3-28-44-240 </h3>
                     <div class="dialogText">Description</div>
                     <div class="part2">{{item.description}}</div>
                     <div class="part3">
@@ -134,7 +139,8 @@
                       <div style="flex:1">credits:{{item.credit}}</div>
                     </div>
                     <div class="part4">
-                      <el-button @click="dialogVisible = false" onclick="makeRequest()" round type="primary">Request
+                      <el-button @click="dialogVisible = false; UpdateDonationID(item.donation_id)"
+                        onclick="makeRequest(donation_id)" round type="primary">Request
                       </el-button>
                     </div>
                   </div>
@@ -262,7 +268,7 @@
           <el-table-column fixed="right" label="Operations" width="120">
             <template slot-scope="scope">
               <el-button @click="showMessagePanel(scope.$index)" type="text" size="small">Reply</el-button>
-<!--              <el-button @click="showMessage" type="text" size="small">Delete</el-button>-->
+              <!--              <el-button @click="showMessage" type="text" size="small">Delete</el-button>-->
             </template>
           </el-table-column>
         </el-table>
@@ -294,7 +300,7 @@
           <input id="psw" placeholder="Enter Password" required type="password">
 
           <button onclick="login()" type="submit">Login</button>
-          <button onclick="signUp()" type="submit">Register</button>
+          <button id='signup-btn' onclick="showSignUp()" type="submit">New user? Create an account here!</button>
           <label>
             <input checked="checked" name="remember" type="checkbox"> Remember me
           </label>
@@ -308,13 +314,46 @@
 
       </div>
     </div>
+    <div class="modal" id="signup">
+      <!-- Modal Content -->
+      <div class="modal-content animate">
+        <span class="close" onclick="document.getElementById('signup').style.display='none'"
+          title="Close Modal">&times;</span>
+
+        <div class="container">
+          <label for="signup-uname"><b>Username</b></label>
+          <input id="signup-uname" placeholder="Enter Your Username" required type="text">
+
+          <label for="signup-psw1"><b>Please enter your password</b></label>
+          <input id="signup-psw1" placeholder="Enter Your Password" required type="password">
+
+          <label for="signup-psw2"><b>Please enter your password again </b></label>
+          <input id="signup-psw2" placeholder="Enter Your Password" required type="password">
+
+          <label for="signup-email"><b>Email</b></label>
+          <input id="signup-email" placeholder="Enter Your Email" required type="text">
+
+          <button onclick="signUp()" type="submit">Register</button>
+          <label>
+            <input checked="checked" name="remember" type="checkbox"> Remember me
+          </label>
+        </div>
+
+        <div class="container" style="background-color:#f1f1f1">
+          <button class="cancelbtn" onclick="document.getElementById('signup').style.display='none'"
+            type="button">Cancel
+          </button>
+          <span class="psw">Forgot <a href="#">password?</a></span>
+        </div>
+
+      </div>
+    </div>
     <div class="chat-popup" id="myForm">
       <form class="form-container">
         <h1>Send Message</h1>
 
         <b>Message</b></label>
         <textarea id="message_input" placeholder="Type message.." name="msg" required></textarea>
-
         <button type="button" class="btn" onclick="sendMessage()">Send</button>
         <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
       </form>
@@ -326,6 +365,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script>
+
   new Vue({
     el: "#app",
     data: function () {
@@ -345,37 +385,121 @@
         dialogImageUrl: '',
         url: "",
         Baseurl: "https://z7xnekbzrd.execute-api.us-east-1.amazonaws.com/dev/donate/photos/",
+        BaseurlPic: "https://book-exchange-book-photos-bucket.s3.amazonaws.com/",
         fav: [],
         messages: [],
         current_credit: '',
         last_sign_up_time: '',
         user_id: '',
+        donation_id: '',
         thum: false,
         image_path: generateUUID(),
         dona_his: "",
         req_his: "",
-        info: [{
-          'credit': 5,
-          'photos_links': 'https://photokit.com/images/editor.min.webp',
-
-          'openlibrary_link': 'https://openlibrary.org/works/OL82563W',
-
-          'book_name': 'Harry Potter',
-
-          'insertedAtTimestamp': '02:23:36 UTC, 05-11-2022',
-
-          'condition': 'Good',
-
-          'user': 'albert-new',
-
-          'book_status': 'available',
-
-          'description': 'Harry Potter #1\r\n\r\nWhen mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts School of Witchcraft and Wizardry.\r\n\r\nThey are swiftly confiscated by his aunt and uncle.\r\n\r\nThen, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard and has been awarded a place to study at Hogwarts.\r\n\r\nAnd so the first of the Harry Potter adventures is set to begin.\r\n([source][1])\r\n\r\n\r\n  [1]: https://www.jkrowling.com/book/harry-potter-philosophers-stone/',
-
-          'genres': ['Ghosts', 'Monsters', 'Vampires', 'Witches', 'Challenges and Overcoming Obstacles', 'Magic and Supernatural', 'Cleverness', 'School Life', 'school stories', 'Wizards', 'Magic', 'MAGIA', 'MAGOS', 'Juvenile fiction', 'Fiction', 'NOVELAS INGLESAS', 'Schools', 'orphans', 'fantasy fiction', 'England in fiction', 'Witches in fiction', 'Wizards in fiction', 'Alchemy', 'New York Times bestseller', 'Juvenile literature', 'Magic in fiction', 'Open Library Staff Picks', 'Juvenile audience', "Children's stories", 'Juvenile works', 'Schools in fiction', 'Fantasy', 'Hogwarts School of Witchcraft and Wizardry (Imaginary place)', 'Harry Potter (Fictitious character)', 'Ficción juvenil', 'Escuelas', 'Hogwarts School of Witchcraft and Wizardry (Imaginary organization)', 'Translations from English', 'Chinese fiction', 'Hermione Granger (Fictitious character)', 'Reading Level-Grade 9', 'Reading Level-Grade 11', 'Reading Level-Grade 10', 'Reading Level-Grade 12', 'Hogwarts school of witchcraft and wizardry (imaginary organization), fiction', "Children's fiction", 'Schools, fiction', 'England, fiction', 'Potter, harry (fictitious character), fiction', 'Wizards, fiction', 'Magic, fiction', 'Fiction, fantasy, general', 'Large type books', 'Magier', 'Fabeltiere', 'Lehrling', 'Kinderbuch', 'Stein der Weisen', 'Ungeheuer', 'Junge', 'English language', 'Translating into Welsh', 'Modern history to 20th century: c 1700 to c 1900', 'Literary theory', 'English literature', 'Ron Weasley (Fictitious character)', 'Latin language materials', 'Romans, nouvelles, etc. pour la jeunesse', 'Poudlard, école de sorcellerie (Organisation imaginaire)', 'Sorciers', 'Sorcières', 'Magie', 'Internats', 'Adventure and adventurers, fiction', 'Action & Adventure', 'Fantasy & Magic', 'Social Themes', 'Friendship', 'Harry Potter (Fictional character)', 'Friendship, fiction', 'German language materials'],
-
-          'donation_id': 'albert-new-2022-5-10-22-23-34-240'
-        }]
+        condition_option: ["Poor", "Fair", "Good", "Very Good", "As New"],
+        info: [],
+        // info: [{
+        //   'credit': 5,
+        //   'photos_links': 'https://photokit.com/images/editor.min.webp',
+        //   'openlibrary_link': 'https://openlibrary.org/works/OL82563W',
+        //   'book_name': 'Harry Potter1',
+        //   'condition': 'Good',
+        //   'user': 'albert-new',
+        //   'genres': ['Drama', 'Fiction', 'History'],
+        //   'description': 'Harry Potter #1\r\n\r\nWhen mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts School of Witchcraft and Wizardry.\r\n\r\nThey are swiftly confiscated by his aunt and uncle.\r\n\r\nThen, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard and has been awarded a place to study at Hogwarts.\r\n\r\nAnd so the first of the Harry Potter adventures is set to begin.\r\n([source][1])\r\n\r\n\r\n  [1]: https://www.jkrowling.com/book/harry-potter-philosophers-stone/',
+        //   'donation_id': 'albert-new-2022-5-10-22-23-34-240'
+        // },
+        // {
+        //   'credit': 5,
+        //   'photos_links': 'https://photokit.com/images/editor.min.webp',
+        //   'openlibrary_link': 'https://openlibrary.org/works/OL82563W',
+        //   'book_name': 'Harry Potter2',
+        //   'condition': 'Very Good',
+        //   'user': 'albert-new',
+        //   'genres': ['History', 'Romance', 'Fiction'],
+        //   'description': 'Harry Potter #1\r\n\r\nWhen mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts School of Witchcraft and Wizardry.\r\n\r\nThey are swiftly confiscated by his aunt and uncle.\r\n\r\nThen, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard and has been awarded a place to study at Hogwarts.\r\n\r\nAnd so the first of the Harry Potter adventures is set to begin.\r\n([source][1])\r\n\r\n\r\n  [1]: https://www.jkrowling.com/book/harry-potter-philosophers-stone/',
+        //   'donation_id': 'albert-new-2022-5-10-22-23-34-240'
+        // },
+        // {
+        //   'credit': 5,
+        //   'photos_links': 'https://photokit.com/images/editor.min.webp',
+        //   'openlibrary_link': 'https://openlibrary.org/works/OL82563W',
+        //   'book_name': 'Harry Potter3',
+        //   'condition': 'Good',
+        //   'user': 'albert-new',
+        //   'genres': ['Romance'],
+        //   'description': 'Harry Potter #1\r\n\r\nWhen mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts School of Witchcraft and Wizardry.\r\n\r\nThey are swiftly confiscated by his aunt and uncle.\r\n\r\nThen, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard and has been awarded a place to study at Hogwarts.\r\n\r\nAnd so the first of the Harry Potter adventures is set to begin.\r\n([source][1])\r\n\r\n\r\n  [1]: https://www.jkrowling.com/book/harry-potter-philosophers-stone/',
+        //   'donation_id': 'albert-new-2022-5-10-22-23-34-240'
+        // },
+        // {
+        //   'credit': 5,
+        //   'photos_links': 'https://photokit.com/images/editor.min.webp',
+        //   'openlibrary_link': 'https://openlibrary.org/works/OL82563W',
+        //   'book_name': 'Harry Potter4',
+        //   'condition': 'As New',
+        //   'user': 'albert-new',
+        //   'genres': ['Drama', 'History'],
+        //   'description': 'Harry Potter #1\r\n\r\nWhen mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts School of Witchcraft and Wizardry.\r\n\r\nThey are swiftly confiscated by his aunt and uncle.\r\n\r\nThen, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard and has been awarded a place to study at Hogwarts.\r\n\r\nAnd so the first of the Harry Potter adventures is set to begin.\r\n([source][1])\r\n\r\n\r\n  [1]: https://www.jkrowling.com/book/harry-potter-philosophers-stone/',
+        //   'donation_id': 'albert-new-2022-5-10-22-23-34-240'
+        // },
+        // {
+        //   'credit': 5,
+        //   'photos_links': 'https://photokit.com/images/editor.min.webp',
+        //   'openlibrary_link': 'https://openlibrary.org/works/OL82563W',
+        //   'book_name': 'Harry Potter5',
+        //   'condition': 'Very Good',
+        //   'user': 'albert-new',
+        //   'genres': ['Fiction'],
+        //   'description': 'Harry Potter #1\r\n\r\nWhen mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts School of Witchcraft and Wizardry.\r\n\r\nThey are swiftly confiscated by his aunt and uncle.\r\n\r\nThen, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard and has been awarded a place to study at Hogwarts.\r\n\r\nAnd so the first of the Harry Potter adventures is set to begin.\r\n([source][1])\r\n\r\n\r\n  [1]: https://www.jkrowling.com/book/harry-potter-philosophers-stone/',
+        //   'donation_id': 'albert-new-2022-5-10-22-23-34-240'
+        // },
+        // {
+        //   'credit': 5,
+        //   'photos_links': 'https://photokit.com/images/editor.min.webp',
+        //   'openlibrary_link': 'https://openlibrary.org/works/OL82563W',
+        //   'book_name': 'Harry Potter6',
+        //   'condition': 'Fair',
+        //   'user': 'albert-new',
+        //   'genres': ['Fiction', 'Romance'],
+        //   'description': 'Harry Potter #1\r\n\r\nWhen mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts School of Witchcraft and Wizardry.\r\n\r\nThey are swiftly confiscated by his aunt and uncle.\r\n\r\nThen, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard and has been awarded a place to study at Hogwarts.\r\n\r\nAnd so the first of the Harry Potter adventures is set to begin.\r\n([source][1])\r\n\r\n\r\n  [1]: https://www.jkrowling.com/book/harry-potter-philosophers-stone/',
+        //   'donation_id': 'albert-new-2022-5-10-22-23-34-240'
+        // },
+        // {
+        //   'credit': 5,
+        //   'photos_links': 'https://photokit.com/images/editor.min.webp',
+        //   'openlibrary_link': 'https://openlibrary.org/works/OL82563W',
+        //   'book_name': 'Harry Potter7',
+        //   'condition': 'Poor',
+        //   'user': 'albert-new',
+        //   'genres': ['Drama'],
+        //   'description': 'Harry Potter #1\r\n\r\nWhen mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts School of Witchcraft and Wizardry.\r\n\r\nThey are swiftly confiscated by his aunt and uncle.\r\n\r\nThen, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard and has been awarded a place to study at Hogwarts.\r\n\r\nAnd so the first of the Harry Potter adventures is set to begin.\r\n([source][1])\r\n\r\n\r\n  [1]: https://www.jkrowling.com/book/harry-potter-philosophers-stone/',
+        //   'donation_id': 'albert-new-2022-5-10-22-23-34-240'
+        // }],
+        order_option: [
+          { "label": "Alphabetical Order (A-Z)", "value": "1" },
+          { "label": "Alphabetical Order (Z-A)", "value": "2" },
+          { "label": "Credit required low to high", "value": "3" },
+          { "label": "Credit required high to low", "value": "4" },
+        ],
+        condition_option: [
+          { "label": "As New", "value": 5 },
+          { "label": "Very Good", "value": 4 },
+          { "label": "Good", "value": 3 },
+          { "label": "Fair", "value": 2 },
+          { "label": "Poor", "value": 1 },
+        ],
+        category_option: [
+          { "label": "Drama", "value": "1" },
+          { "label": "Fiction", "value": "2" },
+          { "label": "History", "value": "3" },
+          { "label": "Juvenile literature", "value": "4" },
+          { "label": "Romance", "value": "5" },
+        ],
+        display: {
+          sortby_order: "",
+          min_requirement: "",
+          category: ""
+        }
       };
     },
     methods: {
@@ -485,8 +609,68 @@
         console.log(this.messages[index]['sender'])
         current_recipient = this.messages[index]['sender']
         openForm()
+      },
+      getOrder(val) {
+        this.order_option.forEach(item => {
+          if (item.value === val) {
+            this.display.sortby_order = item.label;
+            console.log(this.display.sortby_order);
+          }
+        })
+      },
+      getCondition(val) {
+        this.condition_option.forEach(item => {
+          if (item.value === val) {
+            this.display.min_requirement = item.label;
+          }
+        })
+      },
+      getCategory(val) {
+        this.category_option.forEach(item => {
+          if (item.value === val) {
+            this.display.category = item.label;
+          }
+        })
+      },
+      UpdateDonationID(d_id) {
+        this.donation_id = d_id;
+        console.log(d_id);
+        console.log(this.donation_id);
+      },
+      searchPhoto() {
+        //var query = document.getElementById("searchContent").value;
+        if (this.bookName === "") {
+          alert("Please input the name for your book.");
+          return;
+        }
+
+        //initialize apigclient and related parameters
+        var apigClient = apigClientFactory.newClient();
+        var params = {
+          book_name: this.bookName
+        };
+        var body = {};
+        var additionalParams = {};
+
+        apigClient
+          .searchGet(params, body, additionalParams)
+          .then((res) => {
+            //TODO: how to update info in the frontend part
+            this.info = res.data;
+            console.log(this.info);
+          });
       }
+    },
+    mounted() {
+      window.UpdateDonationID = this.UpdateDonationID;
+      window.getOrder = this.getOrder;
+      window.getCondition = this.getCondition;
+      window.getCategory = this.getCategory;
+      window.updateHTML = this.updateHTML;
     }
+
+
+
   });
 
 </script>

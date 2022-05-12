@@ -1,4 +1,4 @@
-function makeRequest() {
+function makeRequest(d_id) {
     var apigClient = apigClientFactory.newClient({
         apiKey: "DZbM31zNmQ6yIX0cYXLul5QK72JoMVmA72sDXTSE",
     });
@@ -12,9 +12,8 @@ function makeRequest() {
     };
     console.log("hiiii make rquest");
 
-    dateTime=get_current_time()
     user_id = get_user_id()
-    book_id = "albert-2022-5-8-3-28-44-240" //get_book_id()
+    book_id = d_id //get_book_id()
     //TODO: find a better way to get the credit value
     var body = {
         'userName': user_id,
