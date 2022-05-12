@@ -220,14 +220,14 @@
         <!--        </el-card>-->
 
         <el-table :data="this.messages" style="width: 100%">
-          <el-table-column fixed prop="sender" label="Sender" width="150">
+          <el-table-column fixed prop="sender" label="From" width="150">
           </el-table-column>
           <el-table-column prop="content" label="Content" width="500">
           </el-table-column>
 
           <el-table-column fixed="right" label="Operations" width="120">
             <template slot-scope="scope">
-              <el-button @click="showMessagePanel" type="text" size="small">Reply</el-button>
+              <el-button @click="showMessagePanel(scope.$index)" type="text" size="small">Reply</el-button>
               <el-button @click="showMessage" type="text" size="small">Delete</el-button>
             </template>
           </el-table-column>
@@ -279,9 +279,9 @@
         <h1>Send Message</h1>
 
         <b>Message</b></label>
-        <textarea placeholder="Type message.." name="msg" required></textarea>
+        <textarea id="message_input" placeholder="Type message.." name="msg" required></textarea>
 
-        <button type="submit" class="btn">Send</button>
+        <button type="button" class="btn" onclick="sendMessage()">Send</button>
         <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
       </form>
     </div>
@@ -361,6 +361,7 @@
       handleSuccess(file, file_list) {
         donation_photos_list = file_list
 
+
       },
       showFav() {
         if (login_user_name == null) {
@@ -420,7 +421,9 @@
             this.user_id = res.data.user_id
           });
       },
-      showMessagePanel(receiver){
+      showMessagePanel(index){
+        console.log(this.messages[index]['sender'])
+        current_recipient=this.messages[index]['sender']
         openForm()
       }
     }
