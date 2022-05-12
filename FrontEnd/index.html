@@ -105,30 +105,33 @@
           </el-select>
         </div>
         <div class="imgDisplay" id="photoContainer">
-          <el-row :gutter="20">
-            <el-col :span="6"><img class="grid-content" src="https://photokit.com/images/editor.min.webp"></img>
-              <el-button @click="dialogVisible = true" type="text">click to open the Dialog</el-button>
+          <el-row :gutter="20" v-for="(item,index) in this.info" :key="index">
+            <el-col :span="6">
+              <img class="grid-content" :src="item.photos_links"></img>
+              <el-button @click="dialogVisible = true" type="text">Book Information</el-button>
               <el-dialog :visible.sync="dialogVisible" width="800px">
                 <div class="dialog">
                   <div class="left">
-                    <img class="imgSize" src="https://photokit.com/images/editor.min.webp" />
+                    <img class="imgSize" :src="item.photos_links" />
                   </div>
                   <div class="right">
                     <div class="line1">
-                      <h1>Amazon Unbound</h1>
+                      <h1>{{item.book_name}}</h1>
                       <div @click="thumbup" id="heart" :class="thum ?  'is-active' : ''"></div>
                     </div>
+                    <h3> albert-2022-5-8-3-28-44-240 </h3>
                     <div class="dialogText">Description</div>
-                    <div class="part2">This is new york</div>
+                    <div class="part2">{{item.description}}</div>
                     <div class="part3">
                       <div style="flex:1">
                         <div><i class="el-icon-user-solid"></i>
-                          owner:nmlgb6998
+                          owner:{{item.user}}
                         </div>
-                        <el-rate disabled score-template="{value} points" text-color="#ff9900" v-model="read_value">
+                        <el-rate disabled score-template="{item.credit} points" text-color="#ff9900"
+                          v-model="read_value">
                         </el-rate>
                       </div>
-                      <div style="flex:1">credits:5</div>
+                      <div style="flex:1">credits:{{item.credit}}</div>
                     </div>
                     <div class="part4">
                       <el-button @click="dialogVisible = false" onclick="makeRequest()" round type="primary">Request
@@ -191,9 +194,48 @@
         </div>
       </div>
       <div class="middle account" v-if="path == 'account'">
-        <div>User ID: {{user_id}}</div>
+        <!-- <div>User ID: {{user_id}}</div>
         <div>Current Credit: {{current_credit}}</div>
-        <div>Sign Up Time: {{last_sign_up_time}}</div>
+        <div>Sign Up Time: {{last_sign_up_time}}</div> -->
+
+        <el-descriptions class="margin-top" title="Account Information" :column="1" :size="size" border>
+          <el-descriptions-item>
+            <template slot="label">
+              <i class="el-icon-user"></i>
+              Username
+            </template>
+            {{user_id}}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template slot="label">
+              <i class="el-icon-coin"></i>
+              Current Credit
+            </template>
+            {{current_credit}}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template slot="label">
+              <i class="el-icon-time"></i>
+              Sign Up Time
+            </template>
+            {{last_sign_up_time}}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template slot="label">
+              <i class="el-icon-notebook-2"></i>
+              Requested Book
+            </template>
+            {{req_his}}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template slot="label">
+              <i class="el-icon-notebook-1"></i>
+              Donated Book
+            </template>
+            <!-- {{fav}} -->
+            {{dona_his}}
+          </el-descriptions-item>
+        </el-descriptions>
 
       </div>
       <div class="middle" v-if="path == 'fav'">
@@ -210,14 +252,6 @@
 
       <div class="middle" v-if="path == 'message'">
         <h1>Message Box</h1>
-        <!--        <el-card class="box-card" style="overflow-y: scroll;">-->
-        <!--          <div v-if="this.messages.length === 0">-->
-        <!--            <el-empty :image-size="200" description="No Message"></el-empty>-->
-        <!--          </div>-->
-        <!--          <div v-for="(item,index) in this.messages" :key="index" class="text item" v-else>-->
-        <!--            {{item}}-->
-        <!--          </div>-->
-        <!--        </el-card>-->
 
         <el-table :data="this.messages" style="width: 100%">
           <el-table-column fixed prop="sender" label="From" width="150">
@@ -228,7 +262,7 @@
           <el-table-column fixed="right" label="Operations" width="120">
             <template slot-scope="scope">
               <el-button @click="showMessagePanel(scope.$index)" type="text" size="small">Reply</el-button>
-              <el-button @click="showMessage" type="text" size="small">Delete</el-button>
+<!--              <el-button @click="showMessage" type="text" size="small">Delete</el-button>-->
             </template>
           </el-table-column>
         </el-table>
@@ -317,7 +351,31 @@
         last_sign_up_time: '',
         user_id: '',
         thum: false,
-        image_path: generateUUID()
+        image_path: generateUUID(),
+        dona_his: "",
+        req_his: "",
+        info: [{
+          'credit': 5,
+          'photos_links': 'https://photokit.com/images/editor.min.webp',
+
+          'openlibrary_link': 'https://openlibrary.org/works/OL82563W',
+
+          'book_name': 'Harry Potter',
+
+          'insertedAtTimestamp': '02:23:36 UTC, 05-11-2022',
+
+          'condition': 'Good',
+
+          'user': 'albert-new',
+
+          'book_status': 'available',
+
+          'description': 'Harry Potter #1\r\n\r\nWhen mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts School of Witchcraft and Wizardry.\r\n\r\nThey are swiftly confiscated by his aunt and uncle.\r\n\r\nThen, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard and has been awarded a place to study at Hogwarts.\r\n\r\nAnd so the first of the Harry Potter adventures is set to begin.\r\n([source][1])\r\n\r\n\r\n  [1]: https://www.jkrowling.com/book/harry-potter-philosophers-stone/',
+
+          'genres': ['Ghosts', 'Monsters', 'Vampires', 'Witches', 'Challenges and Overcoming Obstacles', 'Magic and Supernatural', 'Cleverness', 'School Life', 'school stories', 'Wizards', 'Magic', 'MAGIA', 'MAGOS', 'Juvenile fiction', 'Fiction', 'NOVELAS INGLESAS', 'Schools', 'orphans', 'fantasy fiction', 'England in fiction', 'Witches in fiction', 'Wizards in fiction', 'Alchemy', 'New York Times bestseller', 'Juvenile literature', 'Magic in fiction', 'Open Library Staff Picks', 'Juvenile audience', "Children's stories", 'Juvenile works', 'Schools in fiction', 'Fantasy', 'Hogwarts School of Witchcraft and Wizardry (Imaginary place)', 'Harry Potter (Fictitious character)', 'Ficción juvenil', 'Escuelas', 'Hogwarts School of Witchcraft and Wizardry (Imaginary organization)', 'Translations from English', 'Chinese fiction', 'Hermione Granger (Fictitious character)', 'Reading Level-Grade 9', 'Reading Level-Grade 11', 'Reading Level-Grade 10', 'Reading Level-Grade 12', 'Hogwarts school of witchcraft and wizardry (imaginary organization), fiction', "Children's fiction", 'Schools, fiction', 'England, fiction', 'Potter, harry (fictitious character), fiction', 'Wizards, fiction', 'Magic, fiction', 'Fiction, fantasy, general', 'Large type books', 'Magier', 'Fabeltiere', 'Lehrling', 'Kinderbuch', 'Stein der Weisen', 'Ungeheuer', 'Junge', 'English language', 'Translating into Welsh', 'Modern history to 20th century: c 1700 to c 1900', 'Literary theory', 'English literature', 'Ron Weasley (Fictitious character)', 'Latin language materials', 'Romans, nouvelles, etc. pour la jeunesse', 'Poudlard, école de sorcellerie (Organisation imaginaire)', 'Sorciers', 'Sorcières', 'Magie', 'Internats', 'Adventure and adventurers, fiction', 'Action & Adventure', 'Fantasy & Magic', 'Social Themes', 'Friendship', 'Harry Potter (Fictional character)', 'Friendship, fiction', 'German language materials'],
+
+          'donation_id': 'albert-new-2022-5-10-22-23-34-240'
+        }]
       };
     },
     methods: {
@@ -418,12 +476,14 @@
           .then(res => {
             this.last_sign_up_time = res.data.user_sign_up_time
             this.current_credit = res.data.current_credit
-            this.user_id = res.data.user_id
+            this.user_id = res.data.user_id ? res.data.user_id : ""
+            this.req_his = res.data.request_history.length !== 0 ? res.data.request_history : "No Data"
+            this.dona_his = res.data.donation_history.length !== 0 ? res.data.donation_history : "No Data"
           });
       },
-      showMessagePanel(index){
+      showMessagePanel(index) {
         console.log(this.messages[index]['sender'])
-        current_recipient=this.messages[index]['sender']
+        current_recipient = this.messages[index]['sender']
         openForm()
       }
     }

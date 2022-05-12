@@ -10,7 +10,6 @@ function sendMessage(){
         "recipient":current_recipient,
         "content":document.getElementById("message_input").value
     };
-    console.log('???')
     closeForm()
     apigClient.messagePost(params, body, additionalParams)
         .then(res => {
