@@ -139,8 +139,8 @@
                       <div style="flex:1">credits:{{item.credit}}</div>
                     </div>
                     <div class="part4">
-                      <el-button @click="dialogVisible = false; UpdateDonationID(item.donation_id)"
-                        onclick="makeRequest(donation_id)" round type="primary">Request
+                      <el-button @click="dialogVisible = false; UpdateDonationID(item.donation_id); MakeRequest(item.donation_id)"
+                         round type="primary">Request book:{{item.donation_id}}
                       </el-button>
                     </div>
                   </div>
@@ -636,6 +636,10 @@
         this.donation_id = d_id;
         console.log(d_id);
         console.log(this.donation_id);
+      },
+      MakeRequest(d_id) {
+        this.donation_id = d_id;
+        makeRequest(d_id);
       },
       searchPhoto() {
         //var query = document.getElementById("searchContent").value;
