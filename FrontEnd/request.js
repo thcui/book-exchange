@@ -25,6 +25,6 @@ function makeRequest() {
 
     var ret = apigClient.requestPost(params, body, additionalParams).then((response) => {
         alert('Request \"' + book_id + '\" Successfully! Thanks for your support!')
-    }).catch(err => console.log(err));
+    }).catch(err => alert('Request \"' + book_id + '\" Failed, not enough credit or book already unavailable'));
 
 }

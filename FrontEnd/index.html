@@ -196,7 +196,7 @@
         <div>User ID: {{user_id}}</div>
         <div>Current Credit: {{current_credit}}</div>
         <div>Sign Up Time: {{last_sign_up_time}}</div>
-        <div>Request History: {{request_history}}</div>
+        <div>Latest Request : {{latest_request}}</div>
 
       </div>
       <div class="middle" v-if="path == 'fav'">
@@ -422,7 +422,7 @@
             this.last_sign_up_time = res.data.user_sign_up_time
             this.current_credit = res.data.current_credit
             this.user_id = res.data.user_id
-            this.request_history = res.data.request_history
+            this.latest_request = res.data.request_history[res.data.request_history.length-1]
           });
       },
       showMessagePanel(index){
