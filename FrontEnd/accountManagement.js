@@ -70,6 +70,10 @@ function signUp() {
         alert("The password confirmation does not match.")
         return
     }
+    if(document.getElementById("signup-email").value === "") {
+        alert("Please enter your email.")
+        return
+    }
   AWS.config.region = "us-east-1"; // Region
   AWS.config.credentials = new AWS.CognitoIdentityCredentials({
     IdentityPoolId: "us-east-1:618317b2-43e9-413e-9624-74f3db4be00f",
