@@ -25,13 +25,8 @@ function searchPhoto() {
   apigClient.searchGet(params, body, additionalParams).then(function (response) {
     result = response.data;
     console.log(result.length);
+    console.log(result[0]);
     this.info = result;
-    var order = getOrder();
-    var condition = getCondition();
-    var category = getCategory();
-
-
-
   }).catch(function (result) {
     console.log(result);
   })
