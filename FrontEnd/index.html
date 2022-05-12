@@ -32,6 +32,7 @@
   <script src="chatbox.js" type="text/javascript"></script>
   <script src="accountManagement.js" type="text/javascript"></script>
   <script src="search.js" type="text/javascript"></script>
+  <!-- <script src="request.js"></script> -->
   <script src="request.js" type="module"></script>
 
 </head>
@@ -110,7 +111,7 @@
           <el-row :gutter="20">
             <el-col :span="6" v-for="(item,index) in this.info" :key="index">
               <img class="grid-content" :src="item.photos_links"></img>
-              <el-button @click="dialogVisible = true" type="text">Book Information</el-button>
+              <el-button @click="dialogVisible = true" type="text">{{item.book_name}}</el-button>
               <el-dialog :visible.sync="dialogVisible" width="800px">
                 <div class="dialog">
                   <div class="left">
@@ -135,7 +136,7 @@
                       <div style="flex:1">credits:{{item.credit}}</div>
                     </div>
                     <div class="part4">
-                      <el-button @click="dialogVisible = false" onclick="makeRequest()" round type="primary">Request
+                      <el-button @click="dialogVisible = false; UpdateDonationID(item.donation_id)" onclick="" round type="primary">Request
                       </el-button>
                     </div>
                   </div>
@@ -359,7 +360,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script>
-  // import { makeRequest } from "./request.js"
+  import { makeRequest } from "request.js"
 
   new Vue({
     el: "#app",
@@ -385,32 +386,89 @@
         current_credit: '',
         last_sign_up_time: '',
         user_id: '',
+        donation_id: '',
         thum: false,
         image_path: generateUUID(),
         dona_his: "",
         req_his: "",
         info: [{
-          'credit': 5,
-          'photos_links': 'https://photokit.com/images/editor.min.webp',
-          'openlibrary_link': 'https://openlibrary.org/works/OL82563W',
-          'book_name': 'Harry Potter',
-          'condition': 'Good',
-          'user': 'albert-new',
-          'genres': ['Ghosts', 'Monsters', 'Vampires', 'Witches', 'Challenges and Overcoming Obstacles', 'Magic and Supernatural', 'Cleverness', 'School Life', 'school stories', 'Wizards', 'Magic', 'MAGIA', 'MAGOS', 'Juvenile fiction', 'Fiction', 'NOVELAS INGLESAS', 'Schools', 'orphans', 'fantasy fiction', 'England in fiction', 'Witches in fiction', 'Wizards in fiction', 'Alchemy', 'New York Times bestseller', 'Juvenile literature', 'Magic in fiction', 'Open Library Staff Picks', 'Juvenile audience', "Children's stories", 'Juvenile works', 'Schools in fiction', 'Fantasy', 'Hogwarts School of Witchcraft and Wizardry (Imaginary place)', 'Harry Potter (Fictitious character)', 'Ficción juvenil', 'Escuelas', 'Hogwarts School of Witchcraft and Wizardry (Imaginary organization)', 'Translations from English', 'Chinese fiction', 'Hermione Granger (Fictitious character)', 'Reading Level-Grade 9', 'Reading Level-Grade 11', 'Reading Level-Grade 10', 'Reading Level-Grade 12', 'Hogwarts school of witchcraft and wizardry (imaginary organization), fiction', "Children's fiction", 'Schools, fiction', 'England, fiction', 'Potter, harry (fictitious character), fiction', 'Wizards, fiction', 'Magic, fiction', 'Fiction, fantasy, general', 'Large type books', 'Magier', 'Fabeltiere', 'Lehrling', 'Kinderbuch', 'Stein der Weisen', 'Ungeheuer', 'Junge', 'English language', 'Translating into Welsh', 'Modern history to 20th century: c 1700 to c 1900', 'Literary theory', 'English literature', 'Ron Weasley (Fictitious character)', 'Latin language materials', 'Romans, nouvelles, etc. pour la jeunesse', 'Poudlard, école de sorcellerie (Organisation imaginaire)', 'Sorciers', 'Sorcières', 'Magie', 'Internats', 'Adventure and adventurers, fiction', 'Action & Adventure', 'Fantasy & Magic', 'Social Themes', 'Friendship', 'Harry Potter (Fictional character)', 'Friendship, fiction', 'German language materials'],
-          'description': 'Harry Potter #1\r\n\r\nWhen mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts School of Witchcraft and Wizardry.\r\n\r\nThey are swiftly confiscated by his aunt and uncle.\r\n\r\nThen, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard and has been awarded a place to study at Hogwarts.\r\n\r\nAnd so the first of the Harry Potter adventures is set to begin.\r\n([source][1])\r\n\r\n\r\n  [1]: https://www.jkrowling.com/book/harry-potter-philosophers-stone/',
-          'donation_id': 'albert-new-2022-5-10-22-23-34-240'
-        },
-        {
-          'credit': 5,
-          'photos_links': 'https://photokit.com/images/editor.min.webp',
-          'openlibrary_link': 'https://openlibrary.org/works/OL82563W',
-          'book_name': 'Harry Potter',
-          'condition': 'Good',
-          'user': 'albert-new',
-          'genres': ['Ghosts', 'Monsters', 'Vampires', 'Witches', 'Challenges and Overcoming Obstacles', 'Magic and Supernatural', 'Cleverness', 'School Life', 'school stories', 'Wizards', 'Magic', 'MAGIA', 'MAGOS', 'Juvenile fiction', 'Fiction', 'NOVELAS INGLESAS', 'Schools', 'orphans', 'fantasy fiction', 'England in fiction', 'Witches in fiction', 'Wizards in fiction', 'Alchemy', 'New York Times bestseller', 'Juvenile literature', 'Magic in fiction', 'Open Library Staff Picks', 'Juvenile audience', "Children's stories", 'Juvenile works', 'Schools in fiction', 'Fantasy', 'Hogwarts School of Witchcraft and Wizardry (Imaginary place)', 'Harry Potter (Fictitious character)', 'Ficción juvenil', 'Escuelas', 'Hogwarts School of Witchcraft and Wizardry (Imaginary organization)', 'Translations from English', 'Chinese fiction', 'Hermione Granger (Fictitious character)', 'Reading Level-Grade 9', 'Reading Level-Grade 11', 'Reading Level-Grade 10', 'Reading Level-Grade 12', 'Hogwarts school of witchcraft and wizardry (imaginary organization), fiction', "Children's fiction", 'Schools, fiction', 'England, fiction', 'Potter, harry (fictitious character), fiction', 'Wizards, fiction', 'Magic, fiction', 'Fiction, fantasy, general', 'Large type books', 'Magier', 'Fabeltiere', 'Lehrling', 'Kinderbuch', 'Stein der Weisen', 'Ungeheuer', 'Junge', 'English language', 'Translating into Welsh', 'Modern history to 20th century: c 1700 to c 1900', 'Literary theory', 'English literature', 'Ron Weasley (Fictitious character)', 'Latin language materials', 'Romans, nouvelles, etc. pour la jeunesse', 'Poudlard, école de sorcellerie (Organisation imaginaire)', 'Sorciers', 'Sorcières', 'Magie', 'Internats', 'Adventure and adventurers, fiction', 'Action & Adventure', 'Fantasy & Magic', 'Social Themes', 'Friendship', 'Harry Potter (Fictional character)', 'Friendship, fiction', 'German language materials'],
-          'description': 'Harry Potter #1\r\n\r\nWhen mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts School of Witchcraft and Wizardry.\r\n\r\nThey are swiftly confiscated by his aunt and uncle.\r\n\r\nThen, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard and has been awarded a place to study at Hogwarts.\r\n\r\nAnd so the first of the Harry Potter adventures is set to begin.\r\n([source][1])\r\n\r\n\r\n  [1]: https://www.jkrowling.com/book/harry-potter-philosophers-stone/',
-          'donation_id': 'albert-new-2022-5-10-22-23-34-240'
-        }],
+            'credit': 5,
+            'photos_links': 'https://photokit.com/images/editor.min.webp',
+            'openlibrary_link': 'https://openlibrary.org/works/OL82563W',
+            'book_name': 'Harry Potter1',
+            'condition': 'Good',
+            'user': 'albert-new',
+            'genres': ['Drama', 'Fiction', 'History'],
+            'description': 'Harry Potter #1\r\n\r\nWhen mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts School of Witchcraft and Wizardry.\r\n\r\nThey are swiftly confiscated by his aunt and uncle.\r\n\r\nThen, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard and has been awarded a place to study at Hogwarts.\r\n\r\nAnd so the first of the Harry Potter adventures is set to begin.\r\n([source][1])\r\n\r\n\r\n  [1]: https://www.jkrowling.com/book/harry-potter-philosophers-stone/',
+            'donation_id': 'albert-new-2022-5-10-22-23-34-240'
+          },
+          {
+            'credit': 5,
+            'photos_links': 'https://photokit.com/images/editor.min.webp',
+            'openlibrary_link': 'https://openlibrary.org/works/OL82563W',
+            'book_name': 'Harry Potter2',
+            'condition': 'Very Good',
+            'user': 'albert-new',
+            'genres': ['History', 'Romance', 'Fiction'], 
+            'description': 'Harry Potter #1\r\n\r\nWhen mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts School of Witchcraft and Wizardry.\r\n\r\nThey are swiftly confiscated by his aunt and uncle.\r\n\r\nThen, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard and has been awarded a place to study at Hogwarts.\r\n\r\nAnd so the first of the Harry Potter adventures is set to begin.\r\n([source][1])\r\n\r\n\r\n  [1]: https://www.jkrowling.com/book/harry-potter-philosophers-stone/',
+            'donation_id': 'albert-new-2022-5-10-22-23-34-240'
+          },
+          {
+            'credit': 5,
+            'photos_links': 'https://photokit.com/images/editor.min.webp',
+            'openlibrary_link': 'https://openlibrary.org/works/OL82563W',
+            'book_name': 'Harry Potter3',
+            'condition': 'Good',
+            'user': 'albert-new',
+            'genres': ['Romance'],
+            'description': 'Harry Potter #1\r\n\r\nWhen mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts School of Witchcraft and Wizardry.\r\n\r\nThey are swiftly confiscated by his aunt and uncle.\r\n\r\nThen, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard and has been awarded a place to study at Hogwarts.\r\n\r\nAnd so the first of the Harry Potter adventures is set to begin.\r\n([source][1])\r\n\r\n\r\n  [1]: https://www.jkrowling.com/book/harry-potter-philosophers-stone/',
+            'donation_id': 'albert-new-2022-5-10-22-23-34-240'
+          },
+          {
+            'credit': 5,
+            'photos_links': 'https://photokit.com/images/editor.min.webp',
+            'openlibrary_link': 'https://openlibrary.org/works/OL82563W',
+            'book_name': 'Harry Potter4',
+            'condition': 'As New',
+            'user': 'albert-new',
+            'genres': ['Drama', 'History'],
+            'description': 'Harry Potter #1\r\n\r\nWhen mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts School of Witchcraft and Wizardry.\r\n\r\nThey are swiftly confiscated by his aunt and uncle.\r\n\r\nThen, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard and has been awarded a place to study at Hogwarts.\r\n\r\nAnd so the first of the Harry Potter adventures is set to begin.\r\n([source][1])\r\n\r\n\r\n  [1]: https://www.jkrowling.com/book/harry-potter-philosophers-stone/',
+            'donation_id': 'albert-new-2022-5-10-22-23-34-240'
+          },
+          {
+            'credit': 5,
+            'photos_links': 'https://photokit.com/images/editor.min.webp',
+            'openlibrary_link': 'https://openlibrary.org/works/OL82563W',
+            'book_name': 'Harry Potter5',
+            'condition': 'Very Good',
+            'user': 'albert-new',
+            'genres': ['Fiction'],
+            'description': 'Harry Potter #1\r\n\r\nWhen mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts School of Witchcraft and Wizardry.\r\n\r\nThey are swiftly confiscated by his aunt and uncle.\r\n\r\nThen, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard and has been awarded a place to study at Hogwarts.\r\n\r\nAnd so the first of the Harry Potter adventures is set to begin.\r\n([source][1])\r\n\r\n\r\n  [1]: https://www.jkrowling.com/book/harry-potter-philosophers-stone/',
+            'donation_id': 'albert-new-2022-5-10-22-23-34-240'
+          },
+          {
+            'credit': 5,
+            'photos_links': 'https://photokit.com/images/editor.min.webp',
+            'openlibrary_link': 'https://openlibrary.org/works/OL82563W',
+            'book_name': 'Harry Potter6',
+            'condition': 'Fair',
+            'user': 'albert-new',
+            'genres': ['Fiction', 'Romance'],
+            'description': 'Harry Potter #1\r\n\r\nWhen mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts School of Witchcraft and Wizardry.\r\n\r\nThey are swiftly confiscated by his aunt and uncle.\r\n\r\nThen, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard and has been awarded a place to study at Hogwarts.\r\n\r\nAnd so the first of the Harry Potter adventures is set to begin.\r\n([source][1])\r\n\r\n\r\n  [1]: https://www.jkrowling.com/book/harry-potter-philosophers-stone/',
+            'donation_id': 'albert-new-2022-5-10-22-23-34-240'
+          },
+          {
+            'credit': 5,
+            'photos_links': 'https://photokit.com/images/editor.min.webp',
+            'openlibrary_link': 'https://openlibrary.org/works/OL82563W',
+            'book_name': 'Harry Potter7',
+            'condition': 'Poor',
+            'user': 'albert-new',
+            'genres': ['Drama'],
+            'description': 'Harry Potter #1\r\n\r\nWhen mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts School of Witchcraft and Wizardry.\r\n\r\nThey are swiftly confiscated by his aunt and uncle.\r\n\r\nThen, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard and has been awarded a place to study at Hogwarts.\r\n\r\nAnd so the first of the Harry Potter adventures is set to begin.\r\n([source][1])\r\n\r\n\r\n  [1]: https://www.jkrowling.com/book/harry-potter-philosophers-stone/',
+            'donation_id': 'albert-new-2022-5-10-22-23-34-240'
+          },
+        ],
         order_option: [
           {"label": "Alphabetical Order (A-Z)", "value":"1"},
           {"label": "Alphabetical Order (Z-A)", "value": "2"},
@@ -418,11 +476,11 @@
           {"label": "Credit required high to low", "value": "4"},
         ],
         condition_option: [
-          {"label": "As New", "value":"1"},
-          {"label": "Very Good", "value": "2"},
-          {"label": "Good", "value": "3"},
-          {"label": "Fair", "value": "4"},
-          {"label": "Poor", "value": "5"},
+          {"label": "As New", "value": 5},
+          {"label": "Very Good", "value": 4},
+          {"label": "Good", "value": 3},
+          {"label": "Fair", "value": 2},
+          {"label": "Poor", "value": 1},
         ],
         category_option: [
           {"label": "Drama", "value":"1"},
@@ -566,7 +624,15 @@
 	      	  this.display.category = item.label;
 	        }
 	      })
+      },
+      UpdateDonationID(d_id) {
+        this.donation_id = d_id;
+        console.log(d_id);
+        console.log(this.donation_id);
       }
+    },
+    mounted() {
+      window.UpdateDonationID = this.UpdateDonationID;
     }
   });
 
