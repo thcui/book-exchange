@@ -49,7 +49,7 @@
       <div class="naviBar">
         <i class="el-icon-s-fold" @click="changeMode" style="font-size: 32px;
         color: gray;"></i>
-        <el-menu default-active="1" class="el-menu-vertical-demo" :collapse="isCollapse">
+        <el-menu class="el-menu-vertical-demo" :collapse="isCollapse" ref="menu" default-active="1">
           <el-menu-item index="1" @click="path = 'home'">
             <i class="el-icon-house"></i>
             <span>Home</span>
@@ -131,7 +131,7 @@
                       <div style="flex:1">credits:5</div>
                     </div>
                     <div class="part4">
-                        <el-button @click="dialogVisible = false" onclick="makeRequest()"round type="primary">Request
+                      <el-button @click="dialogVisible = false" onclick="makeRequest()" round type="primary">Request
                       </el-button>
                     </div>
                   </div>
@@ -210,34 +210,22 @@
 
       <div class="middle" v-if="path == 'message'">
         <h1>Message Box</h1>
-<!--        <el-card class="box-card" style="overflow-y: scroll;">-->
-<!--          <div v-if="this.messages.length === 0">-->
-<!--            <el-empty :image-size="200" description="No Message"></el-empty>-->
-<!--          </div>-->
-<!--          <div v-for="(item,index) in this.messages" :key="index" class="text item" v-else>-->
-<!--            {{item}}-->
-<!--          </div>-->
-<!--        </el-card>-->
+        <!--        <el-card class="box-card" style="overflow-y: scroll;">-->
+        <!--          <div v-if="this.messages.length === 0">-->
+        <!--            <el-empty :image-size="200" description="No Message"></el-empty>-->
+        <!--          </div>-->
+        <!--          <div v-for="(item,index) in this.messages" :key="index" class="text item" v-else>-->
+        <!--            {{item}}-->
+        <!--          </div>-->
+        <!--        </el-card>-->
 
-        <el-table
-                :data="this.messages"
-                style="width: 100%">
-          <el-table-column
-                  fixed
-                  prop="sender"
-                  label="Sender"
-                  width="150">
+        <el-table :data="this.messages" style="width: 100%">
+          <el-table-column fixed prop="sender" label="Sender" width="150">
           </el-table-column>
-          <el-table-column
-                  prop="content"
-                  label="Content"
-                  width="500">
+          <el-table-column prop="content" label="Content" width="500">
           </el-table-column>
 
-          <el-table-column
-                  fixed="right"
-                  label="Operations"
-                  width="120">
+          <el-table-column fixed="right" label="Operations" width="120">
             <template slot-scope="scope">
               <el-button @click="showMessagePanel" type="text" size="small">Reply</el-button>
               <el-button @click="showMessage" type="text" size="small">Delete</el-button>
@@ -324,7 +312,7 @@
         url: "",
         Baseurl: "https://z7xnekbzrd.execute-api.us-east-1.amazonaws.com/dev/donate/photos/",
         fav: [],
-        messages:[],
+        messages: [],
         current_credit: '',
         last_sign_up_time: '',
         user_id: '',
@@ -375,8 +363,9 @@
 
       },
       showFav() {
-        if (login_user_name==null){
+        if (login_user_name == null) {
           request_login()
+          this.$refs.menu.activeIndex = 1
           return
         }
         this.path = 'fav';
@@ -393,8 +382,10 @@
           });
       },
       showMessage() {
-        if (login_user_name==null){
+        if (login_user_name == null) {
           request_login()
+          this.$refs.menu.activeIndex = 1
+          return
         }
         this.path = 'message';
         var apigClient = apigClientFactory.newClient();
@@ -404,14 +395,15 @@
         var additionalParams = {};
         var body = {};
         apigClient.messageGet(params, body, additionalParams)
-                .then(res => {
-                  console.log(res)
-                  this.messages = res.data.messages
-                });
+          .then(res => {
+            console.log(res)
+            this.messages = res.data.messages
+          });
       },
       showAcc() {
-        if (login_user_name==null){
+        if (login_user_name == null) {
           request_login()
+          this.$refs.menu.activeIndex = 1
           return
         }
         this.path = 'account';
