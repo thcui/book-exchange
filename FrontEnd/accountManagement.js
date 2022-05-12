@@ -2,6 +2,11 @@ var login_user_name = null;
 var user_credit = null;
 var user_info_cognito = null;
 
+function showSignUp(){
+    document.getElementById('login').style.display = 'none'
+    document.getElementById('signup').style.display = 'block'
+}
+
 function login() {
     /* Set AWS to read DB*/
     // Load the AWS SDK for Node.js
@@ -61,6 +66,10 @@ function login() {
 }
 
 function signUp() {
+    if(document.getElementById("signup-psw1").value !==document.getElementById("signup-psw2").value ){
+        alert("The password confirmation does not match.")
+        return
+    }
   AWS.config.region = "us-east-1"; // Region
   AWS.config.credentials = new AWS.CognitoIdentityCredentials({
     IdentityPoolId: "us-east-1:618317b2-43e9-413e-9624-74f3db4be00f",
@@ -70,14 +79,14 @@ function signUp() {
     cognito
       .signUp({
         ClientId: "3erlabfk978and45jb9rhq3ai2" /* required */,
-        Password: document.getElementById("psw").value /* required */,
-        Username: document.getElementById("uname").value,
+        Password: document.getElementById("signup-psw2").value /* required */,
+        Username: document.getElementById("signup-uname").value,
       })
       .promise()
       .then(() => {
         return cognito
           .adminConfirmSignUp({
-            Username: document.getElementById("uname").value /* required */,
+            Username: document.getElementById("signup-uname").value /* required */,
             UserPoolId: "us-east-1_uDFJ9JkrJ" /* required */,
           })
           .promise()
@@ -87,15 +96,18 @@ function signUp() {
                 UserAttributes: [
                   /* required */
                   {
-                    Name: "custom:credit" /* required */,
-                    Value: "0",
+                    Name: "email" /* required */,
+                    Value: document.getElementById("signup-email").value,
                   },
                 ],
                 UserPoolId: "us-east-1_uDFJ9JkrJ",
-                Username: document.getElementById("uname").value,
+                Username: document.getElementById("signup-uname").value,
               })
               .promise()
               .then(() => {
+                  document.getElementById("uname").value=document.getElementById("signup-uname").value
+                  document.getElementById("psw").value=document.getElementById("signup-psw2").value
+                  document.getElementById('signup').style.display = 'none'
                 alert("Registered Successfully");
                 login();
               });
