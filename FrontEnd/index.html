@@ -31,7 +31,7 @@
   <script src="donation.js" type="text/javascript"></script>
   <script src="chatbox.js" type="text/javascript"></script>
   <script src="accountManagement.js" type="text/javascript"></script>
-  <!-- <script src="search.js" type="text/javascript"></script> -->
+  <script src="search.js" type="text/javascript"></script>
   <script src="request.js" type="text/javascript"></script>
 
 </head>
@@ -81,7 +81,7 @@
             <el-button slot="append" icon="el-icon-search" @click="searchPhoto()"></el-button>
           </el-input>
           <el-select id="selectOrder" v-model="sortby" slot="prepend" placeholder="Sort By" style="width: 30%"
-            @change="getOrder" clearable>
+            @change="filter" clearable>
             <el-option v-for="(item,index) in this.order_option" :key="index" :label="item.label" :value="item.value">
             </el-option>
             <!-- <el-option label="Alphabetical Order (A-Z)" value="1"></el-option>
@@ -90,7 +90,7 @@
             <el-option label="Credit required high to low" value="4"></el-option> -->
           </el-select>
           <el-select id="selectCondition" placeholder="Min. Condition Requirement" slot="prepend" style="width: 30%"
-            v-model="tag" @change="getCondition" clearable>
+            v-model="tag" @change="filter" clearable>
             <el-option v-for="(item,index) in this.condition_option" :key="index" :label="item.label"
               :value="item.value"></el-option>
             <!-- <el-option label="As New" value="1"></el-option>
@@ -100,7 +100,7 @@
             <el-option label="Poor" value="5"></el-option> -->
           </el-select>
           <el-select id="selectCategory" v-model="category" slot="prepend" placeholder="Category" style="width: 30%"
-            onchange="getCategory()" clearable>
+            @change="filter" clearable>
             <el-option v-for="(item,index) in this.category_option" :key="index" :label="item.label"
               :value="item.value"></el-option>
             <!-- <el-option label="Drama" value="Drama"></el-option>
@@ -494,6 +494,7 @@
           { "label": "History", "value": "3" },
           { "label": "Juvenile literature", "value": "4" },
           { "label": "Romance", "value": "5" },
+          { "label": "Ghosts", "value": "6" },
         ],
         display: {
           sortby_order: "",
@@ -610,28 +611,6 @@
         current_recipient = this.messages[index]['sender']
         openForm()
       },
-      getOrder(val) {
-        this.order_option.forEach(item => {
-          if (item.value === val) {
-            this.display.sortby_order = item.label;
-            console.log(this.display.sortby_order);
-          }
-        })
-      },
-      getCondition(val) {
-        this.condition_option.forEach(item => {
-          if (item.value === val) {
-            this.display.min_requirement = item.label;
-          }
-        })
-      },
-      getCategory(val) {
-        this.category_option.forEach(item => {
-          if (item.value === val) {
-            this.display.category = item.label;
-          }
-        })
-      },
       UpdateDonationID(d_id) {
         this.donation_id = d_id;
         console.log(d_id);
@@ -655,12 +634,64 @@
         apigClient
           .searchGet(params, body, additionalParams)
           .then((res) => {
-            //TODO: how to update info in the frontend part
             this.info = res.data;
+            searchResult = this.info;
             console.log(this.info);
           });
-      }
+      },
+      filterByCategory(val) {
+        this.category_option.forEach(item => {
+          if (item.value === val) {
+            this.display.category = item.label;
+            console.log(this.display.category);
+          }
+        });
+
+        var newInfo = [];
+        for (var i = 0; i < searchResult.length; i++) {
+          if (searchResult[i].genres.indexOf(this.display.category) > -1) {
+            newInfo.push(searchResult[i]);
+          }
+        }
+        this.info = newInfo;
+      },
+      filterByCondition() {
+        this.condition_option.forEach(item => {
+          if (item.value === val) {
+            this.display.min_requirement = item.value;
+            console.log(this.display.min_requirement);
+          }
+        });
+
+        var newInfo = [];
+        for (var i = 0; i< searchResult.length; i++) {
+          book_value = condition_option.indexOf(searchResult[i].condition) + 1;
+          console.log(book_value);
+          if (book_value >= this.display.min_requirement) {
+            newInfo.push(searchResult[i]);
+          }
+        }
+        this.info = newInfo;
+      },
+      filterByOrder(val) {
+        this.order_option.forEach(item => {
+          if (item.value === val) {
+            this.display.sortby_order = item.value;
+            console.log(this.display.sortby_order);
+          }
+        });
+
+        var newInfo = [];
+        if (this.display.sortby_order == 1) {
+        }
+      },
+      filter(val) {
+        filterByOrder(val);
+        filterByCategory(val);
+        filterByCondition(val);
+      },
     },
+    
     mounted() {
       window.UpdateDonationID = this.UpdateDonationID;
       window.getOrder = this.getOrder;
