@@ -32,7 +32,7 @@
   <script src="chatbox.js" type="text/javascript"></script>
   <script src="accountManagement.js" type="text/javascript"></script>
   <script src="search.js" type="text/javascript"></script>
-  <script src="request.js" type="text/javascript"></script>
+  <script src="request.js" type="module"></script>
 
 </head>
 
@@ -80,29 +80,30 @@
             style="width: 90%; margin-bottom: 10px" clearable>
             <el-button slot="append" icon="el-icon-search" onclick="searchPhoto()"></el-button>
           </el-input>
-          <el-select id="selectOrder" v-model="sortby" slot="prepend" onchange="getOrder()" placeholder="Sort By"
-            style="width: 30%" clearable>
-            <el-option label="Alphabetical Order (A-Z)" value="1"></el-option>
+          <el-select id="selectOrder" v-model="sortby" slot="prepend" placeholder="Sort By"
+            style="width: 30%" @change="getOrder" clearable>
+            <el-option v-for="(item,index) in this.order_option" :key="index" :label="item.label" :value="item.value"></el-option>
+            <!-- <el-option label="Alphabetical Order (A-Z)" value="1"></el-option>
             <el-option label="Alphabetical Order (Z-A)" value="2"></el-option>
             <el-option label="Credit required low to high" value="3"></el-option>
-            <el-option label="Credit required high to low" value="4"></el-option>
+            <el-option label="Credit required high to low" value="4"></el-option> -->
           </el-select>
           <el-select id="selectCondition" placeholder="Min. Condition Requirement" slot="prepend"
-            onchange="getCondition()" style="width: 30%" v-model="tag" clearable>
-            <el-option label="As New" value="1"></el-option>
+            style="width: 30%" v-model="tag" @change="getCondition" clearable>
+            <el-option v-for="(item,index) in this.condition_option" :key="index" :label="item.label" :value="item.value"></el-option>
+            <!-- <el-option label="As New" value="1"></el-option>
             <el-option label="Very good" value="2"></el-option>
             <el-option label="Good" value="3"></el-option>
             <el-option label="Fair" value="4"></el-option>
-            <el-option label="Poor" value="5"></el-option>
-
+            <el-option label="Poor" value="5"></el-option> -->
           </el-select>
-          <el-select id="selectCategory" v-model="category" slot="prepend" onchange="getCategory()"
-            placeholder="Category" style="width: 30%" clearable>
-            <el-option label="Drama" value="Drama"></el-option>
+          <el-select id="selectCategory" v-model="category" slot="prepend" placeholder="Category" style="width: 30%" @change="getCategory" clearable>
+            <el-option v-for="(item,index) in this.category_option" :key="index" :label="item.label" :value="item.value"></el-option>
+            <!-- <el-option label="Drama" value="Drama"></el-option>
             <el-option label="Fiction" value="Fiction"></el-option>
             <el-option label="History" value="History"></el-option>
             <el-option label="Juvenile literature" value="Juvenile literature"></el-option>
-            <el-option label="Romance" value="Romance"></el-option>
+            <el-option label="Romance" value="Romance"></el-option> -->
           </el-select>
         </div>
         <div class="imgDisplay" id="photoContainer">
@@ -358,6 +359,8 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script>
+  import { makeRequest } from "./request.js"
+
   new Vue({
     el: "#app",
     data: function () {
@@ -408,7 +411,31 @@
           'description': 'Harry Potter #1\r\n\r\nWhen mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts School of Witchcraft and Wizardry.\r\n\r\nThey are swiftly confiscated by his aunt and uncle.\r\n\r\nThen, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard and has been awarded a place to study at Hogwarts.\r\n\r\nAnd so the first of the Harry Potter adventures is set to begin.\r\n([source][1])\r\n\r\n\r\n  [1]: https://www.jkrowling.com/book/harry-potter-philosophers-stone/',
           'donation_id': 'albert-new-2022-5-10-22-23-34-240'
         }],
-        sortBy: []
+        order_option: [
+          {"label": "Alphabetical Order (A-Z)", "value":"1"},
+          {"label": "Alphabetical Order (Z-A)", "value": "2"},
+          {"label": "Credit required low to high", "value": "3"},
+          {"label": "Credit required high to low", "value": "4"},
+        ],
+        condition_option: [
+          {"label": "As New", "value":"1"},
+          {"label": "Very Good", "value": "2"},
+          {"label": "Good", "value": "3"},
+          {"label": "Fair", "value": "4"},
+          {"label": "Poor", "value": "5"},
+        ],
+        category_option: [
+          {"label": "Drama", "value":"1"},
+          {"label": "Fiction", "value": "2"},
+          {"label": "History", "value": "3"},
+          {"label": "Juvenile literature", "value": "4"},
+          {"label": "Romance", "value": "5"},
+        ],
+        display: {
+          sortby_order: "",
+          min_requirement: "",
+          category: ""
+        }
       };
     },
     methods: {
@@ -518,6 +545,27 @@
         console.log(this.messages[index]['sender'])
         current_recipient = this.messages[index]['sender']
         openForm()
+      },
+      getOrder(val) {
+        this.order_option.forEach(item=>{
+	        if(item.value === val){
+	      	  this.display.sortby_order = item.label;
+	        }
+	      })
+      },
+      getCondition(val) {
+        this.condition_option.forEach(item=>{
+	        if(item.value === val){
+	      	  this.display.min_requirement = item.label;
+	        }
+	      })
+      },
+      getCategory(val) {
+        this.category_option.forEach(item=>{
+	        if(item.value === val){
+	      	  this.display.category = item.label;
+	        }
+	      })
       }
     }
   });
