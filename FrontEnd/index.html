@@ -116,8 +116,10 @@
                   <div class="right">
                     <div class="line1">
                       <h1>Amazon Unbound</h1>
+                      
                       <div @click="thumbup" id="heart" :class="thum ?  'is-active' : ''"></div>
                     </div>
+                    <h3> albert-2022-5-8-3-28-44-240 </h3>
                     <div class="dialogText">Description</div>
                     <div class="part2">This is new york</div>
                     <div class="part3">
@@ -194,6 +196,7 @@
         <div>User ID: {{user_id}}</div>
         <div>Current Credit: {{current_credit}}</div>
         <div>Sign Up Time: {{last_sign_up_time}}</div>
+        <div>Latest Request : {{latest_request}}</div>
 
       </div>
       <div class="middle" v-if="path == 'fav'">
@@ -419,6 +422,7 @@
             this.last_sign_up_time = res.data.user_sign_up_time
             this.current_credit = res.data.current_credit
             this.user_id = res.data.user_id
+            this.latest_request = res.data.request_history[res.data.request_history.length-1]
           });
       },
       showMessagePanel(index){
