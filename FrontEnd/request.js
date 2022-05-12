@@ -28,3 +28,7 @@ function makeRequest() {
     }).catch(err => alert('Request \"' + book_id + '\" Failed, not enough credit or book already unavailable'));
 
 }
+
+export {
+    makeRequest
+}

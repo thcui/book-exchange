@@ -36,15 +36,3 @@ function searchPhoto() {
     console.log(result);
   })
 }
-
-function getOrder() {
-
-}
-
-function getCategory() {
-  return document.getElementById("selectCategory").label;
-}
-
-function getCondition() {
-  return document.getElementById("selectCondition").label;
-}
