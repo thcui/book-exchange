@@ -245,6 +245,60 @@ apigClientFactory.newClient = function (config) {
     };
     
     
+    apigClient.messageGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['user_id'], ['body']);
+        
+        var messageGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/message').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['user_id']),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(messageGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.messagePost = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['body'], ['body']);
+        
+        var messagePostRequest = {
+            verb: 'post'.toUpperCase(),
+            path: pathComponent + uritemplate('/message').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(messagePostRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.messageOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var messageOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/message').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(messageOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.removePost = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
@@ -281,16 +335,34 @@ apigClientFactory.newClient = function (config) {
     };
     
     
+    apigClient.requestOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var requestOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/request').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(requestOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.searchGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
-        apiGateway.core.utils.assertParametersDefined(params, ['body'], ['body']);
+        apiGateway.core.utils.assertParametersDefined(params, ['book_name'], ['body']);
         
         var searchGetRequest = {
             verb: 'get'.toUpperCase(),
             path: pathComponent + uritemplate('/search').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
             headers: apiGateway.core.utils.parseParametersToObject(params, []),
-            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['book_name']),
             body: body
         };
         
@@ -298,22 +370,24 @@ apigClientFactory.newClient = function (config) {
         return apiGatewayClient.makeRequest(searchGetRequest, authType, additionalParams, config.apiKey);
     };
     
+    
     apigClient.searchOptions = function (params, body, additionalParams) {
-        if (additionalParams === undefined) { additionalParams = {}; }
-
-        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
-
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['Access-Control-Allow-Headers'], ['body']);
+        
         var searchOptionsRequest = {
             verb: 'options'.toUpperCase(),
             path: pathComponent + uritemplate('/search').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
-            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            headers: apiGateway.core.utils.parseParametersToObject(params, ['Access-Control-Allow-Headers']),
             queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
             body: body
         };
-
-
+        
+        
         return apiGatewayClient.makeRequest(searchOptionsRequest, authType, additionalParams, config.apiKey);
     };
+    
 
     return apigClient;
 };
