@@ -77,7 +77,7 @@
       <div class="middle" v-if="path == 'home'">
         <div class="searchbar">
           <el-input id="searchContent" placeholder="Search for Book Name" v-model="bookName" class="input-with-select"
-            style="width: 90%; margin-bottom: 10px" clearable>
+            style="width: 91%; margin-bottom: 10px" clearable>
             <el-button slot="append" icon="el-icon-search" @click="searchPhoto()"></el-button>
           </el-input>
           <el-select id="selectOrder" v-model="sortby" slot="prepend" placeholder="Sort By" style="width: 30%"
@@ -113,9 +113,9 @@
         <div class="imgDisplay" id="photoContainer">
           <el-row :gutter="20">
             <el-col :span="6" v-for="(item,index) in this.info" :key="index">
-              <img class="grid-content" :src="item.photos_links"></img>
-              <el-button @click="dialogVisible = true" type="text">{{item.book_name}}</el-button>
-              <el-dialog :visible.sync="dialogVisible" width="800px">
+              <img class="grid-content" :src="item.photos_links" @click="dialogVisible[index]=true"/>
+              <el-button @click="dialogVisible[index]=true" type="text">{{item.book_name}}</el-button>
+              <el-dialog :visible.sync="dialogVisible[index]" width="800px">
                 <div class="dialog">
                   <div class="left">
                     <img class="imgSize" :src="item.photos_links" />
@@ -143,7 +143,7 @@
 
                     </div>
                     <div class="part4">
-                      <el-button @click="dialogVisible = false; UpdateDonationID(item.donation_id); MakeRequest(item.donation_id)"
+                      <el-button @click="dialogVisible[index] = false; UpdateDonationID(item.donation_id); MakeRequest(item.donation_id)"
                          round type="primary">Request book (Credits Required:{{item.credit}})
                       </el-button>
                     </div>
@@ -157,7 +157,6 @@
       </div>
       <div class="middle" v-if="path == 'donate'">
         <div id="donate-popup">
-
           Name of your donated book:
           <el-input class="input-with-select" id="bookNameInput" placeholder="Ex. Harry Potter"
             style="width: 100%; margin-bottom: 10px" v-model="donatedBook" clearable>
@@ -383,7 +382,7 @@
         bookName: "Harry Potter",
         donatedBook: "",
         creditRequired: 5,
-        dialogVisible: false,
+        dialogVisible: {0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false},//TODO:换一种方法
         path: 'home',
         read_value: 3.7,
         dialogImageUrl: '',
@@ -397,7 +396,6 @@
         user_id: '',
         donation_id: '',
         thum: false,
-        image_path: generateUUID(),
         dona_his: "",
         req_his: "",
         condition_option: ["Poor", "Fair", "Good", "Very Good", "As New"],
@@ -679,6 +677,7 @@
           }
         });
       },
+
 
       filter(val) {
         // filterByOrder();
