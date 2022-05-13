@@ -81,7 +81,7 @@
             <el-button slot="append" icon="el-icon-search" @click="searchPhoto()"></el-button>
           </el-input>
           <el-select id="selectOrder" v-model="sortby" slot="prepend" placeholder="Sort By" style="width: 30%"
-            @change="filter" clearable>
+            @change="filterByOrder" clearable>
             <el-option v-for="(item,index) in this.order_option" :key="index" :label="item.label" :value="item.value">
             </el-option>
             <!-- <el-option label="Alphabetical Order (A-Z)" value="1"></el-option>
@@ -90,7 +90,7 @@
             <el-option label="Credit required high to low" value="4"></el-option> -->
           </el-select>
           <el-select id="selectCondition" placeholder="Min. Condition Requirement" slot="prepend" style="width: 30%"
-            v-model="tag" @change="filter" clearable>
+            v-model="tag" @change="filterByCondition" clearable>
             <el-option v-for="(item,index) in this.condition_option" :key="index" :label="item.label"
               :value="item.value"></el-option>
             <!-- <el-option label="As New" value="1"></el-option>
@@ -100,7 +100,7 @@
             <el-option label="Poor" value="5"></el-option> -->
           </el-select>
           <el-select id="selectCategory" v-model="category" slot="prepend" placeholder="Category" style="width: 30%"
-            @change="filter" clearable>
+            @change="getCategory($event)" clearable>
             <el-option v-for="(item,index) in this.category_option" :key="index" :label="item.label"
               :value="item.value"></el-option>
             <!-- <el-option label="Drama" value="Drama"></el-option>
@@ -113,12 +113,12 @@
         <div class="imgDisplay" id="photoContainer">
           <el-row :gutter="20">
             <el-col :span="6" v-for="(item,index) in this.info" :key="index">
-              <img class="grid-content" :src="BaseurlPic+item.photos_links"></img>
+              <img class="grid-content" :src="item.photos_links"></img>
               <el-button @click="dialogVisible = true" type="text">{{item.book_name}}</el-button>
               <el-dialog :visible.sync="dialogVisible" width="800px">
                 <div class="dialog">
                   <div class="left">
-                    <img class="imgSize" :src="BaseurlPic+item.photos_links" />
+                    <img class="imgSize" :src="item.photos_links" />
                   </div>
                   <div class="right">
                     <div class="line1">
@@ -655,56 +655,35 @@
             console.log(this.info);
           });
       },
-      filterByCategory(val) {
-        this.category_option.forEach(item => {
-          if (item.value === val) {
-            this.display.category = item.label;
-            console.log(this.display.category);
-          }
-        });
-
-        var newInfo = [];
-        for (var i = 0; i < searchResult.length; i++) {
-          if (searchResult[i].genres.indexOf(this.display.category) > -1) {
-            newInfo.push(searchResult[i]);
-          }
-        }
-        this.info = newInfo;
-      },
-      filterByCondition() {
+      getCondition(val) {
         this.condition_option.forEach(item => {
           if (item.value === val) {
             this.display.min_requirement = item.value;
             console.log(this.display.min_requirement);
           }
         });
-
-        var newInfo = [];
-        for (var i = 0; i< searchResult.length; i++) {
-          book_value = condition_option.indexOf(searchResult[i].condition) + 1;
-          console.log(book_value);
-          if (book_value >= this.display.min_requirement) {
-            newInfo.push(searchResult[i]);
-          }
-        }
-        this.info = newInfo;
       },
-      filterByOrder(val) {
+      getCategory(val) {
+        this.category_option.forEach(item => {
+          if (item.value === val) {
+            this.display.category = item.label;
+            console.log(this.display.category);
+          }
+        });
+      },
+      getOrder(val) {
         this.order_option.forEach(item => {
           if (item.value === val) {
             this.display.sortby_order = item.value;
             console.log(this.display.sortby_order);
           }
         });
-
-        var newInfo = [];
-        if (this.display.sortby_order == 1) {
-        }
       },
+
       filter(val) {
-        filterByOrder(val);
-        filterByCategory(val);
-        filterByCondition(val);
+        // filterByOrder();
+        filterByCategory();
+        // filterByCondition();
       },
     },
     
@@ -715,9 +694,6 @@
       window.getCategory = this.getCategory;
       window.updateHTML = this.updateHTML;
     }
-
-
-
   });
 
 </script>
