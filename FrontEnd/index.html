@@ -125,22 +125,26 @@
                       <h1>{{item.book_name}}</h1>
                       <div @click="thumbup" id="heart" :class="thum ?  'is-active' : ''"></div>
                     </div>
+                    id: {{item.donation_id}}
                     <div class="dialogText">Description</div>
                     <div class="part2">{{item.description}}</div>
                     <div class="part3">
                       <div style="flex:1">
                         <div><i class="el-icon-user-solid"></i>
                           owner:{{item.user}}
+                          <el-button type="info" icon="el-icon-message" circle @click="dialogVisible = false; sendMessage_with_name(item.user)"
+                                     round type="primary">
+                          </el-button>
                         </div>
                         <el-rate disabled score-template="{item.credit} points" text-color="#ff9900"
                           v-model="read_value">
                         </el-rate>
                       </div>
-                      <div style="flex:1">credits:{{item.credit}}</div>
+
                     </div>
                     <div class="part4">
                       <el-button @click="dialogVisible = false; UpdateDonationID(item.donation_id); MakeRequest(item.donation_id)"
-                         round type="primary">Request book:{{item.donation_id}}
+                         round type="primary">Request book (Credits Required:{{item.credit}})
                       </el-button>
                     </div>
                   </div>
@@ -609,6 +613,14 @@
       showMessagePanel(index) {
         console.log(this.messages[index]['sender'])
         current_recipient = this.messages[index]['sender']
+        openForm()
+      },
+      sendMessage_with_name(name){
+        if (login_user_name == null) {
+          request_login()
+          return
+        }
+        current_recipient = name
         openForm()
       },
       UpdateDonationID(d_id) {
