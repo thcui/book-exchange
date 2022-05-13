@@ -147,14 +147,14 @@ function signUp() {
                   document.getElementById("uname").value=document.getElementById("signup-uname").value
                   document.getElementById("psw").value=document.getElementById("signup-psw2").value
                   document.getElementById('signup').style.display = 'none'
-                alert("Registered Successfully");
+                alert("Please check your email box and enter the verification code you received");
                 login();
               })
           // })
       // })
-      .catch((err) => console.log(err));
+      .catch((err) => alert(err));
   } catch (err) {
-    console.log(err);
+    alert(err);
   }
 }
 
@@ -199,5 +199,17 @@ function verifyUser(){
     //     AttributeName:'email'}).promise().then(document.getElementById('verification-panel').style.display = 'none').catch((err) => console.log(err));
     return cognito.confirmSignUp({ClientId: '7ue5e0ui44s9oocg383v9tibhm', /* required */
         ConfirmationCode: document.getElementById('verification-input').value, /* required */
-        Username: login_user_name}).promise().then(document.getElementById('verification-panel').style.display = 'none').then(import_user_data());
+        Username: login_user_name}).promise().then(document.getElementById('verification-panel').style.display = 'none')
+        .then(import_user_data())
+        .catch((err) => {
+            log_out();
+            alert(err)});
+}
+
+function log_out(){
+    login_user_name = null;
+    user_credit = null;
+    user_info_cognito = null;
+    user_access_token=null;
+
 }

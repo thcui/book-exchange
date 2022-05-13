@@ -114,12 +114,12 @@
         <div class="imgDisplay" id="photoContainer">
           <el-row :gutter="20">
             <el-col :span="6" v-for="(item,index) in this.info" :key="index">
-              <img class="grid-content" :src="item.photos_links" @click="book_dialog_visibility[index]=true"/>
+              <img class="grid-content" :src="item.cover_photos_links" @click="book_dialog_visibility[index]=true"/>
               <el-button @click="book_dialog_visibility[index]=true" type="text">{{item.book_name}}</el-button>
               <el-dialog :visible.sync="book_dialog_visibility[index]" width="70%">
                 <div class="dialog">
                   <div class="left">
-                    <img class="imgSize" :src="item.photos_links" />
+                    <img class="imgSize" :src="item.cover_photos_links" />
                   </div>
                   <div class="right">
                     <div class="line1">
@@ -367,7 +367,7 @@
         <h1>Verify Your Email Address</h1>
 
         <b>Message</b></label>
-        <input id="verification-input" placeholder="Input your verification Number sent to you email"
+        <input id="verification-input" placeholder="Input your verification code"
                required/>
         <button type="button" class="btn" onclick="verifyUser()">Confirm</button>
       </form>
