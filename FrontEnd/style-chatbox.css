@@ -31,6 +31,7 @@
 
 /* Add styles to the form container */
 .form-container {
+    border-radius: 10px;
     position: relative;
     left: 30%;
     top: 10%;
@@ -57,6 +58,7 @@
 
 /* Set a style for the submit/login button */
 .form-container .btn {
+    border-radius: 5px;
     background-color: #04AA6D;
     color: white;
     padding: 16px 20px;

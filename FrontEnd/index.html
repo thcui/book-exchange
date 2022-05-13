@@ -113,9 +113,9 @@
         <div class="imgDisplay" id="photoContainer">
           <el-row :gutter="20">
             <el-col :span="6" v-for="(item,index) in this.info" :key="index">
-              <img class="grid-content" :src="item.photos_links" @click="dialogVisible[index]=true"/>
-              <el-button @click="dialogVisible[index]=true" type="text">{{item.book_name}}</el-button>
-              <el-dialog :visible.sync="dialogVisible[index]" width="800px">
+              <img class="grid-content" :src="item.photos_links" @click="book_dialog_visibility[index]=true"/>
+              <el-button @click="book_dialog_visibility[index]=true" type="text">{{item.book_name}}</el-button>
+              <el-dialog :visible.sync="book_dialog_visibility[index]" width="70%">
                 <div class="dialog">
                   <div class="left">
                     <img class="imgSize" :src="item.photos_links" />
@@ -132,7 +132,7 @@
                       <div style="flex:1">
                         <div><i class="el-icon-user-solid"></i>
                           owner:{{item.user}}
-                          <el-button type="info" icon="el-icon-message" circle @click="dialogVisible = false; sendMessage_with_name(item.user)"
+                          <el-button type="info" icon="el-icon-message" circle @click="book_dialog_visibility[index] = false; sendMessage_with_name(item.user)"
                                      round type="primary">
                           </el-button>
                         </div>
@@ -143,7 +143,7 @@
 
                     </div>
                     <div class="part4">
-                      <el-button @click="dialogVisible[index] = false; UpdateDonationID(item.donation_id); MakeRequest(item.donation_id)"
+                      <el-button @click="book_dialog_visibility[index] = false; UpdateDonationID(item.donation_id); MakeRequest(item.donation_id)"
                          round type="primary">Request book (Credits Required:{{item.credit}})
                       </el-button>
                     </div>
@@ -382,7 +382,8 @@
         bookName: "Harry Potter",
         donatedBook: "",
         creditRequired: 5,
-        dialogVisible: {0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false},//TODO:换一种方法
+        book_dialog_visibility: {0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false},//TODO:换一种方法
+        dialogVisible:false,
         path: 'home',
         read_value: 3.7,
         dialogImageUrl: '',
