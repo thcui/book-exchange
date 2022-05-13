@@ -667,12 +667,45 @@
           }
         });
       },
-
-      filter(val) {
-        // filterByOrder();
-        filterByCategory();
-        // filterByCondition();
+      filterByCategory() {
+        var newInfo = [];
+        for (var i = 0; i < searchResult.length; i++) {
+          if (searchResult[i].genres.indexOf() > -1) {
+            newInfo.push(searchResult[i]);
+          }
+        }
+        this.info = newInfo;
       },
+      filterByCondition() {
+        var newInfo = [];
+        for (var i = 0; i< searchResult.length; i++) {
+          book_value = condition_option.indexOf(searchResult[i].condition) + 1;
+          console.log(book_value);
+          if (book_value >= this.display.min_requirement) {
+            newInfo.push(searchResult[i]);
+          }
+        }
+        this.info = newInfo;
+      },
+      filterByOrder() {
+        var newInfo = [];
+        // if (this.display.sortby_order == 1) {
+          
+        // }
+        // else if (this.display.sortby_order == 2) {
+
+        // } 
+        // else if ((this.display.sortby_order == 3){
+
+        // } else {
+        // }
+        //
+      },
+      // filter() {
+      //   filterByOrder();
+      //   filterByCategory();
+      //   filterByCondition();
+      // }
     },
     
     mounted() {
