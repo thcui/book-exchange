@@ -30,7 +30,7 @@ function makeDonation() {
     var body = {
         donation_id: user_id + "-" + dateTime,
         book_name: bookNameInput,
-        user: user_id,
+        user_id: user_id,
         condition: get_condition(),
         photos_links: donation_photos_links,
         credit: parseInt(
