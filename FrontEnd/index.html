@@ -82,17 +82,17 @@
             <el-button slot="append" icon="el-icon-search" @click="searchPhoto()"></el-button>
           </el-input>
           <el-select id="selectOrder" v-model="sortby" slot="prepend" placeholder="Sort By" style="width: 30%"
-            @change="filterByOrder" clearable>
+            @change="getOrder($event); filterByOrder()" clearable>
             <el-option v-for="(item,index) in this.order_option" :key="index" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
           <el-select id="selectCondition" placeholder="Min. Condition Requirement" slot="prepend" style="width: 30%"
-            v-model="tag" @change="filterByCondition" clearable>
+            v-model="tag" @change="getCondition($event); filterByCondition()" clearable>
             <el-option v-for="(item,index) in this.condition_option" :key="index" :label="item.label"
               :value="item.value"></el-option>
           </el-select>
           <el-select id="selectCategory" v-model="category" slot="prepend" placeholder="Category" style="width: 30%"
-            @change="getCategory($event)" clearable>
+            @change="getCategory($event); filterByCategory()" clearable>
             <el-option v-for="(item,index) in this.category_option" :key="index" :label="item.label"
               :value="item.value"></el-option>
           </el-select>
@@ -573,7 +573,7 @@
           .then((res) => {
             this.info = res.data;
             searchResult = this.info;
-            this.loading = false
+            this.loading = false;
           });
       },
       getCondition(val) {
@@ -602,8 +602,9 @@
       },
       filterByCategory() {
         var newInfo = [];
+        console.log(searchResult.length);
         for (var i = 0; i < searchResult.length; i++) {
-          if (searchResult[i].genres.indexOf() > -1) {
+          if (searchResult[i].genres.indexOf(this.display.category) > -1) {
             newInfo.push(searchResult[i]);
           }
         }
@@ -621,18 +622,25 @@
         this.info = newInfo;
       },
       filterByOrder() {
-        var newInfo = [];
-        // if (this.display.sortby_order == 1) {
-          
-        // }
-        // else if (this.display.sortby_order == 2) {
-
-        // } 
-        // else if ((this.display.sortby_order == 3){
-
-        // } else {
-        // }
-        //
+        var newInfo = searchResult;
+        if (this.display.sortby_order == 1) {
+          newInfo.sort(function (a, b) {
+              return a.book_name - b.book_name;
+          })
+        } else if (this.display.sortby_order == 2) {
+          newInfo.sort(function (a, b) {
+            return b.book_name - a.book_name;
+          })
+        } else if (this.display.sortby_order == 3){
+          newInfo.sort(function (a, b) {
+            return a.credit - b.credit;
+          })
+        } else if (this.display.sortby_order == 4) {
+          newInfo.sort(function (a, b) {
+            return b.credit - a.credit;
+          })
+        }
+        
       },
       // filter() {
       //   filterByOrder();
