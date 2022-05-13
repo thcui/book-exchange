@@ -85,36 +85,22 @@
             @change="filterByOrder" clearable>
             <el-option v-for="(item,index) in this.order_option" :key="index" :label="item.label" :value="item.value">
             </el-option>
-            <!-- <el-option label="Alphabetical Order (A-Z)" value="1"></el-option>
-            <el-option label="Alphabetical Order (Z-A)" value="2"></el-option>
-            <el-option label="Credit required low to high" value="3"></el-option>
-            <el-option label="Credit required high to low" value="4"></el-option> -->
           </el-select>
           <el-select id="selectCondition" placeholder="Min. Condition Requirement" slot="prepend" style="width: 30%"
             v-model="tag" @change="filterByCondition" clearable>
             <el-option v-for="(item,index) in this.condition_option" :key="index" :label="item.label"
               :value="item.value"></el-option>
-            <!-- <el-option label="As New" value="1"></el-option>
-            <el-option label="Very good" value="2"></el-option>
-            <el-option label="Good" value="3"></el-option>
-            <el-option label="Fair" value="4"></el-option>
-            <el-option label="Poor" value="5"></el-option> -->
           </el-select>
           <el-select id="selectCategory" v-model="category" slot="prepend" placeholder="Category" style="width: 30%"
             @change="getCategory($event)" clearable>
             <el-option v-for="(item,index) in this.category_option" :key="index" :label="item.label"
               :value="item.value"></el-option>
-            <!-- <el-option label="Drama" value="Drama"></el-option>
-            <el-option label="Fiction" value="Fiction"></el-option>
-            <el-option label="History" value="History"></el-option>
-            <el-option label="Juvenile literature" value="Juvenile literature"></el-option>
-            <el-option label="Romance" value="Romance"></el-option> -->
           </el-select>
         </div>
-        <div class="imgDisplay" id="photoContainer">
+        <div class="imgDisplay" id="photoContainer" v-loading="loading">
           <el-row :gutter="20">
             <el-col :span="6" v-for="(item,index) in this.info" :key="index">
-              <img class="grid-content" :src="item.cover_photos_links" @click="book_dialog_visibility[index]=true"/>
+              <img class="grid-content" :src="item.cover_photos_links" @click="book_dialog_visibility[index]=true" />
               <el-button @click="book_dialog_visibility[index]=true" type="text">{{item.book_name}}</el-button>
               <el-dialog :visible.sync="book_dialog_visibility[index]" width="70%">
                 <div class="dialog">
@@ -127,25 +113,27 @@
                       <div @click="thumbup" id="heart" :class="thum ?  'is-active' : ''"></div>
                     </div>
                     id: {{item.donation_id}}
-                    <div class="dialogText">Description</div>
+                    <div class="dialogText">Description </div>
+                    <a :href="item.detail_photos_links"></a>
                     <div class="part2">{{item.description}}</div>
                     <div class="part3">
                       <div style="flex:1">
                         <div><i class="el-icon-user-solid"></i>
                           Donator: {{item.user}}
-                          <el-button type="info" icon="el-icon-message" circle @click="book_dialog_visibility[index] = false; sendMessage_with_name(item.user)"
-                                     round type="primary">
+                          <el-button type="info" icon="el-icon-message" circle
+                            @click="book_dialog_visibility[index] = false; sendMessage_with_name(item.user)" round
+                            type="primary">
                           </el-button>
                         </div>
                         <el-rate disabled score-template="{item.credit} points" text-color="#ff9900"
                           v-model="read_value">
                         </el-rate>
                       </div>
-
                     </div>
                     <div class="part4">
-                      <el-button @click="book_dialog_visibility[index] = false; UpdateDonationID(item.donation_id); MakeRequest(item.donation_id)"
-                         round type="primary">Request book (Credits Required:{{item.credit}})
+                      <el-button
+                        @click="book_dialog_visibility[index] = false; UpdateDonationID(item.donation_id); MakeRequest(item.donation_id)"
+                        round type="primary">Request book (Credits Required:{{item.credit}})
                       </el-button>
                     </div>
                   </div>
@@ -367,8 +355,7 @@
         <h1>Verify Your Email Address</h1>
 
         <b>Message</b></label>
-        <input id="verification-input" placeholder="Input your verification code"
-               required/>
+        <input id="verification-input" placeholder="Input your verification code" required />
         <button type="button" class="btn" onclick="verifyUser()">Confirm</button>
       </form>
     </div>
@@ -393,8 +380,8 @@
         bookName: "Harry Potter",
         donatedBook: "",
         creditRequired: 5,
-        book_dialog_visibility: {0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false},//TODO:换一种方法
-        dialogVisible:false,
+        book_dialog_visibility: { 0: false, 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false },//TODO:换一种方法
+        dialogVisible: false,
         path: 'home',
         read_value: 3.7,
         dialogImageUrl: '',
@@ -412,83 +399,7 @@
         req_his: "",
         condition_option: ["Poor", "Fair", "Good", "Very Good", "As New"],
         info: [],
-        // info: [{
-        //   'credit': 5,
-        //   'photos_links': 'https://photokit.com/images/editor.min.webp',
-        //   'openlibrary_link': 'https://openlibrary.org/works/OL82563W',
-        //   'book_name': 'Harry Potter1',
-        //   'condition': 'Good',
-        //   'user': 'albert-new',
-        //   'genres': ['Drama', 'Fiction', 'History'],
-        //   'description': 'Harry Potter #1\r\n\r\nWhen mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts School of Witchcraft and Wizardry.\r\n\r\nThey are swiftly confiscated by his aunt and uncle.\r\n\r\nThen, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard and has been awarded a place to study at Hogwarts.\r\n\r\nAnd so the first of the Harry Potter adventures is set to begin.\r\n([source][1])\r\n\r\n\r\n  [1]: https://www.jkrowling.com/book/harry-potter-philosophers-stone/',
-        //   'donation_id': 'albert-new-2022-5-10-22-23-34-240'
-        // },
-        // {
-        //   'credit': 5,
-        //   'photos_links': 'https://photokit.com/images/editor.min.webp',
-        //   'openlibrary_link': 'https://openlibrary.org/works/OL82563W',
-        //   'book_name': 'Harry Potter2',
-        //   'condition': 'Very Good',
-        //   'user': 'albert-new',
-        //   'genres': ['History', 'Romance', 'Fiction'],
-        //   'description': 'Harry Potter #1\r\n\r\nWhen mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts School of Witchcraft and Wizardry.\r\n\r\nThey are swiftly confiscated by his aunt and uncle.\r\n\r\nThen, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard and has been awarded a place to study at Hogwarts.\r\n\r\nAnd so the first of the Harry Potter adventures is set to begin.\r\n([source][1])\r\n\r\n\r\n  [1]: https://www.jkrowling.com/book/harry-potter-philosophers-stone/',
-        //   'donation_id': 'albert-new-2022-5-10-22-23-34-240'
-        // },
-        // {
-        //   'credit': 5,
-        //   'photos_links': 'https://photokit.com/images/editor.min.webp',
-        //   'openlibrary_link': 'https://openlibrary.org/works/OL82563W',
-        //   'book_name': 'Harry Potter3',
-        //   'condition': 'Good',
-        //   'user': 'albert-new',
-        //   'genres': ['Romance'],
-        //   'description': 'Harry Potter #1\r\n\r\nWhen mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts School of Witchcraft and Wizardry.\r\n\r\nThey are swiftly confiscated by his aunt and uncle.\r\n\r\nThen, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard and has been awarded a place to study at Hogwarts.\r\n\r\nAnd so the first of the Harry Potter adventures is set to begin.\r\n([source][1])\r\n\r\n\r\n  [1]: https://www.jkrowling.com/book/harry-potter-philosophers-stone/',
-        //   'donation_id': 'albert-new-2022-5-10-22-23-34-240'
-        // },
-        // {
-        //   'credit': 5,
-        //   'photos_links': 'https://photokit.com/images/editor.min.webp',
-        //   'openlibrary_link': 'https://openlibrary.org/works/OL82563W',
-        //   'book_name': 'Harry Potter4',
-        //   'condition': 'As New',
-        //   'user': 'albert-new',
-        //   'genres': ['Drama', 'History'],
-        //   'description': 'Harry Potter #1\r\n\r\nWhen mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts School of Witchcraft and Wizardry.\r\n\r\nThey are swiftly confiscated by his aunt and uncle.\r\n\r\nThen, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard and has been awarded a place to study at Hogwarts.\r\n\r\nAnd so the first of the Harry Potter adventures is set to begin.\r\n([source][1])\r\n\r\n\r\n  [1]: https://www.jkrowling.com/book/harry-potter-philosophers-stone/',
-        //   'donation_id': 'albert-new-2022-5-10-22-23-34-240'
-        // },
-        // {
-        //   'credit': 5,
-        //   'photos_links': 'https://photokit.com/images/editor.min.webp',
-        //   'openlibrary_link': 'https://openlibrary.org/works/OL82563W',
-        //   'book_name': 'Harry Potter5',
-        //   'condition': 'Very Good',
-        //   'user': 'albert-new',
-        //   'genres': ['Fiction'],
-        //   'description': 'Harry Potter #1\r\n\r\nWhen mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts School of Witchcraft and Wizardry.\r\n\r\nThey are swiftly confiscated by his aunt and uncle.\r\n\r\nThen, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard and has been awarded a place to study at Hogwarts.\r\n\r\nAnd so the first of the Harry Potter adventures is set to begin.\r\n([source][1])\r\n\r\n\r\n  [1]: https://www.jkrowling.com/book/harry-potter-philosophers-stone/',
-        //   'donation_id': 'albert-new-2022-5-10-22-23-34-240'
-        // },
-        // {
-        //   'credit': 5,
-        //   'photos_links': 'https://photokit.com/images/editor.min.webp',
-        //   'openlibrary_link': 'https://openlibrary.org/works/OL82563W',
-        //   'book_name': 'Harry Potter6',
-        //   'condition': 'Fair',
-        //   'user': 'albert-new',
-        //   'genres': ['Fiction', 'Romance'],
-        //   'description': 'Harry Potter #1\r\n\r\nWhen mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts School of Witchcraft and Wizardry.\r\n\r\nThey are swiftly confiscated by his aunt and uncle.\r\n\r\nThen, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard and has been awarded a place to study at Hogwarts.\r\n\r\nAnd so the first of the Harry Potter adventures is set to begin.\r\n([source][1])\r\n\r\n\r\n  [1]: https://www.jkrowling.com/book/harry-potter-philosophers-stone/',
-        //   'donation_id': 'albert-new-2022-5-10-22-23-34-240'
-        // },
-        // {
-        //   'credit': 5,
-        //   'photos_links': 'https://photokit.com/images/editor.min.webp',
-        //   'openlibrary_link': 'https://openlibrary.org/works/OL82563W',
-        //   'book_name': 'Harry Potter7',
-        //   'condition': 'Poor',
-        //   'user': 'albert-new',
-        //   'genres': ['Drama'],
-        //   'description': 'Harry Potter #1\r\n\r\nWhen mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts School of Witchcraft and Wizardry.\r\n\r\nThey are swiftly confiscated by his aunt and uncle.\r\n\r\nThen, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard and has been awarded a place to study at Hogwarts.\r\n\r\nAnd so the first of the Harry Potter adventures is set to begin.\r\n([source][1])\r\n\r\n\r\n  [1]: https://www.jkrowling.com/book/harry-potter-philosophers-stone/',
-        //   'donation_id': 'albert-new-2022-5-10-22-23-34-240'
-        // }],
+        loading: false,
         order_option: [
           { "label": "Alphabetical Order (A-Z)", "value": "1" },
           { "label": "Alphabetical Order (Z-A)", "value": "2" },
@@ -625,7 +536,7 @@
         current_recipient = this.messages[index]['sender']
         openForm()
       },
-      sendMessage_with_name(name){
+      sendMessage_with_name(name) {
         if (login_user_name == null) {
           request_login()
           return
@@ -648,7 +559,7 @@
           alert("Please input the name for your book.");
           return;
         }
-
+        this.loading = true
         //initialize apigclient and related parameters
         var apigClient = apigClientFactory.newClient();
         var params = {
@@ -662,7 +573,7 @@
           .then((res) => {
             this.info = res.data;
             searchResult = this.info;
-            console.log(this.info);
+            this.loading = false
           });
       },
       getCondition(val) {
@@ -697,7 +608,7 @@
         // filterByCondition();
       },
     },
-    
+
     mounted() {
       window.UpdateDonationID = this.UpdateDonationID;
       window.getOrder = this.getOrder;
