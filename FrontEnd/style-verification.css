@@ -15,7 +15,7 @@
 }
 
 /* The popup chat - hidden by default */
-#myForm {
+#verification-panel {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     left: 0;
@@ -30,7 +30,7 @@
 }
 
 /* Add styles to the form container */
-.form-container {
+#verification-panel .form-container {
     border-radius: 10px;
     position: relative;
     left: 30%;
@@ -41,23 +41,23 @@
 }
 
 /* Full-width textarea */
-.form-container textarea {
+#verification-panel .form-container input {
     width: 100%;
     margin: 5px 0 22px 0;
     border: none;
     background: #f1f1f1;
     resize: none;
-    min-height: 200px;
+    min-height: 20px;
 }
 
 /* When the textarea gets focus, do something */
-.form-container textarea:focus {
+#verification-panel .form-container input:focus {
     background-color: #ddd;
     outline: none;
 }
 
 /* Set a style for the submit/login button */
-.form-container .btn {
+#verification-panel .form-container .btn {
     border-radius: 5px;
     background-color: #04AA6D;
     color: white;
@@ -70,7 +70,7 @@
 }
 
 /* Add a red background color to the cancel button */
-.form-container .cancel {
+#verification-panel .form-container .cancel {
     background-color: red;
 }
 
