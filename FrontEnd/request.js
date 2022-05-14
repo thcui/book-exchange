@@ -16,6 +16,9 @@ function makeRequest(d_id) {
     .requestPost(params, body, additionalParams)
     .then((response) => {
       alert('Request "' + book_id + '" Successfully! Thanks for your support!');
+      console.log(response['data']['user_credit'])
+      document.getElementById('login-button').innerHTML = '<i class="el-icon-user"></i>' + login_user_name + '<i class="el-icon-coin"></i>' + 'Credit: ' + response['data']['user_credit']
+
     })
     .catch((err) =>
       alert(
