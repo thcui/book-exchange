@@ -61,7 +61,7 @@ body{
 }
 .imgSize{
   height: 100%;
-    width: 180px;
+    width: 310px;
 }
 .left{
   width: 40%;
@@ -82,8 +82,8 @@ body{
   margin-top: 20px;
 }
 .part2{
-  height: 48%;
-  width: 400px;
+  height: 32%;
+  width: 85%;
 }
 .part3{
   display: flex;
@@ -92,6 +92,7 @@ body{
 .part4{
   justify-content: flex-end;
   display: flex;
+  padding-bottom: 20px;
 }
 .Rating-gray {
   margin-right: 1.066667vw;
@@ -126,11 +127,25 @@ body{
     font-size: 14px;
     color:#606266;
 }
-.dialogClass .el-dialog__body{
+/* .dialogClass .el-dialog__body{
   width:70%;
   height:65%
+} */
+.el-dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: 0 !important;
+  transform: translate(-50%, -50%);
+  max-height: calc(100% - 30px);
+  max-width: calc(100% - 30px);
+  display: flex;
+  flex-direction: column;
 }
 
+.el-dialog__body {
+  overflow: auto;
+}
 #heart {
   width: 100px;
   height: 100px;
