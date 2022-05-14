@@ -78,8 +78,8 @@
       <div class="middle" v-if="path == 'home'">
         <div class="searchbar">
           <el-input id="searchContent" placeholder="Search for Book Name" v-model="bookName" class="input-with-select"
-            style="width: 91%; margin-bottom: 10px" clearable>
-            <el-button slot="append" icon="el-icon-search" @click="searchPhoto()"></el-button>
+            @keyup.enter.native="searchPhoto" style=" width: 91%; margin-bottom: 10px" clearable>
+            <el-button slot="append" icon="el-icon-search" @click="searchPhoto"></el-button>
           </el-input>
           <el-select id="selectOrder" v-model="sortby" slot="prepend" placeholder="Sort By" style="width: 30%"
             @change="getOrder($event); filter()" clearable>
@@ -109,7 +109,7 @@
                   {{item.book_name}}
                 </el-button>
               </el-tooltip>
-              <el-dialog :visible.sync="book_dialog_visibility[index]" width="70%">
+              <el-dialog :visible.sync="book_dialog_visibility[index]" class="dialogClass" width="70%">
                 <div class="dialog">
                   <div class="left">
                     <img class="imgSize" :src="item.cover_photos_links" />
@@ -199,9 +199,6 @@
         </div>
       </div>
       <div class="middle account" v-if="path == 'account'">
-        <!-- <div>User ID: {{user_id}}</div>
-        <div>Current Credit: {{current_credit}}</div>
-        <div>Sign Up Time: {{last_sign_up_time}}</div> -->
 
         <el-descriptions class="margin-top" title="Account Information" :column="1" :size="size" border>
           <el-descriptions-item>

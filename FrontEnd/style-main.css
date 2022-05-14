@@ -61,7 +61,7 @@ body{
 }
 .imgSize{
   height: 100%;
-    width: 150px;
+    width: 180px;
 }
 .left{
   width: 40%;
@@ -79,6 +79,7 @@ body{
 }
 .dialogText{
   text-decoration: underline; font-size: 20px;
+  margin-top: 20px;
 }
 .part2{
   height: 48%;
@@ -124,6 +125,10 @@ body{
   margin-top: 22px;
     font-size: 14px;
     color:#606266;
+}
+.dialogClass .el-dialog__body{
+  width:70%;
+  height:65%
 }
 
 #heart {
