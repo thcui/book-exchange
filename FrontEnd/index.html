@@ -78,8 +78,8 @@
       <div class="middle" v-if="path == 'home'">
         <div class="searchbar">
           <el-input id="searchContent" placeholder="Search for Book Name" v-model="bookName" class="input-with-select"
-            style="width: 91%; margin-bottom: 10px" clearable>
-            <el-button slot="append" icon="el-icon-search" @click="searchPhoto()"></el-button>
+            @keyup.enter.native="searchPhoto" style=" width: 91%; margin-bottom: 10px" clearable>
+            <el-button slot="append" icon="el-icon-search" @click="searchPhoto"></el-button>
           </el-input>
           <el-select id="selectOrder" v-model="sortby" slot="prepend" placeholder="Sort By" style="width: 30%"
             @change="getOrder($event); filter()" clearable>
@@ -101,8 +101,15 @@
           <el-row :gutter="20">
             <el-col :span="4" v-for="(item,index) in this.info" :key="index">
               <img class="grid-content" :src="item.cover_photos_links" @click="book_dialog_visibility[index]=true" />
-              <el-button @click="book_dialog_visibility[index]=true" type="text">{{item.book_name}}</el-button>
-              <el-dialog :visible.sync="book_dialog_visibility[index]" width="70%">
+              <el-tooltip class="item" effect="light" placement="bottom-end" :content="item.book_name">
+                <el-button @click="book_dialog_visibility[index]=true" type="text" style="max-width: 100px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;">
+                  {{item.book_name}}
+                </el-button>
+              </el-tooltip>
+              <el-dialog :visible.sync="book_dialog_visibility[index]" class="dialogClass" width="70%">
                 <div class="dialog">
                   <div class="left">
                     <img class="imgSize" :src="item.cover_photos_links" />
@@ -193,9 +200,6 @@
         </div>
       </div>
       <div class="middle account" v-if="path == 'account'">
-        <!-- <div>User ID: {{user_id}}</div>
-        <div>Current Credit: {{current_credit}}</div>
-        <div>Sign Up Time: {{last_sign_up_time}}</div> -->
 
         <el-descriptions class="margin-top" title="Account Information" :column="1" :size="size" border>
           <el-descriptions-item>
@@ -269,8 +273,14 @@
 
       <div class="ediChoice">
         <h4 class="title">Editor's choice</h4>
-        <img src="https://photokit.com/images/editor.min.webp" height="300" width="180" />
-        <div style="color: black">to kill a mocking bird</div>
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/To_Kill_a_Mockingbird_%28first_edition_cover%29.jpg/1280px-To_Kill_a_Mockingbird_%28first_edition_cover%29.jpg"
+          height="200" width="150" style="padding: 0 16px" />
+        <div class="subtitle">To kill a mocking bird</div>
+        <div class="subtitle2">
+          A novel by the American author Harper Lee. It was published in 1960 and was instantly
+          successful. In the United States, it is widely read in high schools and middle schools.
+        </div>
       </div>
     </div>
 
@@ -294,15 +304,15 @@
 
           <button onclick="login()" type="submit">Login</button>
           <button id='signup-btn' onclick="showSignUp()" type="submit">New user? Create an account here!</button>
-          <label>
+          <!-- <label>
             <input checked="checked" name="remember" type="checkbox"> Remember me
-          </label>
+          </label> -->
         </div>
 
         <div class="container" style="background-color:#f1f1f1">
           <button class="cancelbtn" onclick="document.getElementById('login').style.display='none'" type="button">Cancel
           </button>
-          <span class="psw">Forgot <a href="#">password?</a></span>
+          <!-- <span class="psw">Forgot <a href="#">password?</a></span> -->
         </div>
 
       </div>
@@ -619,7 +629,7 @@
         }
 
         if (this.display.min_requirement > 0) {
-          for (var i = 0; i< searchResult.length; i++) {
+          for (var i = 0; i < searchResult.length; i++) {
             book_value = condition_option.indexOf(searchResult[i].condition) + 1;
             console.log(book_value);
             if (book_value >= this.display.min_requirement) {
@@ -630,22 +640,22 @@
           newInfo = [];
         }
 
-        if (this.display.sortby_order > 0){
+        if (this.display.sortby_order > 0) {
           if (this.display.sortby_order == 1) {
             searchResult.sort(function (a, b) {
               if (a.book_name > b.book_name)
                 return 1;
-              else 
+              else
                 return -1;
             })
           } else if (this.display.sortby_order == 2) {
             searchResult.sort(function (a, b) {
               if (a.book_name > b.book_name)
                 return -1;
-              else 
+              else
                 return 1;
             })
-          } else if (this.display.sortby_order == 3){
+          } else if (this.display.sortby_order == 3) {
             searchResult.sort(function (a, b) {
               return a.credit - b.credit;
             })
