@@ -293,15 +293,15 @@
 
           <button onclick="login()" type="submit">Login</button>
           <button id='signup-btn' onclick="showSignUp()" type="submit">New user? Create an account here!</button>
-          <label>
+          <!-- <label>
             <input checked="checked" name="remember" type="checkbox"> Remember me
-          </label>
+          </label> -->
         </div>
 
         <div class="container" style="background-color:#f1f1f1">
           <button class="cancelbtn" onclick="document.getElementById('login').style.display='none'" type="button">Cancel
           </button>
-          <span class="psw">Forgot <a href="#">password?</a></span>
+          <!-- <span class="psw">Forgot <a href="#">password?</a></span> -->
         </div>
 
       </div>
@@ -618,7 +618,7 @@
         }
 
         if (this.display.min_requirement > 0) {
-          for (var i = 0; i< searchResult.length; i++) {
+          for (var i = 0; i < searchResult.length; i++) {
             book_value = condition_option.indexOf(searchResult[i].condition) + 1;
             console.log(book_value);
             if (book_value >= this.display.min_requirement) {
@@ -629,22 +629,22 @@
           newInfo = [];
         }
 
-        if (this.display.sortby_order > 0){
+        if (this.display.sortby_order > 0) {
           if (this.display.sortby_order == 1) {
             searchResult.sort(function (a, b) {
               if (a.book_name > b.book_name)
                 return 1;
-              else 
+              else
                 return -1;
             })
           } else if (this.display.sortby_order == 2) {
             searchResult.sort(function (a, b) {
               if (a.book_name > b.book_name)
                 return -1;
-              else 
+              else
                 return 1;
             })
-          } else if (this.display.sortby_order == 3){
+          } else if (this.display.sortby_order == 3) {
             searchResult.sort(function (a, b) {
               return a.credit - b.credit;
             })
