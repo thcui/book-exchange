@@ -164,7 +164,8 @@
           </div>
 
           <div style="margin-bottom: 20px;">
-            Upload a photo:
+            <div>Upload a photo:</div>
+            <div>(we will generate an image based on your book's name if you leave it empty):</div>
             <el-upload action="#" :on-preview="handlePictureCardPreview" :on-remove="handleRemove"
               :on-change="handleSuccess" accept="image/*" drag: list-type="picture-card" :auto-upload=false>
               <i class="el-icon-plus"></i>
@@ -247,7 +248,7 @@
             <el-empty :image-size="200" description="No Data"></el-empty>
           </div>
           <div v-for="(item,index) in this.fav" :key="index" class="text item" v-else>
-            {{item}}
+            <el-button type='text' @click="searchBook(item)">{{item}}</el-button>
           </div>
         </el-card>
       </div>
@@ -667,6 +668,11 @@
         this.info = searchResult;
         searchResult = temp;
       },
+      searchBook(item) {
+        this.path = 'home';
+        this.bookName = item
+
+      }
     },
 
     mounted() {
