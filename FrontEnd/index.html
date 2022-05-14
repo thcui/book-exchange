@@ -99,7 +99,7 @@
         </div>
         <div class="imgDisplay" id="photoContainer" v-loading="loading">
           <el-row :gutter="20">
-            <el-col :span="6" v-for="(item,index) in this.info" :key="index">
+            <el-col :span="4" v-for="(item,index) in this.info" :key="index">
               <img class="grid-content" :src="item.cover_photos_links" @click="book_dialog_visibility[index]=true" />
               <el-button @click="book_dialog_visibility[index]=true" type="text">{{item.book_name}}</el-button>
               <el-dialog :visible.sync="book_dialog_visibility[index]" width="70%">
