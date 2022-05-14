@@ -54,7 +54,7 @@
         <el-menu class="el-menu-vertical-demo" :collapse="isCollapse" ref="menu" default-active="1">
           <el-menu-item index="1" @click="path = 'home'">
             <i class="el-icon-house"></i>
-            <span>Home</span>
+            <span>Search</span>
           </el-menu-item>
           <el-menu-item index="2" @click="path = 'donate'">
             <i class="el-icon-plus"></i>
@@ -155,7 +155,7 @@
         <div id="donate-popup">
           Name of your donated book:
           <el-input class="input-with-select" id="bookNameInput" placeholder="Ex. Harry Potter"
-            style="width: 100%; margin-bottom: 10px" v-model="donatedBook" clearable>
+            style="width: 100%; margin-bottom: 20px" v-model="donatedBook" clearable>
           </el-input>
           <div class="line1">
             Credit Required for requesting this book:
@@ -163,7 +163,7 @@
             </el-input-number>
           </div>
 
-          <div>
+          <div style="margin-bottom: 20px;">
             Upload a photo:
             <el-upload action="#" :on-preview="handlePictureCardPreview" :on-remove="handleRemove"
               :on-change="handleSuccess" accept="image/*" drag: list-type="picture-card" :auto-upload=false>
@@ -173,7 +173,7 @@
               <img :src="dialogImageUrl" alt="" width="100%">
             </el-dialog>
           </div>
-          <div>
+          <div style="margin-bottom: 20px;">
             Book condition:
             <div>
               <el-radio-group id="book_condition" v-model="condition_radio">
