@@ -1,9 +1,44 @@
-1. First introduce registration（简单看下界面就好）
-2. Login
+1. First introduce registration（简单看下界面就好） & Login
+
+First, I will introduce to you the login panel and the registration panel, which is the 
+first part of front-end an user may need.
+
+After clicking the login panel, if you do not have any account, you can register an account here
+It will ask for your user name password and email. 
+After that, an verification code will be sent to your email box.
+
+As I have already had an account, I will just login here, you can see your credit here, credits is just like a currency for reuqesting books, but you can only gain it by donating your books.
+
 3. Search
-4. Show the book details
-5. Show the donation part（upload a photo说明upload photo的话会怎么样）
-6. Make a request
+Any user, even if you have not logged in, can search for the books available for request
+Here, I will use the keyword Amazon as an example, you can see all the books realted to Amazon appears here.
+You can also choose the order of the books by alphabetical order or by the credist required.
+Meanwhile, you can also filter the books by there minimum condition or the grenes
+
+4. Show the book details  & Add a book to the favourite list
+After clicking a book, we can see the detail panel here, it includes the 
+book name, id and some decription.
+Here you can see who donated that book and send message about where and when you would
+like they give the book to you.
+
+5. Make a request, and show the credit change.
+After you make sure you want to have a book, you can request it here, the credits
+required will be deducted from you account, as you can see here, and it will be added to the donators' account.
+
+
+6. Show the donation part（upload a photo说明upload photo的话会怎么样）
+If you want to donate a used book, you can simplily click this tab and enter the infomration here.
+You can also upload a photo, if you do not upload one, we will try to generate one based on the information from eternal API.
+
 7. Show the user information, with donation and request history.
-8. Add a book to the favourite list
-9. 
+
+After you requested or donated a book, you can see the history and other personal informaiton here.
+
+9. Show favourite list and click the item
+As I introduced before, you can add a book to your favourite list and here is where you would check it.
+You can click the name to quickly search for the book
+
+10. Send a message from the book details
+As I mentioned before, you can send a message to another, and here is where you would check the emssages you received.
+11. Check the message tab and email box
+You can reply to the message here, and after that, the receiver will received an email with message content you just sent.
