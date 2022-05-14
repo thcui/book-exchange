@@ -82,17 +82,17 @@
             <el-button slot="append" icon="el-icon-search" @click="searchPhoto()"></el-button>
           </el-input>
           <el-select id="selectOrder" v-model="sortby" slot="prepend" placeholder="Sort By" style="width: 30%"
-            @change="getOrder($event); filterByOrder()" clearable>
+            @change="getOrder($event); filter()" clearable>
             <el-option v-for="(item,index) in this.order_option" :key="index" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
           <el-select id="selectCondition" placeholder="Min. Condition Requirement" slot="prepend" style="width: 30%"
-            v-model="tag" @change="getCondition($event); filterByCondition()" clearable>
+            v-model="tag" @change="getCondition($event); filter()" clearable>
             <el-option v-for="(item,index) in this.condition_option" :key="index" :label="item.label"
               :value="item.value"></el-option>
           </el-select>
           <el-select id="selectCategory" v-model="category" slot="prepend" placeholder="Category" style="width: 30%"
-            @change="getCategory($event); filterByCategory()" clearable>
+            @change="getCategory($event); filter()" clearable>
             <el-option v-for="(item,index) in this.category_option" :key="index" :label="item.label"
               :value="item.value"></el-option>
           </el-select>
@@ -424,7 +424,8 @@
         display: {
           sortby_order: "",
           min_requirement: "",
-          category: ""
+          category: "",
+          category_v: "",
         }
       };
     },
@@ -588,6 +589,7 @@
         this.category_option.forEach(item => {
           if (item.value === val) {
             this.display.category = item.label;
+            this.display.category_v = item.value;
             console.log(this.display.category);
           }
         });
@@ -600,53 +602,61 @@
           }
         });
       },
-      filterByCategory() {
+      filter() {
         var newInfo = [];
-        console.log(searchResult.length);
-        for (var i = 0; i < searchResult.length; i++) {
-          if (searchResult[i].genres.indexOf(this.display.category) > -1) {
-            newInfo.push(searchResult[i]);
+        var temp = searchResult;
+        console.log(searchResult);
+
+        if (this.display.category_v > 0) {
+          for (var i = 0; i < searchResult.length; i++) {
+            if (searchResult[i].genres.indexOf(this.display.category) > -1) {
+              newInfo.push(searchResult[i]);
+            }
+          }
+          searchResult = newInfo;
+          newInfo = [];
+        }
+
+        if (this.display.min_requirement > 0) {
+          for (var i = 0; i< searchResult.length; i++) {
+            book_value = condition_option.indexOf(searchResult[i].condition) + 1;
+            console.log(book_value);
+            if (book_value >= this.display.min_requirement) {
+              newInfo.push(searchResult[i]);
+            }
+          }
+          searchResult = newInfo;
+          newInfo = [];
+        }
+
+        if (this.display.sortby_order > 0){
+          if (this.display.sortby_order == 1) {
+            searchResult.sort(function (a, b) {
+              if (a.book_name > b.book_name)
+                return 1;
+              else 
+                return -1;
+            })
+          } else if (this.display.sortby_order == 2) {
+            searchResult.sort(function (a, b) {
+              if (a.book_name > b.book_name)
+                return -1;
+              else 
+                return 1;
+            })
+          } else if (this.display.sortby_order == 3){
+            searchResult.sort(function (a, b) {
+              return a.credit - b.credit;
+            })
+          } else if (this.display.sortby_order == 4) {
+            searchResult.sort(function (a, b) {
+              return b.credit - a.credit;
+            })
           }
         }
-        this.info = newInfo;
+        this.info = searchResult;
+        searchResult = temp;
       },
-      filterByCondition() {
-        var newInfo = [];
-        for (var i = 0; i< searchResult.length; i++) {
-          book_value = condition_option.indexOf(searchResult[i].condition) + 1;
-          console.log(book_value);
-          if (book_value >= this.display.min_requirement) {
-            newInfo.push(searchResult[i]);
-          }
-        }
-        this.info = newInfo;
-      },
-      filterByOrder() {
-        var newInfo = searchResult;
-        if (this.display.sortby_order == 1) {
-          newInfo.sort(function (a, b) {
-              return a.book_name - b.book_name;
-          })
-        } else if (this.display.sortby_order == 2) {
-          newInfo.sort(function (a, b) {
-            return b.book_name - a.book_name;
-          })
-        } else if (this.display.sortby_order == 3){
-          newInfo.sort(function (a, b) {
-            return a.credit - b.credit;
-          })
-        } else if (this.display.sortby_order == 4) {
-          newInfo.sort(function (a, b) {
-            return b.credit - a.credit;
-          })
-        }
-        
-      },
-      // filter() {
-      //   filterByOrder();
-      //   filterByCategory();
-      //   filterByCondition();
-      // }
     },
 
     mounted() {
