@@ -1,6 +1,14 @@
 # BookExchange
 ## Tianhang Cui(tc3158), Zhenrui Chen(zc2569), Anni Chen(ac4779), Dantong Zhu(dz2451)
 
+
+### Demo Video:
+Check The demo video here: 
+
+[![Book-Exchange Demo](https://img.youtube.com/vi/xgqVHjfLKbI/0.jpg)](https://www.youtube.com/watch?v=xgqVHjfLKbI)
+
+### Report:
+Check the report here: [Report](https://github.com/thcui/book-exchange/blob/main/report.pdf).
 ### General Idea:
 Current days, books are really expensive for lots of reasons, including the rising cost of printing on paper, royalties, the economy of scale, return policy, and transit costs. Therefore more people prefer to have cheap, used books rather than the new paper books, this is especially the case for students' textbooks.
 
