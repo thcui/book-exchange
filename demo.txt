@@ -1,5 +1,7 @@
 1. First introduce registration（简单看下界面就好） & Login
 
+This is an applicaition for excahnging secondi hand books among users.
+
 First, I will introduce to you the login panel and the registration panel, which is the 
 first part of front-end an user may need.
 
@@ -18,6 +20,9 @@ Meanwhile, you can also filter the books by there minimum condition or the grene
 4. Show the book details  & Add a book to the favourite list
 After clicking a book, we can see the detail panel here, it includes the 
 book name, id and some decription.
+
+You can also add the book to your favourite list by clicking the heart here
+
 Here you can see who donated that book and send message about where and when you would
 like they give the book to you.
 
@@ -26,13 +31,13 @@ After you make sure you want to have a book, you can request it here, the credit
 required will be deducted from you account, as you can see here, and it will be added to the donators' account.
 
 
-6. Show the donation part（upload a photo说明upload photo的话会怎么样）
+6. 
 If you want to donate a used book, you can simplily click this tab and enter the infomration here.
 You can also upload a photo, if you do not upload one, we will try to generate one based on the information from eternal API.
 
 7. Show the user information, with donation and request history.
 
-After you requested or donated a book, you can see the history and other personal informaiton here.
+After you requested or donated a book, you can see the history and other personal informaiton from the account tab.
 
 9. Show favourite list and click the item
 As I introduced before, you can add a book to your favourite list and here is where you would check it.
