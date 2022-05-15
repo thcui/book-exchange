@@ -1,9 +1,0 @@
-1. First introduce registration（简单看下界面就好）
-2. Login
-3. Search
-4. Show the book details
-5. Show the donation part（upload a photo说明upload photo的话会怎么样）
-6. Make a request
-7. Show the user information, with donation and request history.
-8. Add a book to the favourite list
-9. 
