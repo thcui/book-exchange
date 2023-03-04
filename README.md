@@ -14,7 +14,7 @@ Current days, books are really expensive for lots of reasons, including the risi
 
 As there are some people who do not really need their books after reading but some people are seeking to buy these books. We can see there is a need for a platform for people to effectively exchange their books with each other.
 
-Therefore we intended to build Book-Exchange -- a second-book exchange platform that satisfied people's need to exchange books easily, and we currently put the focus on the students at Columbia University. We made such a decision not only because there are many students who have the passion and time to read a lot of books, but also because there is a huge need for getting new textbooks and giving away old textbooks every semester.
+Therefore we intended to build Book-Exchange -- a second-hand book exchange platform that satisfied people's need to exchange books easily, and we currently put the focus on the students at Columbia University. We made such a decision not only because there are many students who have the passion and time to read a lot of books, but also because there is a huge need for getting new textbooks and giving away old textbooks every semester.
 
 We want to make it a place where every user can easily find the books they need and have the motivation to donate their books to others. Donating and requesting books is the main part of our application, and we want to create an environment for sharing thoughts and making friends with other readers who share the same interests.
 
